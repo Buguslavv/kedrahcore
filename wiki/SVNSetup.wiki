@@ -1,4 +1,4 @@
-#summary Short Tutorial on how to use TortoiseSVN to get the latest sources of TibiaAPI
+#summary Short Tutorial on how to use TortoiseSVN to get the latest sources of KedrahCore
 #labels Featured,Phase-Implementation
 
  # Download and install TortoiseSVN from [http://tortoisesvn.net/downloads]
