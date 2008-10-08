@@ -12,6 +12,7 @@ namespace Kedrah
         // Hardek Modules
         Modules.General general;
         Modules.Heal heal;
+        Modules.Targeting targeting;
 
         #endregion
 
@@ -25,6 +26,7 @@ namespace Kedrah
             /* Instantiate modules */
             general = new Modules.General(core);
             heal = new Modules.Heal(core);
+            targeting = new Modules.Targeting(core);
         }
 
         #endregion
@@ -52,6 +54,18 @@ namespace Kedrah
             set
             {
                 heal = value;
+            }
+        }
+
+        public Modules.Targeting Targeting
+        {
+            get
+            {
+                return targeting;
+            }
+            set
+            {
+                targeting = value;
             }
         }
 

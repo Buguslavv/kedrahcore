@@ -52,6 +52,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="Modules\General.cs" />
     <Compile Include="Modules\Heal.cs" />
+    <Compile Include="Modules\Targeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
