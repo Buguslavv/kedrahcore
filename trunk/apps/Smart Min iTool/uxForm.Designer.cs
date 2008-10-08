@@ -35,11 +35,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.uxExhaustion = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.uxMana = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // uxEnable
             // 
-            this.uxEnable.Location = new System.Drawing.Point(12, 90);
+            this.uxEnable.Location = new System.Drawing.Point(12, 116);
             this.uxEnable.Name = "uxEnable";
             this.uxEnable.Size = new System.Drawing.Size(174, 41);
             this.uxEnable.TabIndex = 0;
@@ -98,11 +100,30 @@
             this.uxExhaustion.TabIndex = 5;
             this.uxExhaustion.Text = "1080";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Mana needed:";
+            // 
+            // uxMana
+            // 
+            this.uxMana.Location = new System.Drawing.Point(88, 90);
+            this.uxMana.Name = "uxMana";
+            this.uxMana.Size = new System.Drawing.Size(100, 20);
+            this.uxMana.TabIndex = 7;
+            this.uxMana.Text = "20";
+            // 
             // uxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(200, 146);
+            this.ClientSize = new System.Drawing.Size(200, 174);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.uxMana);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.uxExhaustion);
             this.Controls.Add(this.label2);
@@ -131,6 +152,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox uxExhaustion;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox uxMana;
     }
 }
 
