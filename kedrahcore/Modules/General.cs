@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace Kedrah.Modules
 {
+    /// <summary>
+    /// General functions that are just utilities.
+    /// </summary>
     public class General : Module
     {
         #region Variables/Objects
@@ -15,6 +18,7 @@ namespace Kedrah.Modules
         int floorOfSpy = 0, light, lightColor;
         string sign = "";
         bool showNames = false, fullLight = false, reusing = false, talking = false, wasdWalk = false, speedBoost = false, holdingBoostKey = true;
+        Keys spyPlusKey, spyMinusKey, spyCenterKey;
 
         #endregion
 
@@ -781,16 +785,62 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        /// <summary>
+        /// Enables the General module.
+        /// </summary>
         public override void Enable()
         {
-            base.Enable();
+            base.Enable();            
+        }
 
-            kedrah.BattleList.ShowInvisible(true);
+        /// <summary>
+        /// Main wrapper for LevelSpyKeys
+        /// </summary>
+        public void EnableLevelSpyKeys()
+        {
+            EnableLevelSpyKeys(System.Windows.Forms.Keys.Add, System.Windows.Forms.Keys.Subtract, System.Windows.Forms.Keys.Multiply);
+        }
+
+        /// <summary>
+        /// Wrapper for LevelSpyKeys
+        /// <param name="prefix"></param>
+        /// <param name="prefixSpy"></param>
+        /// <param name="prefixCenter"></param>
+        /// </summary>
+        public void EnableLevelSpyKeys(string prefix, string prefixSpy, string prefixCenter)
+        {
+            EnableLevelSpyKeys(System.Windows.Forms.Keys.Add, System.Windows.Forms.Keys.Subtract, System.Windows.Forms.Keys.Multiply, prefix, prefixSpy, prefixCenter);
+        }
+
+        /// <summary>
+        /// Wrapper for LevelSpyKeys
+        /// <param name="plusKey"></param>
+        /// <param name="minusKey"></param>
+        /// <param name="centerKey"></param>
+        /// </summary>
+        public void EnableLevelSpyKeys(Keys plusKey, Keys minusKey, Keys centerKey)
+        {
+            EnableLevelSpyKeys(plusKey, minusKey, centerKey, "KedrahCore - ", "LevelSpy Floor = ", "Removing Roofs.");
+        }
+
+        /// <summary>
+        /// LevelSpy keys function
+        /// <param name="plusKey"></param>
+        /// <param name="minusKey"></param>
+        /// <param name="centerKey"></param>
+        /// <param name="prefix"></param>
+        /// <param name="prefixSpy"></param>
+        /// <param name="prefixCenter"></param>
+        /// </summary>
+        public void EnableLevelSpyKeys(Keys plusKey, Keys minusKey, Keys centerKey, string prefix, string prefixSpy, string prefixCenter)
+        {
+            spyPlusKey = plusKey;
+            spyMinusKey = minusKey;
+            spyCenterKey = centerKey;
 
             #region LevelSpy Keys
 
-            // Adds (+) key to hook.
-            Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Add, new Tibia.KeyboardHook.KeyPressed(delegate()
+            Tibia.KeyboardHook.Add(spyPlusKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
                 if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
                 {
@@ -805,21 +855,20 @@ namespace Kedrah.Modules
                         kedrah.Map.FullLight(fullLight);
                     }
                     if (floorOfSpy > 0) sign = "+"; else sign = "";
-                    kedrah.Client.Statusbar = "Hardek Suite | LevelSpy.Floor = " + sign + floorOfSpy;
+                    kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
                     return false;
                 }
                 return true;
             }));
 
-            // Adds (-) key to hook.
-            Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Subtract, new Tibia.KeyboardHook.KeyPressed(delegate()
+            Tibia.KeyboardHook.Add(spyMinusKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
                 if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
                 {
                     if (floorOfSpy == 0 && kedrah.Player.Z == 7)
                     {
                         kedrah.Map.ShowFloor(0, true);
-                        kedrah.Client.Statusbar = "Hardek Suite | LevelSpy => Removing roofs.";
+                        kedrah.Client.Statusbar = prefix + prefixCenter;
                     }
                     else
                     {
@@ -834,20 +883,19 @@ namespace Kedrah.Modules
                             kedrah.Map.FullLight(fullLight);
                         }
                         if (floorOfSpy > 0) sign = "+"; else sign = "";
-                        kedrah.Client.Statusbar = "Hardek Suite | LevelSpy.Floor = " + sign + floorOfSpy;
+                        kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
                     }
                     return false;
                 }
                 return true;
             }));
 
-            // Adds (*) key to hook.
-            Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Multiply, new Tibia.KeyboardHook.KeyPressed(delegate()
+            Tibia.KeyboardHook.Add(spyCenterKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
                 if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
                 {
                     kedrah.Map.ShowFloor(0, true);
-                    kedrah.Client.Statusbar = "Hardek Suite | LevelSpy => Removing roofs.";
+                    kedrah.Client.Statusbar = prefix + prefixCenter;
                     kedrah.Map.ShowNames(true);
                     kedrah.Map.FullLight(true);
                     return false;
@@ -858,20 +906,29 @@ namespace Kedrah.Modules
             #endregion
         }
 
-        public override void Disable()
+        /// <summary>
+        /// Disables the hotkeys for level spy
+        /// </summary>
+        public void DisableLevelSpyKeys()
         {
-            base.Disable();
-
             #region LevelSpy Keys
 
             // Removes (+) key from hook.
-            Tibia.KeyboardHook.Remove(System.Windows.Forms.Keys.Add);
+            Tibia.KeyboardHook.Remove(spyPlusKey);
             // Removes (-) key from hook.
-            Tibia.KeyboardHook.Remove(System.Windows.Forms.Keys.Subtract);
+            Tibia.KeyboardHook.Remove(spyMinusKey);
             // Removes (*) key from hook.
-            Tibia.KeyboardHook.Remove(System.Windows.Forms.Keys.Multiply);
+            Tibia.KeyboardHook.Remove(spyCenterKey);
 
             #endregion
+        }
+
+        /// <summary>
+        /// Disables the General module.
+        /// </summary>
+        public override void Disable()
+        {
+            base.Disable();
         }
 
         #endregion
