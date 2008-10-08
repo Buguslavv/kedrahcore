@@ -1,4 +1,4 @@
-﻿namespace Smart_Min_iTool
+﻿namespace Smart_Mini_Tool
 {
     partial class uxForm
     {
@@ -116,6 +116,7 @@
             this.Name = "uxForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Mini Tool";
+            this.Load += new System.EventHandler(this.uxForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

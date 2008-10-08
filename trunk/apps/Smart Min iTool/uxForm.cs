@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Smart_Min_iTool
+namespace Smart_Mini_Tool
 {
     public partial class uxForm : Form
     {
@@ -44,7 +44,12 @@ namespace Smart_Min_iTool
                 }
             }
             else
-                MessageBox.Show("Percent must be numeric!");
+                MessageBox.Show("Percent/Exhaustion must be numeric! Percent must be between 0 and 100!");
+        }
+
+        private void uxForm_Load(object sender, EventArgs e)
+        {
+            kedrah.Modules.General.EnableLevelSpyKeys();
         }
     }
 }
