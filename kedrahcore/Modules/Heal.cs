@@ -13,7 +13,7 @@ namespace Kedrah.Modules
         hList<SpellPercent> spellLife, reverseSpellLife;
         DateTime spellNext = DateTime.Now, potionNext = DateTime.Now;
         bool poison = false, paralyze = false;
-        uint potionExhaustion = 700, spellExhaustion = 1080;
+        uint potionExhaustion = 700, spellExhaustion = 1080, spellPoisonMana = 30;
         string spellPoison = Tibia.Constants.Spells.Antidote.Words;
 
         #endregion
@@ -86,7 +86,7 @@ namespace Kedrah.Modules
             }
         }
 
-        public string SpellPoison
+        public string SpellPoisonMana
         {
             get
             {
@@ -95,6 +95,18 @@ namespace Kedrah.Modules
             set
             {
                 spellPoison = value;
+            }
+        }
+
+        public uint SpellPoisonWords
+        {
+            get
+            {
+                return spellPoisonMana;
+            }
+            set
+            {
+                spellPoisonMana = value;
             }
         }
 
@@ -216,15 +228,15 @@ namespace Kedrah.Modules
                 }
                 foreach (SpellPercent spell in spellLife)
                 {
-                    if (kedrah.Player.HPBar <= spell.Percent)
+                    if (kedrah.Player.HPBar <= spell.Percent && kedrah.Player.Mana >= spell.Mana)
                         spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 }
-                if (poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned))
+                if (poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= spellPoisonMana)
                     spellNext = kedrah.Console.Spell(spellPoison) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 if (paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
                     foreach (SpellPercent spell in reverseSpellLife)
                     {
-                        if (kedrah.Player.HPBar >= spell.Percent)
+                        if (kedrah.Player.HPBar >= spell.Percent && kedrah.Player.Mana >= spell.Mana)
                             spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                     }
             }
@@ -274,11 +286,13 @@ namespace Kedrah.Modules
     {
         public uint Percent;
         public string Spell;
+        public uint Mana;
 
-        public SpellPercent(uint percent, string spell)
+        public SpellPercent(uint percent, string spell, uint mana)
         {
             this.Percent = percent;
             this.Spell = spell;
+            this.Mana = mana;
         }
     }
 }

@@ -24,14 +24,14 @@ namespace Smart_Mini_Tool
 
         private void uxEnable_Click(object sender, EventArgs e)
         {
-            uint percent, exhaustion;
-            if (UInt32.TryParse(uxPercent.Text, out percent) && percent <= 100 && UInt32.TryParse(uxExhaustion.Text, out exhaustion))
+            uint percent, exhaustion, mana;
+            if (UInt32.TryParse(uxPercent.Text, out percent) && percent <= 100 && UInt32.TryParse(uxExhaustion.Text, out exhaustion) && UInt32.TryParse(uxMana.Text, out mana))
             {
                 uxPercent.Enabled = !uxPercent.Enabled;
                 uxSpell.Enabled = !uxSpell.Enabled;
                 if (!uxSpell.Enabled)
                 {
-                    kedrah.Modules.Heal.SpellLife.Add(new Kedrah.Modules.SpellPercent(percent, uxSpell.Text));
+                    kedrah.Modules.Heal.SpellLife.Add(new Kedrah.Modules.SpellPercent(percent, uxSpell.Text, mana));
                     kedrah.Modules.Heal.SpellExhaustion = exhaustion;
                     kedrah.Modules.Heal.Healer = true;
                     uxEnable.Text = "Disable";
@@ -44,7 +44,7 @@ namespace Smart_Mini_Tool
                 }
             }
             else
-                MessageBox.Show("Percent/Exhaustion must be numeric! Percent must be between 0 and 100!");
+                MessageBox.Show("Mana needed/Percent/Exhaustion must be numeric! Percent must be between 0 and 100!");
         }
 
         private void uxForm_Load(object sender, EventArgs e)

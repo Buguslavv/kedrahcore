@@ -85,7 +85,7 @@
       <Name>TibiaAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\kedrahcore\KedrahCore.csproj">
-      <Project>{2FD66CCF-0B43-4538-9AB1-5587223F7CC0}</Project>
+      <Project>{2AC544A0-7273-45B0-901B-494ED8020DB4}</Project>
       <Name>KedrahCore</Name>
     </ProjectReference>
   </ItemGroup>
