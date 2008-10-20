@@ -32,7 +32,7 @@ namespace KedrahCore.Util
 
         public void CreaturesToFile(string html)
         {
-            //try
+            try
             {
                 string url;
                 XmlDocument doc = new XmlDocument();
@@ -68,7 +68,7 @@ namespace KedrahCore.Util
                     }, request);
                 }
             }
-           // catch
+            catch
             {
                 
             }
@@ -84,7 +84,7 @@ namespace KedrahCore.Util
                 reader.Close();
                 XmlNode currNode;
                 html = Regex.Replace(html, "<(.|\n)*?>", "");
-                html.Replace("&nbsp;", "").Replace("&", "").Replace(";", "");
+                html = html.Replace("&nbsp;", "").Replace("&", "").Replace(";", "").Replace("and", ",");
                 string weaknesses = Regex.Match(html, @"Weak Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string strongnesses = Regex.Match(html, @"Strong Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string immunities = Regex.Match(html, @"Immune To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
