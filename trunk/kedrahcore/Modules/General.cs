@@ -392,7 +392,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Tibia.Objects.Item f;
-                    f = new Tibia.Objects.Item();
+                    f = new Tibia.Objects.Item(kedrah.Client, false);
 
                     for (i = 2118; i <= 2127; i++)
                         Fields.Add(i);
@@ -410,7 +410,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Tibia.Objects.Item f;
-                    f = new Tibia.Objects.Item();
+                    f = new Tibia.Objects.Item(kedrah.Client, false);
 
                     for (i = 2118; i <= 2127; i++)
                         Fields.Add(i);
