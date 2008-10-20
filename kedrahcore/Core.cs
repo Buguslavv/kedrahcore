@@ -49,7 +49,7 @@ namespace Kedrah
 
             /* Enable Keyboard Hook */
             Tibia.KeyboardHook.Enable();
-            Tibia.MouseHook.Enable();
+            //Tibia.MouseHook.Enable();
 
             foreach (Tibia.Objects.Client c in Tibia.Objects.Client.GetClients())
             {

@@ -54,12 +54,16 @@
     <Compile Include="Modules\Heal.cs" />
     <Compile Include="Modules\Targeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Database.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TibiaAPIRepos\trunk\tibiaapi\TibiaAPI.csproj">
       <Project>{4D132EB7-B97D-461D-85CF-949FF5A7BA96}</Project>
       <Name>TibiaAPI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Monsters.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
