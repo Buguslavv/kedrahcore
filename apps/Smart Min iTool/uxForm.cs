@@ -51,5 +51,14 @@ namespace Smart_Mini_Tool
         {
             kedrah.Modules.General.EnableLevelSpyKeys();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Kedrah.Modules.Targeting a = new Kedrah.Modules.Targeting(kedrah);
+            a.LoadMonstersFromXmlResource();
+
+            a.FindMonster("demon");
+            MessageBox.Show(a.GetBestElementIn(a.FindMonster("demon"), new string[] { "fire", "Earth", "energy", "holy" }));
+        }
     }
 }

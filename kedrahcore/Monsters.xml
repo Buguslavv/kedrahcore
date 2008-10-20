@@ -117,22 +117,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Apocalypse</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Annihilon</name>
     <weakness>
       <to>Fire</to>
@@ -149,6 +133,36 @@
     <immunity>
       <to>
       </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Apocalypse</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Apprentice Sheng</name>
+    <weakness>
+      <to>Unknown</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Unknown</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Energy</to>
     </immunity>
   </monster>
   <monster>
@@ -176,17 +190,41 @@
     </immunity>
   </monster>
   <monster>
-    <name>Apprentice Sheng</name>
+    <name>Ashmunrah</name>
     <weakness>
-      <to>Unknown</to>
+      <to>Holy</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Unknown</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Avalanche</name>
+    <weakness>
       <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>30</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -203,6 +241,20 @@
     </strongness>
     <immunity>
       <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Azure Frog</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -224,112 +276,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Axeitus Headbanger</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Ashmunrah</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisible</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Badger</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Avalanche</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>30</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Banshee</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Azure Frog</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Bandit</name>
     <weakness>
       <to>Physical</to>
@@ -345,65 +291,6 @@
     </strongness>
     <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Barbarian Bloodwalker</name>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Earth</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
-      <percent>5</percent>
-    </strongness>
-    <immunity>
-      <to>Drunkenness</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Barbarian Headsplitter</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Drunkenness</to>
     </immunity>
   </monster>
   <monster>
@@ -424,99 +311,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Bat</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Barbarian Brutetamer</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>20</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Drunkenness</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Bear</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Beholder</name>
+    <name>Axeitus Headbanger</name>
     <weakness>
       <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Big Boss Trolliver</name>
-    <weakness>
-      <to>
-      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -553,19 +358,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Black Sheep</name>
+    <name>Badger</name>
     <weakness>
-      <to>
-      </to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -585,27 +388,18 @@
     </immunity>
   </monster>
   <monster>
-    <name>Blightwalker</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>5</percent>
-    </weakness>
+    <name>Banshee</name>
     <weakness>
       <to>Holy</to>
-      <percent>30</percent>
+      <percent>25</percent>
     </weakness>
     <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
       <to>Fire</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
+    </immunity>
     <immunity>
       <to>Earth</to>
     </immunity>
@@ -613,10 +407,13 @@
       <to>Death</to>
     </immunity>
     <immunity>
-      <to>Paralysis</to>
+      <to>Life</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
     </immunity>
   </monster>
   <monster>
@@ -624,6 +421,10 @@
     <weakness>
       <to>Ice</to>
       <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
       <to>Physical</to>
@@ -641,29 +442,15 @@
       <to>Energy</to>
       <percent>10</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>30</percent>
+    </strongness>
     <immunity>
       <to>Paralysis</to>
     </immunity>
-  </monster>
-  <monster>
-    <name>Blood Crab</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>20</percent>
-    </strongness>
     <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -699,17 +486,33 @@
     </immunity>
   </monster>
   <monster>
-    <name>Bloodpaw</name>
+    <name>Barbarian Bloodwalker</name>
     <weakness>
-      <to>Energy</to>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Earth</to>
+      <percent>5</percent>
+    </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Physical</to>
+      <percent>5</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Drunkenness</to>
     </immunity>
   </monster>
   <monster>
@@ -748,43 +551,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Bog Raider</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Fire</to>
-      <percent>80</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>25</percent>
-    </strongness>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisible</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Blazing Fire Elemental</name>
     <weakness>
       <to>Ice</to>
@@ -803,19 +569,32 @@
     </immunity>
   </monster>
   <monster>
-    <name>Bones</name>
+    <name>Barbarian Headsplitter</name>
     <weakness>
-      <to>
-      </to>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Drunkenness</to>
     </immunity>
   </monster>
   <monster>
@@ -837,35 +616,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Braindeath</name>
+    <name>Bat</name>
     <weakness>
-      <to>Fire</to>
-      <percent>15</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
       <to>Earth</to>
-    </immunity>
+      <percent>20</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -890,24 +651,14 @@
     </immunity>
   </monster>
   <monster>
-    <name>Bug</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Blue Djinn</name>
     <weakness>
       <to>Ice</to>
       <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
       <to>Fire</to>
@@ -917,8 +668,37 @@
       <to>Energy</to>
       <percent>50</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Bear</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -966,51 +746,32 @@
     </immunity>
   </monster>
   <monster>
-    <name>Captain Jones</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Physical</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Carrion Worm</name>
+    <name>Beholder</name>
     <weakness>
       <to>Fire</to>
-      <percent>5</percent>
+      <percent>10</percent>
     </weakness>
-    <weakness>
+    <strongness>
       <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
+      <percent>20</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
-    <name>Cave Rat</name>
+    <name>Big Boss Trolliver</name>
     <weakness>
-      <to>Fire</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
@@ -1036,17 +797,19 @@
     </immunity>
   </monster>
   <monster>
-    <name>Chakoya Toolshaper</name>
+    <name>Black Sheep</name>
     <weakness>
-      <to>Energy</to>
-      <percent>15</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>40</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Ice</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -1061,20 +824,6 @@
     </strongness>
     <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Chakoya Windcaller</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>15</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>50</percent>
-    </strongness>
-    <immunity>
-      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
@@ -1099,17 +848,38 @@
     </immunity>
   </monster>
   <monster>
-    <name>Chicken</name>
+    <name>Blightwalker</name>
     <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
+      <to>Physical</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>30</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -1124,20 +894,6 @@
     </strongness>
     <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Cockroach</name>
-    <weakness>
-      <to>None</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -1159,31 +915,60 @@
     </immunity>
   </monster>
   <monster>
+    <name>Blood Crab</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Chakoya Tribewarden</name>
     <weakness>
       <to>Energy</to>
       <percent>15</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
     <strongness>
       <to>Fire</to>
       <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
       <to>Ice</to>
     </immunity>
   </monster>
   <monster>
-    <name>Coral Frog</name>
+    <name>Bloodpaw</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Energy</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
+      <to>Fire</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -1199,24 +984,6 @@
     </strongness>
     <immunity>
       <to>Energy</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Crab</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -1237,29 +1004,40 @@
     </immunity>
   </monster>
   <monster>
-    <name>Crocodile</name>
+    <name>Bog Raider</name>
     <weakness>
       <to>Physical</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Fire</to>
       <percent>10</percent>
     </weakness>
     <weakness>
       <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
       <percent>5</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
+      <to>Death</to>
+      <percent>-1</percent>
     </strongness>
     <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
+      <to>Fire</to>
+      <percent>80</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>25</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -1277,26 +1055,65 @@
     </immunity>
   </monster>
   <monster>
-    <name>Crystal Spider</name>
+    <name>Bones</name>
     <weakness>
-      <to>Energy</to>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Braindeath</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
       <percent>20</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
+      <to>Ice</to>
       <percent>20</percent>
     </strongness>
+    <strongness>
+      <to>Physical</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </strongness>
     <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Bug</name>
+    <weakness>
       <to>Fire</to>
-    </immunity>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Drunkenness</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -1330,25 +1147,19 @@
     </immunity>
   </monster>
   <monster>
-    <name>Cyclops</name>
+    <name>Captain Jones</name>
     <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>10</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>25</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Physical</to>
     </immunity>
   </monster>
   <monster>
@@ -1375,18 +1186,22 @@
     </immunity>
   </monster>
   <monster>
-    <name>Cyclops Smith</name>
+    <name>Carrion Worm</name>
     <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
+      <to>Fire</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Earth</to>
+      <percent>-1</percent>
     </strongness>
     <strongness>
       <to>Energy</to>
-      <percent>20</percent>
+      <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Nothing</to>
@@ -1407,9 +1222,9 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dark Apprentice</name>
+    <name>Cave Rat</name>
     <weakness>
-      <to>Death</to>
+      <to>Fire</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
@@ -1417,25 +1232,7 @@
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Dark Monk</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>20</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>40</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -1443,6 +1240,10 @@
     <weakness>
       <to>Earth</to>
       <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
       <to>Energy</to>
@@ -1452,24 +1253,34 @@
       <to>Ice</to>
       <percent>-1</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
-    <name>Deadeye Devious</name>
+    <name>Chakoya Toolshaper</name>
     <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Fire</to>
+      <percent>40</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
@@ -1484,36 +1295,6 @@
     </strongness>
     <immunity>
       <to>Invisible</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Deathslicer</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Deer</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -1537,6 +1318,10 @@
     <strongness>
       <to>Ice</to>
       <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
       <to>Invisibility</to>
@@ -1572,19 +1357,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Demodras</name>
+    <name>Chakoya Windcaller</name>
     <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Fire</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
@@ -1602,6 +1393,684 @@
     </immunity>
     <immunity>
       <to>Death</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Chicken</name>
+    <weakness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Deathspawn</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Cockroach</name>
+    <weakness>
+      <to>None</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Defiler</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Demon</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Coral Frog</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Demongoblin</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Crab</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dharalion</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Crocodile</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Diblis The Fair</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Crystal Spider</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Drunkenness</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dire Penguin</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>50</percent>
+    </strongness>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dracola</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Poison</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Cyclops</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dragon Hatchling</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Cyclops Smith</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dragon Lord Hatchling</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dark Apprentice</name>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dreadbeast</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dark Monk</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Death</to>
+      <percent>40</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dwarf</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dwarf Geomancer</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>60</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dwarf Henchman</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Death</to>
+      <percent>15</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>15</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Deathslicer</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dwarf Soldier</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Deer</name>
+    <weakness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Dworc Venomsniper</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>13</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Earth Elemental</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>25</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>85</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Demodras</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Efreet</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>8</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>90</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>60</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Elephant</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -1670,44 +2139,59 @@
     </immunity>
   </monster>
   <monster>
-    <name>Deathspawn</name>
+    <name>Elf Arcanist</name>
     <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Holy</to>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Fire</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>
-      </to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
-    <name>Defiler</name>
+    <name>Energy Elemental</name>
     <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
+      <to>Earth</to>
+      <percent>15</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
+      <to>Physical</to>
+      <percent>55</percent>
     </strongness>
     <strongness>
-      <to>Ice</to>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Paralysis</to>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
     </immunity>
   </monster>
   <monster>
@@ -1742,31 +2226,61 @@
     </immunity>
   </monster>
   <monster>
-    <name>Demon</name>
+    <name>Enlightened of the Cult</name>
     <weakness>
-      <to>Ice</to>
-      <percent>20</percent>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Physical</to>
-      <percent>25</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
+      <to>Ice</to>
       <percent>-1</percent>
     </strongness>
     <strongness>
-      <to>Energy</to>
+      <to>Holy</to>
       <percent>20</percent>
     </strongness>
     <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
       <to>Paralysis</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Fallen Mooh</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Ferumbras</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>90</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
     </immunity>
   </monster>
   <monster>
@@ -1786,9 +2300,35 @@
     <immunity>
       <to>Invisibility</to>
     </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Demongoblin</name>
+    <name>Fire Elemental</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>25</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Flamethrower</name>
     <weakness>
       <to>
       </to>
@@ -1818,19 +2358,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dharalion</name>
+    <name>Fluffy</name>
     <weakness>
-      <to>
-      </to>
+      <to>None</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -1858,17 +2396,10 @@
     </immunity>
   </monster>
   <monster>
-    <name>Diblis The Fair</name>
+    <name>Freegoiz</name>
     <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
@@ -1877,10 +2408,33 @@
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Death</to>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Frost Dragon Hatchling</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Paralyze</to>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
@@ -1911,24 +2465,39 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dire Penguin</name>
+    <name>Frost Giantess</name>
     <weakness>
       <to>Energy</to>
-      <percent>5</percent>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
       <to>Fire</to>
-      <percent>50</percent>
+      <percent>20</percent>
     </strongness>
     <strongness>
-      <to>Earth</to>
-      <percent>50</percent>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
-      <to>Paralyze</to>
+      <to>Ice</to>
     </immunity>
+  </monster>
+  <monster>
+    <name>Frostfur</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
-      <to>Invisible</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -1974,30 +2543,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dragon Hatchling</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Dwarf Dispenser</name>
     <weakness>
       <to>--</to>
@@ -2034,29 +2579,24 @@
     <immunity>
       <to>Life</to>
     </immunity>
+    <immunity>
+      <to>Physical</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Dragon Lord Hatchling</name>
+    <name>General Murius</name>
     <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -2082,20 +2622,29 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dreadbeast</name>
+    <name>Ghost</name>
     <weakness>
-      <to>
-      </to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>
-      </to>
+      <to>Physical</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
     </immunity>
   </monster>
   <monster>
@@ -2117,18 +2666,43 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dwarf</name>
+    <name>Giant Spider</name>
     <weakness>
       <to>Fire</to>
-      <percent>5</percent>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Goblin</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>10</percent>
     </weakness>
     <weakness>
       <to>Death</to>
-      <percent>-1</percent>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>10</percent>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Nothing</to>
@@ -2157,33 +2731,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dwarf Geomancer</name>
+    <name>Goblin Leader</name>
     <weakness>
-      <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>60</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
+      <to>Nothing</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -2209,39 +2767,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Dwarf Henchman</name>
+    <name>Golgordan</name>
     <weakness>
       <to>Fire</to>
-      <percent>10</percent>
+      <percent>-1</percent>
     </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>15</percent>
-    </strongness>
-    <strongness>
+    <weakness>
       <to>Ice</to>
-      <percent>15</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Dwarf Soldier</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>10</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Death</to>
     </immunity>
   </monster>
   <monster>
@@ -2293,1157 +2837,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Elf</name>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Dworc Venomsniper</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>15</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>13</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Earth Elemental</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>85</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisible</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Elf Scout</name>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Efreet</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>8</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>90</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>60</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Energy Overlord</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Eye Of The Seven</name>
-    <weakness>
-      <to>--</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>--</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Holy</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Elephant</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>25</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fernfang</name>
-    <weakness>
-      <to>None</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>40</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>70</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Elf Arcanist</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fire Devil</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>30</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Energy Elemental</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>15</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>55</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fire Overlord</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Enlightened of the Cult</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Flamingo</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fallen Mooh</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Foreman Kneebiter</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frost Dragon</name>
-    <weakness>
-      <to>None</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Ferumbras</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>90</percent>
-    </strongness>
-    <immunity>
-      <to>
-      </to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frost Giant</name>
-    <weakness>
-      <to>none</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>none</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fire Elemental</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frost Troll</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Flamethrower</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fury</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Gazer</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>11</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Fluffy</name>
-    <weakness>
-      <to>None</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Ghazbaran</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Freegoiz</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frost Dragon Hatchling</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Ghoul</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>30</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Drunkenness</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frost Giantess</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Gnorre Chyllson</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Frostfur</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Goblin Assassin</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Gargoyle</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>40</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Goblin Scavenger</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>General Murius</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Grandfather Tridian</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>35</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Ghost</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Physical</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Giant Spider</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Green Djinn</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>13</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>30</percent>
-    </strongness>
-    <strongness>
-      <to>Fire</to>
-      <percent>80</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Goblin</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Grim Reaper</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Goblin Leader</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Grorlam</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>30</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Hacker</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Golgordan</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Hand of Cursed Fate</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Gravelord Oshuran</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>80</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Hellfire Fighter</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Green Frog</name>
     <weakness>
       <to>None</to>
@@ -3475,49 +2868,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Hellhound</name>
+    <name>Elf</name>
     <weakness>
-      <to>Ice</to>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
-    <weakness>
+    <strongness>
       <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>High Templar Cobrass</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
       <percent>20</percent>
     </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -3537,17 +2898,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Husky</name>
+    <name>Elf Scout</name>
     <weakness>
       <to>Death</to>
-      <percent>5</percent>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
+      <to>Holy</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -3582,31 +2943,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Hydra</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Physical</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>30</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Hell Hole</name>
     <weakness>
       <to>
@@ -3621,6 +2957,26 @@
     <immunity>
       <to>
       </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Energy Overlord</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
@@ -3663,26 +3019,89 @@
     </immunity>
   </monster>
   <monster>
-    <name>Ice Overlord</name>
+    <name>Eye Of The Seven</name>
     <weakness>
-      <to>
-      </to>
+      <to>--</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Physical</to>
-      <percent>50</percent>
+      <to>--</to>
+      <percent>-1</percent>
     </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>50</percent>
-    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>
-      </to>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Holy</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Physical</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Fernfang</name>
+    <weakness>
+      <to>None</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>40</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>70</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Fire Devil</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>30</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
     </immunity>
   </monster>
   <monster>
@@ -3723,19 +3142,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Infernatil</name>
+    <name>Fire Overlord</name>
     <weakness>
-      <to>
-      </to>
+      <to>Ice</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Earth</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Fire</to>
     </immunity>
   </monster>
   <monster>
@@ -3753,28 +3170,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Jagged Earth Elemental</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Hyaena</name>
     <weakness>
       <to>Nothing</to>
@@ -3789,7 +3184,7 @@
     </immunity>
   </monster>
   <monster>
-    <name>Kitty</name>
+    <name>Flamingo</name>
     <weakness>
       <to>Nothing</to>
       <percent>-1</percent>
@@ -3799,31 +3194,7 @@
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Physical</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Holy</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -3859,20 +3230,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Koshei the Deathless</name>
+    <name>Foreman Kneebiter</name>
     <weakness>
-      <to>Holy</to>
-      <percent>20</percent>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -3908,27 +3284,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Larva</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Island Troll</name>
     <weakness>
       <to>Nothing</to>
@@ -3943,19 +3298,32 @@
     </immunity>
   </monster>
   <monster>
-    <name>Lavahole</name>
+    <name>Frost Dragon</name>
     <weakness>
-      <to>
-      </to>
+      <to>None</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Physical</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -3992,33 +3360,14 @@
     </immunity>
   </monster>
   <monster>
-    <name>Lich</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>80</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Kongra</name>
     <weakness>
       <to>Ice</to>
       <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
       <to>Fire</to>
@@ -4037,27 +3386,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Lizard Sentinel</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Kreebosh the Exile</name>
     <weakness>
       <to>Death</to>
@@ -4072,21 +3400,29 @@
     </immunity>
   </monster>
   <monster>
-    <name>Lizard Templar</name>
+    <name>Frost Troll</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
+      <to>Fire</to>
+      <percent>-1</percent>
     </strongness>
     <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -4106,27 +3442,33 @@
     </immunity>
   </monster>
   <monster>
-    <name>Lost Soul</name>
+    <name>Fury</name>
     <weakness>
-      <to>Holy</to>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
+      <to>Ice</to>
+      <percent>-1</percent>
     </strongness>
     <strongness>
-      <to>Ice</to>
-      <percent>50</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
     </immunity>
     <immunity>
       <to>Paralysis</to>
@@ -4152,6 +3494,27 @@
     </immunity>
   </monster>
   <monster>
+    <name>Gazer</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>11</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Lion</name>
     <weakness>
       <to>Ice</to>
@@ -4174,27 +3537,31 @@
     </immunity>
   </monster>
   <monster>
-    <name>Mad Technomancer</name>
+    <name>Ghazbaran</name>
     <weakness>
-      <to>Ice</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>5</percent>
-    </weakness>
     <strongness>
-      <to>None</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Invisibility</to>
     </immunity>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Invisibility</to>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
     </immunity>
   </monster>
   <monster>
@@ -4253,36 +3620,67 @@
     </immunity>
   </monster>
   <monster>
-    <name>Magic Pillar</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Mahrdis</name>
+    <name>Ghoul</name>
     <weakness>
       <to>Holy</to>
-      <percent>10</percent>
+      <percent>25</percent>
     </weakness>
     <strongness>
       <to>Energy</to>
+      <percent>30</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Drunkenness</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Gnorre Chyllson</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Holy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Death</to>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -4297,22 +3695,6 @@
     </strongness>
     <immunity>
       <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Man in the Cave</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -4333,6 +3715,28 @@
     </immunity>
   </monster>
   <monster>
+    <name>Goblin Assassin</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Magicthrower</name>
     <weakness>
       <to>
@@ -4349,31 +3753,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Massacre</name>
+    <name>Goblin Scavenger</name>
     <weakness>
-      <to>
-      </to>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -4390,82 +3788,22 @@
       <to>Earth</to>
       <percent>20</percent>
     </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
     <immunity>
       <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Massive Energy Elemental</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>70</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Massive Water Elemental</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>50</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
     <name>Marid</name>
     <weakness>
       <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
@@ -4480,26 +3818,15 @@
       <to>Energy</to>
       <percent>60</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Paralysis</to>
     </immunity>
-  </monster>
-  <monster>
-    <name>Merlkin</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>15</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -4538,19 +3865,21 @@
     </immunity>
   </monster>
   <monster>
-    <name>Minishabaal</name>
+    <name>Grandfather Tridian</name>
     <weakness>
       <to>
       </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Physical</to>
+      <percent>35</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
     </immunity>
   </monster>
   <monster>
@@ -4589,54 +3918,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Minotaur Archer</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Fire</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Minotaur Mage</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Mimic</name>
     <weakness>
       <to>
@@ -4650,6 +3931,39 @@
     </strongness>
     <immunity>
       <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Green Djinn</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>13</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>30</percent>
+    </strongness>
+    <strongness>
+      <to>Fire</to>
+      <percent>80</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -4675,36 +3989,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Morgaroth</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Minotaur Guard</name>
     <weakness>
       <to>Ice</to>
@@ -4727,7 +4011,76 @@
     </immunity>
   </monster>
   <monster>
-    <name>Mr Punish</name>
+    <name>Grim Reaper</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Grorlam</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>30</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Hacker</name>
     <weakness>
       <to>
       </to>
@@ -4738,6 +4091,39 @@
       </to>
       <percent>-1</percent>
     </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Hand of Cursed Fate</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
     <immunity>
       <to>Invisibility</to>
     </immunity>
@@ -4761,23 +4147,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Mummy</name>
+    <name>Hellfire Fighter</name>
     <weakness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
       <to>Ice</to>
       <percent>20</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
+      <to>Fire</to>
     </immunity>
     <immunity>
       <to>Paralysis</to>
@@ -4841,68 +4229,31 @@
     </immunity>
   </monster>
   <monster>
-    <name>Necromancer</name>
+    <name>Hellhound</name>
     <weakness>
-      <to>Physical</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Fire</to>
-      <percent>5</percent>
+      <to>Ice</to>
+      <percent>-1</percent>
     </weakness>
     <weakness>
       <to>Holy</to>
-      <percent>5</percent>
+      <percent>-1</percent>
     </weakness>
     <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
       <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Nightmare</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
       <to>Fire</to>
-      <percent>25</percent>
-    </strongness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </strongness>
+    </immunity>
     <immunity>
-      <to>Death</to>
+      <to>Paralysis</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
     </immunity>
   </monster>
   <monster>
@@ -4922,20 +4273,21 @@
     </immunity>
   </monster>
   <monster>
-    <name>Norgle Glacierbeard</name>
+    <name>High Templar Cobrass</name>
     <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
+      <to>Fire</to>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisible</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
+      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -4955,25 +4307,43 @@
     </immunity>
   </monster>
   <monster>
-    <name>Omruc</name>
+    <name>Nomad</name>
     <weakness>
-      <to>
-      </to>
+      <to>Physical</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Fire</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Husky</name>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -5011,50 +4381,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Orc Berserker</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>15</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Orc Rider</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Orc</name>
     <weakness>
       <to>Earth</to>
@@ -5074,6 +4400,34 @@
     </strongness>
     <immunity>
       <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Hydra</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Physical</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>30</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -5102,62 +4456,48 @@
     </immunity>
   </monster>
   <monster>
-    <name>Orc Spearman</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Orc Shaman</name>
     <weakness>
       <to>Earth</to>
       <percent>10</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Energy</to>
       <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
       <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
-    <name>Orc Warrior</name>
+    <name>Ice Overlord</name>
     <weakness>
-      <to>Earth</to>
-      <percent>10</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>30</percent>
+      <to>Physical</to>
+      <percent>50</percent>
     </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Orcus the Cruel</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>-1</percent>
+      <to>Holy</to>
+      <percent>50</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Invisible</to>
+      <to>
+      </to>
     </immunity>
   </monster>
   <monster>
@@ -5187,95 +4527,21 @@
     </immunity>
   </monster>
   <monster>
-    <name>Overcharged Energy Elemental</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Parrot</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Orshabaal</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Phantasm</name>
+    <name>Orchid Frog</name>
     <weakness>
       <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
+      <to>Ice</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
-      <to>Physical</to>
-    </immunity>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Invisible</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
-    <name>Pillar</name>
+    <name>Infernatil</name>
     <weakness>
       <to>
       </to>
@@ -5288,6 +4554,28 @@
     </strongness>
     <immunity>
       <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Jagged Earth Elemental</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -5305,29 +4593,41 @@
     </immunity>
   </monster>
   <monster>
-    <name>Pirate Corsair</name>
+    <name>Kitty</name>
     <weakness>
-      <to>Fire</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>10</percent>
+      <to>Nothing</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
+      <to>Physical</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Holy</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
       <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
     </immunity>
   </monster>
   <monster>
@@ -5345,29 +4645,27 @@
     </immunity>
   </monster>
   <monster>
-    <name>Pirate Ghost</name>
+    <name>Koshei the Deathless</name>
     <weakness>
       <to>Holy</to>
-      <percent>25</percent>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>Energy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Physical</to>
+      <to>Death</to>
     </immunity>
     <immunity>
       <to>Earth</to>
     </immunity>
     <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -5382,20 +4680,6 @@
     </strongness>
     <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Pirate Skeleton</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
     </immunity>
   </monster>
   <monster>
@@ -5433,22 +4717,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Plaguethrower</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Pirate Cutthroat</name>
     <weakness>
       <to>Fire</to>
@@ -5480,17 +4748,42 @@
     </immunity>
   </monster>
   <monster>
-    <name>Poison Spider</name>
+    <name>Lavahole</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Lich</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>80</percent>
+    </strongness>
+    <immunity>
       <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5520,34 +4813,42 @@
     </immunity>
   </monster>
   <monster>
-    <name>Priestess</name>
+    <name>Lizard Sentinel</name>
     <weakness>
-      <to>Holy</to>
+      <to>Fire</to>
       <percent>10</percent>
     </weakness>
-    <weakness>
-      <to>Physical</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>70</percent>
+      <to>Energy</to>
+      <percent>10</percent>
     </strongness>
     <strongness>
-      <to>Fire</to>
-      <percent>40</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
+      <to>Ice</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
       <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Lizard Templar</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -5556,12 +4857,20 @@
       <to>Energy</to>
       <percent>10</percent>
     </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Fire</to>
       <percent>-1</percent>
     </strongness>
     <strongness>
       <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
@@ -5570,25 +4879,38 @@
     <immunity>
       <to>Paralysis</to>
     </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Quara Constrictor</name>
+    <name>Lost Soul</name>
     <weakness>
-      <to>Earth</to>
-      <percent>25</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>None</to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>50</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Ice</to>
+      <to>Earth</to>
     </immunity>
     <immunity>
-      <to>Life</to>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5606,36 +4928,45 @@
     </immunity>
   </monster>
   <monster>
-    <name>Quara Hydromancer</name>
+    <name>Mad Technomancer</name>
     <weakness>
-      <to>Earth</to>
-      <percent>25</percent>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
       <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-    <immunity>
-      <to>Paralysis</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
     <name>Polar Bear</name>
     <weakness>
       <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>10</percent>
     </weakness>
     <strongness>
       <to>Fire</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
       <percent>20</percent>
     </strongness>
     <immunity>
@@ -5643,40 +4974,19 @@
     </immunity>
   </monster>
   <monster>
-    <name>Quara Mantassin</name>
+    <name>Magic Pillar</name>
     <weakness>
-      <to>Earth</to>
-      <percent>25</percent>
+      <to>
+      </to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Quara Pincher</name>
-    <weakness>
-      <to>Earth</to>
-      <percent>25</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>10</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Ice</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -5696,23 +5006,27 @@
     </immunity>
   </monster>
   <monster>
-    <name>Quara Predator</name>
+    <name>Mahrdis</name>
     <weakness>
-      <to>Earth</to>
-      <percent>25</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>Energy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Ice</to>
+      <to>Death</to>
     </immunity>
     <immunity>
-      <to>Invisible</to>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5740,17 +5054,19 @@
     </immunity>
   </monster>
   <monster>
-    <name>Rabbit</name>
+    <name>Man in the Cave</name>
     <weakness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -5777,42 +5093,31 @@
     </immunity>
   </monster>
   <monster>
-    <name>Rat</name>
+    <name>Massacre</name>
     <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Earth</to>
     </immunity>
-  </monster>
-  <monster>
-    <name>Rocky</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Fire</to>
     </immunity>
     <immunity>
       <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5833,6 +5138,40 @@
     </immunity>
     <immunity>
       <to>Life</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Massive Energy Elemental</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>70</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5859,39 +5198,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Rotworm</name>
-    <weakness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Rukor Zad</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Death</to>
-      <percent>5</percent>
-    </strongness>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Quara Predator Scout</name>
     <weakness>
       <to>Energy</to>
@@ -5915,31 +5221,67 @@
     </immunity>
   </monster>
   <monster>
-    <name>Scorpion</name>
+    <name>Massive Water Elemental</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Energy</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
+      <to>Holy</to>
+      <percent>-1</percent>
     </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
     <immunity>
       <to>Earth</to>
     </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Seagull</name>
+    <name>Rahemos</name>
     <weakness>
-      <to>Nothing</to>
+      <to>Holy</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -5961,17 +5303,45 @@
     </immunity>
   </monster>
   <monster>
-    <name>Sheep</name>
+    <name>Merlkin</name>
     <weakness>
+      <to>Ice</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
       <to>Fire</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Minishabaal</name>
+    <weakness>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -5991,25 +5361,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>Sibang</name>
+    <name>Minotaur Archer</name>
     <weakness>
       <to>Ice</to>
-      <percent>15</percent>
+      <percent>10</percent>
     </weakness>
     <weakness>
       <to>Death</to>
-      <percent>5</percent>
+      <percent>-1</percent>
     </weakness>
     <strongness>
       <to>Fire</to>
-      <percent>25</percent>
+      <percent>20</percent>
     </strongness>
     <strongness>
       <to>Holy</to>
       <percent>10</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -6029,41 +5399,29 @@
     </immunity>
   </monster>
   <monster>
-    <name>Sir Valorcrest</name>
+    <name>Minotaur Mage</name>
     <weakness>
-      <to>Fire</to>
-      <percent>-1</percent>
+      <to>Ice</to>
+      <percent>10</percent>
     </weakness>
     <weakness>
-      <to>Holy</to>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
+      <to>Earth</to>
+      <percent>20</percent>
     </strongness>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
     <immunity>
       <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Skeleton Warrior</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
     </immunity>
   </monster>
   <monster>
@@ -6087,38 +5445,38 @@
     <immunity>
       <to>Earth</to>
     </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Slick Water Elemental</name>
+    <name>Morgaroth</name>
     <weakness>
-      <to>
-      </to>
+      <to>Ice</to>
       <percent>-1</percent>
     </weakness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
     <strongness>
       <to>Physical</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Ice</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Slime</name>
-    <weakness>
       <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
+    </immunity>
     <immunity>
       <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
     </immunity>
   </monster>
   <monster>
@@ -6150,26 +5508,13 @@
     </immunity>
   </monster>
   <monster>
-    <name>Smuggler Baron Silvertoe</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>
-      </to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Serpent Spawn</name>
     <weakness>
       <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
       <percent>10</percent>
     </weakness>
     <strongness>
@@ -6181,6 +5526,25 @@
     </immunity>
     <immunity>
       <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Mr Punish</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -6200,20 +5564,29 @@
     </immunity>
   </monster>
   <monster>
-    <name>Son of Verminor</name>
+    <name>Mummy</name>
     <weakness>
-      <to>None</to>
-      <percent>-1</percent>
+      <to>Holy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>-1</percent>
+      <to>Ice</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
       <to>Earth</to>
     </immunity>
     <immunity>
-      <to>Paralisis</to>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -6231,17 +5604,36 @@
     </immunity>
   </monster>
   <monster>
-    <name>Spider</name>
+    <name>Necromancer</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>5</percent>
+    </weakness>
     <weakness>
       <to>Fire</to>
-      <percent>-1</percent>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>5</percent>
     </weakness>
     <strongness>
-      <to>None</to>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -6262,23 +5654,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Spirit of Fire</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Skunk</name>
     <weakness>
       <to>Nothing</to>
@@ -6293,26 +5668,35 @@
     </immunity>
   </monster>
   <monster>
-    <name>Spit Nettle</name>
+    <name>Nightmare</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Holy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Ice</to>
+      <to>Fire</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
       <percent>20</percent>
     </strongness>
-    <immunity>
+    <strongness>
       <to>Earth</to>
-    </immunity>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
     <immunity>
-      <to>Energy</to>
+      <to>Death</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
     </immunity>
     <immunity>
-      <to>Paralysis</to>
+      <to>Life</to>
     </immunity>
   </monster>
   <monster>
@@ -6320,6 +5704,10 @@
     <weakness>
       <to>Fire</to>
       <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
       <to>None</to>
@@ -6331,24 +5719,6 @@
     <immunity>
       <to>Earth</to>
     </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Stalker</name>
-    <weakness>
-      <to>Physical</to>
-      <percent>20</percent>
-    </weakness>
-    <weakness>
-      <to>Holy</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>Death</to>
-      <percent>-1</percent>
-    </strongness>
     <immunity>
       <to>Invisibility</to>
     </immunity>
@@ -6372,35 +5742,30 @@
     </immunity>
   </monster>
   <monster>
-    <name>Stonecracker</name>
+    <name>Norgle Glacierbeard</name>
     <weakness>
-      <to>
-      </to>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Energy</to>
-      <percent>15</percent>
-    </strongness>
-    <strongness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </strongness>
-    <strongness>
-      <to>Physical</to>
+      <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>Invisible</to>
     </immunity>
     <immunity>
-      <to>Paralysis</to>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
     <name>Snake</name>
     <weakness>
       <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
       <percent>10</percent>
     </weakness>
     <strongness>
@@ -6412,13 +5777,43 @@
     </immunity>
   </monster>
   <monster>
+    <name>Omruc</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Spectre</name>
     <weakness>
       <to>Fire</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
@@ -6430,16 +5825,27 @@
     <immunity>
       <to>Paralisis</to>
     </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Swamp Troll</name>
+    <name>Orc Berserker</name>
     <weakness>
-      <to>Fire</to>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>15</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
       <to>Nothing</to>
@@ -6460,37 +5866,47 @@
     </immunity>
   </monster>
   <monster>
-    <name>Terror Bird</name>
-    <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </weakness>
+    <name>Orc Rider</name>
     <weakness>
       <to>Earth</to>
       <percent>10</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Energy</to>
       <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
     </strongness>
     <immunity>
       <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
-    <name>The Abomination</name>
+    <name>Orc Spearman</name>
     <weakness>
-      <to>
-      </to>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>20</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -6511,26 +5927,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>The Count</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Physical</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Squirrel</name>
     <weakness>
       <to>Nothing</to>
@@ -6545,39 +5941,25 @@
     </immunity>
   </monster>
   <monster>
-    <name>The Evil Eye</name>
+    <name>Orc Warrior</name>
     <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
       <to>Earth</to>
-    </immunity>
-    <immunity>
-      <to>Invisible</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>The Hag</name>
+      <percent>10</percent>
+    </weakness>
     <weakness>
-      <to>None</to>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
+      <to>Energy</to>
       <percent>30</percent>
     </strongness>
     <strongness>
-      <to>Energy</to>
+      <to>Holy</to>
       <percent>10</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -6598,8 +5980,15 @@
       <to>Energy</to>
       <percent>15</percent>
     </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralisis</to>
     </immunity>
   </monster>
   <monster>
@@ -6620,21 +6009,25 @@
     <immunity>
       <to>Energy</to>
     </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
   </monster>
   <monster>
-    <name>The Halloween Hare</name>
+    <name>Orcus the Cruel</name>
     <weakness>
-      <to>
-      </to>
+      <to>Earth</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Energy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -6643,48 +6036,16 @@
       <to>Fire</to>
       <percent>15</percent>
     </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </weakness>
     <strongness>
       <to>Energy</to>
       <percent>10</percent>
     </strongness>
     <immunity>
       <to>Earth</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>The Horned Fox</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>The Masked Marauder</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -6702,24 +6063,24 @@
     </immunity>
   </monster>
   <monster>
-    <name>The Big Bad One</name>
+    <name>Overcharged Energy Elemental</name>
     <weakness>
-      <to>
-      </to>
+      <to>Earth</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Physical</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>
-      </to>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
-    <name>The Old Whopper</name>
+    <name>The Big Bad One</name>
     <weakness>
       <to>
       </to>
@@ -6745,22 +6106,26 @@
       <to>Fire</to>
       <percent>40</percent>
     </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
-    <name>The Pit Lord</name>
+    <name>Parrot</name>
     <weakness>
-      <to>Ice</to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
+      <to>Nothing</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisible</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -6780,19 +6145,41 @@
     </immunity>
   </monster>
   <monster>
-    <name>The Ruthless Herald</name>
+    <name>Phantasm</name>
     <weakness>
-      <to>
-      </to>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Everything</to>
+      <to>Physical</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
     </immunity>
   </monster>
   <monster>
@@ -6810,17 +6197,19 @@
     </immunity>
   </monster>
   <monster>
-    <name>Thief</name>
+    <name>Pillar</name>
     <weakness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>
+      </to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Invisibility</to>
+      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -6840,37 +6229,55 @@
     </immunity>
   </monster>
   <monster>
-    <name>Thul</name>
+    <name>Pirate Corsair</name>
     <weakness>
-      <to>Energy</to>
+      <to>Fire</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Pirate Ghost</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
       <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Ice</to>
+      <to>Physical</to>
     </immunity>
     <immunity>
       <to>Earth</to>
     </immunity>
     <immunity>
-      <to>Life</to>
+      <to>Death</to>
     </immunity>
-  </monster>
-  <monster>
-    <name>Tiger</name>
-    <weakness>
-      <to>Ice</to>
-      <percent>10</percent>
-    </weakness>
-    <strongness>
-      <to>Nothing</to>
-      <percent>-1</percent>
-    </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
     </immunity>
   </monster>
   <monster>
@@ -6890,35 +6297,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Toad</name>
+    <name>Pirate Skeleton</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Holy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
-    </strongness>
-    <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Troll</name>
-    <weakness>
-      <to>Earth</to>
       <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>Energy</to>
-      <percent>20</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Death</to>
     </immunity>
   </monster>
   <monster>
@@ -6931,42 +6320,19 @@
       <to>Energy</to>
       <percent>50</percent>
     </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Undead Dragon</name>
-    <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
-    </weakness>
     <strongness>
-      <to>Physical</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
-    <immunity>
-      <to>Earth</to>
-    </immunity>
-    <immunity>
       <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Paralysis</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
-    <name>Undead Minion</name>
+    <name>Plaguethrower</name>
     <weakness>
       <to>
       </to>
@@ -6979,6 +6345,40 @@
     </strongness>
     <immunity>
       <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Old Widow</name>
+    <weakness>
+      <to>None</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Poison Spider</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
     </immunity>
   </monster>
   <monster>
@@ -7028,6 +6428,37 @@
     </immunity>
   </monster>
   <monster>
+    <name>Priestess</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Physical</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>70</percent>
+    </strongness>
+    <strongness>
+      <to>Fire</to>
+      <percent>40</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Thornback Tortoise</name>
     <weakness>
       <to>Fire</to>
@@ -7050,23 +6481,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Ushuriel</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>
-      </to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Tibia Bug</name>
     <weakness>
       <to>
@@ -7083,24 +6497,24 @@
     </immunity>
   </monster>
   <monster>
-    <name>Vampire</name>
+    <name>Quara Constrictor</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Earth</to>
+      <percent>-1</percent>
     </weakness>
     <weakness>
-      <to>Holy</to>
+      <to>Energy</to>
       <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Physical</to>
-      <percent>35</percent>
+      <to>None</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Death</to>
+      <to>Ice</to>
     </immunity>
     <immunity>
       <to>Life</to>
@@ -7135,22 +6549,6 @@
     </immunity>
   </monster>
   <monster>
-    <name>Verminor</name>
-    <weakness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
-    </immunity>
-  </monster>
-  <monster>
     <name>Tortoise</name>
     <weakness>
       <to>Fire</to>
@@ -7173,33 +6571,33 @@
     </immunity>
   </monster>
   <monster>
-    <name>Warlock</name>
+    <name>Quara Hydromancer</name>
     <weakness>
-      <to>Physical</to>
+      <to>Earth</to>
       <percent>-1</percent>
     </weakness>
     <weakness>
-      <to>Holy</to>
-      <percent>-1</percent>
+      <to>Energy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>90</percent>
+      <to>None</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
       <to>Fire</to>
     </immunity>
     <immunity>
-      <to>Energy</to>
+      <to>Ice</to>
     </immunity>
     <immunity>
-      <to>Ice</to>
+      <to>Life</to>
     </immunity>
     <immunity>
       <to>Paralysis</to>
     </immunity>
     <immunity>
-      <to>Invisibility</to>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
@@ -7208,8 +6606,16 @@
       <to>Earth</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
@@ -7217,17 +6623,27 @@
     </immunity>
   </monster>
   <monster>
-    <name>Wasp</name>
+    <name>Quara Mantassin</name>
     <weakness>
-      <to>Fire</to>
-      <percent>10</percent>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>25</percent>
     </weakness>
     <strongness>
-      <to>Nothing</to>
+      <to>None</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Earth</to>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
     </immunity>
   </monster>
   <monster>
@@ -7262,39 +6678,57 @@
     </immunity>
   </monster>
   <monster>
-    <name>Webster</name>
+    <name>Quara Pincher</name>
     <weakness>
-      <to>Energy</to>
+      <to>Earth</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>25</percent>
+    </weakness>
     <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
+      <to>Physical</to>
+      <percent>10</percent>
     </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
     <immunity>
       <to>Ice</to>
     </immunity>
     <immunity>
-      <to>Invisibility</to>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
     </immunity>
   </monster>
   <monster>
-    <name>Winter Wolf</name>
+    <name>Quara Predator</name>
     <weakness>
-      <to>Energy</to>
+      <to>Earth</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>25</percent>
+    </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>10</percent>
-    </strongness>
-    <strongness>
-      <to>Ice</to>
-      <percent>20</percent>
+      <to>None</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Nothing</to>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
     </immunity>
   </monster>
   <monster>
@@ -7315,9 +6749,49 @@
     </immunity>
   </monster>
   <monster>
+    <name>Rabbit</name>
+    <weakness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Rat</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
     <name>Valkyrie</name>
     <weakness>
       <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
@@ -7328,20 +6802,27 @@
       <to>Ice</to>
       <percent>10</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
-    <name>Witch</name>
+    <name>Rocky</name>
     <weakness>
-      <to>Physical</to>
-      <percent>10</percent>
+      <to>Fire</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Earth</to>
-      <percent>20</percent>
+      <to>None</to>
+      <percent>-1</percent>
     </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
     <immunity>
       <to>Energy</to>
     </immunity>
@@ -7376,34 +6857,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Wyrm</name>
+    <name>Rotworm</name>
     <weakness>
-      <to>Ice</to>
-      <percent>5</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>5</percent>
+      <to>Nothing</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>20</percent>
-    </strongness>
-    <strongness>
-      <to>Earth</to>
-      <percent>75</percent>
+      <to>Nothing</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Energy</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
-    </immunity>
-    <immunity>
-      <to>Invisibility</to>
-    </immunity>
-    <immunity>
-      <to>Life</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -7412,12 +6876,39 @@
       <to>Ice</to>
       <percent>10</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Earth</to>
       <percent>20</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
     <immunity>
       <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Rukor Zad</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
+      <percent>5</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -7458,6 +6949,10 @@
     </strongness>
     <strongness>
       <to>Holy</to>
+      <percent>50</percent>
+    </strongness>
+    <strongness>
+      <to>Death</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
@@ -7472,22 +6967,40 @@
     <immunity>
       <to>Paralysis</to>
     </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Xenia</name>
+    <name>Scorpion</name>
     <weakness>
-      <to>
-      </to>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Seagull</name>
+    <weakness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>
-      </to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -7496,26 +7009,16 @@
       <to>Physical</to>
       <percent>5</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
     <strongness>
       <to>Holy</to>
       <percent>10</percent>
     </strongness>
     <immunity>
       <to>Nothing</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Yakchal</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>5</percent>
-    </weakness>
-    <strongness>
-      <to>None</to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>None</to>
     </immunity>
   </monster>
   <monster>
@@ -7547,25 +7050,17 @@
     </immunity>
   </monster>
   <monster>
-    <name>Young Sea Serpent</name>
+    <name>Sheep</name>
     <weakness>
-      <to>Physical</to>
-      <percent>20</percent>
-    </weakness>
-    <weakness>
-      <to>Death</to>
-      <percent>15</percent>
-    </weakness>
-    <weakness>
-      <to>Energy</to>
-      <percent>10</percent>
+      <to>Fire</to>
+      <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>Fire</to>
-      <percent>30</percent>
+      <to>Nothing</to>
+      <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>Ice</to>
+      <to>Nothing</to>
     </immunity>
   </monster>
   <monster>
@@ -7574,12 +7069,42 @@
       <to>Ice</to>
       <percent>-1</percent>
     </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
     <strongness>
       <to>Earth</to>
       <percent>-1</percent>
     </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
     <immunity>
       <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Sibang</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>25</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>10</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
@@ -7592,33 +7117,52 @@
       <to>Energy</to>
       <percent>20</percent>
     </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>10</percent>
+    </strongness>
     <immunity>
       <to>Invisible</to>
     </immunity>
     <immunity>
       <to>Drunkenness</to>
     </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
   </monster>
   <monster>
-    <name>Zevelon Duskbringer</name>
+    <name>Sir Valorcrest</name>
     <weakness>
-      <to>
-      </to>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
       <percent>-1</percent>
     </weakness>
     <strongness>
-      <to>
-      </to>
+      <to>Physical</to>
       <percent>-1</percent>
     </strongness>
     <immunity>
-      <to>None</to>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
   <monster>
     <name>Yaga the Crone</name>
     <weakness>
       <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
       <percent>5</percent>
     </weakness>
     <strongness>
@@ -7627,32 +7171,6 @@
     </strongness>
     <immunity>
       <to>Energy</to>
-    </immunity>
-  </monster>
-  <monster>
-    <name>Zugurosh</name>
-    <weakness>
-      <to>Energy</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Earth</to>
-      <percent>-1</percent>
-    </weakness>
-    <weakness>
-      <to>Ice</to>
-      <percent>-1</percent>
-    </weakness>
-    <strongness>
-      <to>
-      </to>
-      <percent>-1</percent>
-    </strongness>
-    <immunity>
-      <to>Death</to>
-    </immunity>
-    <immunity>
-      <to>Paralyze</to>
     </immunity>
     <immunity>
       <to>Invisibility</to>
@@ -7671,6 +7189,35 @@
     </strongness>
     <immunity>
       <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Skeleton Warrior</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Slick Water Elemental</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Ice</to>
     </immunity>
   </monster>
   <monster>
@@ -7715,6 +7262,817 @@
     </strongness>
     <immunity>
       <to>Unknown</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Slime</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Smuggler Baron Silvertoe</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Son of Verminor</name>
+    <weakness>
+      <to>None</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Paralisis</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Spider</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Spirit of Fire</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Spit Nettle</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Stalker</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Stonecracker</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>15</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Swamp Troll</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Terror Bird</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Earth</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Abomination</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Count</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Evil Eye</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Hag</name>
+    <weakness>
+      <to>None</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>30</percent>
+    </strongness>
+    <strongness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Halloween Hare</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Horned Fox</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Masked Marauder</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Old Whopper</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Pit Lord</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisible</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>The Ruthless Herald</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Everything</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Thief</name>
+    <weakness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Thul</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Tiger</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Toad</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Troll</name>
+    <weakness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Energy</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Undead Dragon</name>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Undead Minion</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Ushuriel</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Vampire</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>25</percent>
+    </weakness>
+    <strongness>
+      <to>Physical</to>
+      <percent>35</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Verminor</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Warlock</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>90</percent>
+    </strongness>
+    <immunity>
+      <to>Fire</to>
+    </immunity>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Paralysis</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Wasp</name>
+    <weakness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Nothing</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Earth</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Webster</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Winter Wolf</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>10</percent>
+    </strongness>
+    <strongness>
+      <to>Ice</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Holy</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Nothing</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Witch</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>10</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Earth</to>
+      <percent>20</percent>
+    </strongness>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Wyrm</name>
+    <weakness>
+      <to>Ice</to>
+      <percent>5</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>20</percent>
+    </strongness>
+    <strongness>
+      <to>Earth</to>
+      <percent>75</percent>
+    </strongness>
+    <immunity>
+      <to>Energy</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
+    </immunity>
+    <immunity>
+      <to>Life</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Xenia</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>
+      </to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Yakchal</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>5</percent>
+    </weakness>
+    <strongness>
+      <to>None</to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Young Sea Serpent</name>
+    <weakness>
+      <to>Physical</to>
+      <percent>20</percent>
+    </weakness>
+    <weakness>
+      <to>Death</to>
+      <percent>15</percent>
+    </weakness>
+    <weakness>
+      <to>Energy</to>
+      <percent>10</percent>
+    </weakness>
+    <strongness>
+      <to>Fire</to>
+      <percent>30</percent>
+    </strongness>
+    <immunity>
+      <to>Ice</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Zevelon Duskbringer</name>
+    <weakness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>None</to>
+    </immunity>
+  </monster>
+  <monster>
+    <name>Zugurosh</name>
+    <weakness>
+      <to>Energy</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Earth</to>
+      <percent>-1</percent>
+    </weakness>
+    <weakness>
+      <to>Ice</to>
+      <percent>-1</percent>
+    </weakness>
+    <strongness>
+      <to>
+      </to>
+      <percent>-1</percent>
+    </strongness>
+    <immunity>
+      <to>Death</to>
+    </immunity>
+    <immunity>
+      <to>Paralyze</to>
+    </immunity>
+    <immunity>
+      <to>Invisibility</to>
     </immunity>
   </monster>
 </monsters>
