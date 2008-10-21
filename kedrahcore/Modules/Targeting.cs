@@ -68,39 +68,96 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        public string GetBestMageSpell(Monster monster)
+        {
+            return GetBestMageSpell(monster, "exori flam", "exori vis", "exori frigo", "exori tera", "exori mort");
+        }
+
+        public string GetBestMageSpell(Monster monster, string fireSpell, string energySpell, string iceSpell, string earthSpell, string deathSpell)
+        {
+            string element = GetBestElementIn(monster, new string[] { "fire", "energy", "ice", "earth", "death" });
+            switch (element)
+            {
+                case "fire":
+                    return fireSpell;
+                case "energy":
+                    return energySpell;
+                case "ice":
+                    return iceSpell;
+                case "earth":
+                    return earthSpell;
+                case "death":
+                    return deathSpell;
+            }
+            return deathSpell;
+        }
+
+        public string GetBestPaladinSpell(Monster monster)
+        {
+            return GetBestPaladinSpell(monster, "exori con", "exori san");
+        }
+
+        public string GetBestPaladinSpell(Monster monster, string physicalSpell, string holySpell)
+        {
+            string element = GetBestElementIn(monster, new string[] { "physical", "holy" });
+            switch (element)
+            {
+                case "physical":
+                    return physicalSpell;
+                case "holy":
+                    return holySpell;
+            }
+            return holySpell;
+        }
+
         public string GetBestElementIn(Monster monster, string[] elements)
         {
             tElement current, best = new tElement("", 0);
+            List<string> eles = elements.ToList();
+            List<string> eleenum = elements.ToList();
 
-            foreach (string element in elements)
+            try
             {
-                current = new tElement();
-                current = monster.Immunities.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
-                if (current.To != null)
-                    continue;
-                current = monster.Strongnesses.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
-                if (current.To != null && best.Percent <= 0)
-                    if (current.Percent >= best.Percent || best.To == "")
+                foreach (string element in eleenum)
+                {
+                    current = new tElement();
+                    current = monster.Immunities.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
+                    if (current.To != null)
                     {
-                        best.Percent = -Math.Abs(current.Percent);
-                        best.To = current.To;
+                        eles.Remove(element);
                         continue;
                     }
-                    else
-                        continue;
-                current = monster.Weaknesses.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
-                if (current.To != null)
-                    if (current.Percent >= best.Percent)
+                    current = monster.Strongnesses.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
+                    if (current.To != null && best.Percent <= 0)
                     {
-                        best.Percent = Math.Abs(current.Percent);
-                        best.To = current.To;
+                        if (current.Percent >= best.Percent || best.To == "")
+                        {
+                            best.Percent = -Math.Abs(current.Percent);
+                            best.To = current.To;
+                        }
+                        eles.Remove(element);
                         continue;
                     }
-                    else
+                    current = monster.Weaknesses.Find(delegate(tElement m) { return m.To.ToLower() == element.ToLower(); });
+                    if (current.To != null)
+                    {
+                        if (current.Percent >= best.Percent)
+                        {
+                            best.Percent = Math.Abs(current.Percent);
+                            best.To = current.To;
+                        }
+                        eles.Remove(element);
                         continue;
+                    }
+                }
             }
+            catch
+            { }
 
-            return best.To;
+            if ((best.To == "" || best.Percent < 0) && eles.Count > 0)
+                best.To = eles[new Random().Next(0, eles.Count)].ToLower();
+
+            return best.To.ToLower();
         }
 
         public Monster FindMonster(string name)
