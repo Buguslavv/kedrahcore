@@ -923,6 +923,11 @@ namespace Kedrah.Modules
             #endregion
         }
 
+        public string GetLastMessage()
+        {
+            return kedrah.Client.ReadString(Tibia.Addresses.Client.LastMSGText);
+        }
+
         /// <summary>
         /// Disables the General module.
         /// </summary>
