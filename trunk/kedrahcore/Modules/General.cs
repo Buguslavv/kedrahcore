@@ -78,7 +78,7 @@ namespace Kedrah.Modules
             get
             {
                 Tibia.Objects.Item f;
-                f = new Tibia.Objects.Item();
+                f = new Tibia.Objects.Item(kedrah.Client, 0);
                 f.Id = 1066;
                 return !f.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath);
             }
@@ -86,7 +86,7 @@ namespace Kedrah.Modules
             {
                 List<uint> Falls = new List<uint>();
                 Tibia.Objects.Item f;
-                f = new Tibia.Objects.Item();
+                f = new Tibia.Objects.Item(kedrah.Client, 0);
 
                 Falls.Add(293);
                 Falls.Add(475);
@@ -381,7 +381,7 @@ namespace Kedrah.Modules
             get
             {
                 Tibia.Objects.Item f;
-                f = new Tibia.Objects.Item();
+                f = new Tibia.Objects.Item(kedrah.Client, 0);
                 f.Id = 2118;
                 return  f.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath);
             }
@@ -392,7 +392,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Tibia.Objects.Item f;
-                    f = new Tibia.Objects.Item(kedrah.Client, false);
+                    f = new Tibia.Objects.Item(kedrah.Client, 0);
 
                     for (i = 2118; i <= 2127; i++)
                         Fields.Add(i);
@@ -410,7 +410,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Tibia.Objects.Item f;
-                    f = new Tibia.Objects.Item(kedrah.Client, false);
+                    f = new Tibia.Objects.Item(kedrah.Client, 0);
 
                     for (i = 2118; i <= 2127; i++)
                         Fields.Add(i);

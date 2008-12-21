@@ -63,6 +63,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="uxForm.resx">
       <DependentUpon>uxForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

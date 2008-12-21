@@ -27,7 +27,6 @@ namespace Kedrah
         HModules modules;
 
         // Timers
-        Tibia.Util.Timer control;
 
         bool wasLoggedIn = false;
 
@@ -44,21 +43,33 @@ namespace Kedrah
             modules = new HModules(this);
 
             /* Instantiate timers */
-            control = new Tibia.Util.Timer(100, false);
-            control.OnExecute += new Tibia.Util.Timer.TimerExecution(control_OnExecute);
 
             /* Enable Keyboard Hook */
             Tibia.KeyboardHook.Enable();
-            //Tibia.MouseHook.Enable();
+            Tibia.MouseHook.Enable();
 
             foreach (Tibia.Objects.Client c in Tibia.Objects.Client.GetClients())
             {
                 kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + c.Process.Id.ToString());
-                if (kedrahMutex.WaitOne(0, false))
+                if (!c.LoggedIn && kedrahMutex.WaitOne(0, false))
                 {
                     client = c;
                     break;
                 }
+            }
+            if (client == null)
+            {
+                string path = System.IO.Path.Combine(Environment.GetEnvironmentVariable(Environment.SpecialFolder.ProgramFiles.ToString()), @"Tibia\Tibia.exe");
+                if (System.IO.File.Exists(path))
+                    client = Tibia.Objects.Client.OpenMC(path, "");
+                kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + client.Process.Id.ToString());
+            }
+            if (client != null)
+            {
+                // Using proxy for now while hook is not done
+                client.StartProxy();
+                client.Proxy.PlayerLogin += new Action(OnLogin);
+                client.Proxy.PlayerLogout += new Action(OnLogout);
             }
         }
 
@@ -166,38 +177,29 @@ namespace Kedrah
 
         #region Core Functions
 
-        public void Play()
+        void OnLogin()
         {
-            control.Start();
+            /* Start objects */
+            map = new Tibia.Objects.Map(client);
+            screen = new Tibia.Objects.Screen(client);
+            battleList = new Tibia.Objects.BattleList(client);
+            inventory = new Tibia.Objects.Inventory(client);
+            console = new Tibia.Objects.Console(client);
+            System.Threading.Thread.Sleep(300);
+            player = client.GetPlayer();
+            Modules.Enable();
+        }
+
+        void OnLogout()
+        {
+            Modules.Disable();
+            if (client.WorldOnlyView)
+                client.WorldOnlyView = false;
         }
 
         #endregion
 
         #region Timers
-
-        void control_OnExecute()
-        {
-            if (client != null && client.LoggedIn && !wasLoggedIn)
-            {
-                wasLoggedIn = true;
-                /* Start objects */
-                map = new Tibia.Objects.Map(client);
-                screen = new Tibia.Objects.Screen(client);
-                battleList = new Tibia.Objects.BattleList(client);
-                inventory = new Tibia.Objects.Inventory(client);
-                console = new Tibia.Objects.Console(client);
-                System.Threading.Thread.Sleep(300);
-                player = client.GetPlayer();
-                Modules.Enable();
-            }
-            else if (client != null && !client.LoggedIn)
-            {
-                wasLoggedIn = false;
-                Modules.Disable();
-                if (client.WorldOnlyView)
-                    client.WorldOnlyView = false;
-            }
-        }
 
         #endregion
     }

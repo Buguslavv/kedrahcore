@@ -41,11 +41,11 @@ namespace Smart_Mini_Tool
         {
             if (db.pdone == -1)
                 uxEnable.Text = "Starting download";
-            else if (db.pdone == 380)
+            else if (db.pdone == 500)
                 uxEnable.Text = "Completed!";
             else
-                uxEnable.Text = (db.pdone * 100 / 380).ToString() + "%";
-            progressBar1.Value = (db.pdone * 100 / 380);
+                uxEnable.Text = (db.pdone * 100 / 500).ToString() + "%";
+            progressBar1.Value = (db.pdone * 100 / 500);
         }
     }
 }

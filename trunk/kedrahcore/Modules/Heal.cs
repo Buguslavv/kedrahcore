@@ -34,7 +34,7 @@ namespace Kedrah.Modules
             #region Timers
             
             // Main timer
-            timers.Add("healer", new Tibia.Util.Timer(250, false));
+            timers.Add("healer", new Tibia.Util.Timer(100, false));
             timers["healer"].OnExecute += new Tibia.Util.Timer.TimerExecution(healer_OnExecute);
 
             #endregion
@@ -226,7 +226,7 @@ namespace Kedrah.Modules
                     if (kedrah.Player.HPBar <= rune.Percent)
                         spellNext = kedrah.Inventory.UseItemOnSelf(rune.Item) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 }
-                foreach (SpellPercent spell in spellLife)
+                foreach (SpellPercent spell in reverseSpellLife)
                 {
                     if (kedrah.Player.HPBar <= spell.Percent && kedrah.Player.Mana >= spell.Mana)
                         spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
@@ -234,7 +234,7 @@ namespace Kedrah.Modules
                 if (poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= spellPoisonMana)
                     spellNext = kedrah.Console.Spell(spellPoison) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 if (paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
-                    foreach (SpellPercent spell in reverseSpellLife)
+                    foreach (SpellPercent spell in spellLife)
                     {
                         if (kedrah.Player.HPBar >= spell.Percent && kedrah.Player.Mana >= spell.Mana)
                             spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
@@ -272,10 +272,10 @@ namespace Kedrah.Modules
 
     public struct ItemPercent
     {
-        public int Percent;
+        public uint Percent;
         public Tibia.Objects.Item Item;
 
-        public ItemPercent(int percent, Tibia.Objects.Item item)
+        public ItemPercent(uint percent, Tibia.Objects.Item item)
         {
             this.Percent = percent;
             this.Item = item;
