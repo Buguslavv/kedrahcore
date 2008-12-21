@@ -43,7 +43,8 @@ namespace Kedrah.Modules
 
             #region Timers
 
-
+            timers.Add("avoidFront", new Tibia.Util.Timer(2500, false));
+            timers["avoidFront"].OnExecute += new Tibia.Util.Timer.TimerExecution(avoidFront_OnExecute);
 
             #endregion
         }
@@ -51,6 +52,24 @@ namespace Kedrah.Modules
         #endregion
 
         #region Get/Set Objects
+
+        public bool AvoidFront
+        {
+            get
+            {
+                if (timers["avoidFront"].State == Tibia.Util.TimerState.Running)
+                    return true;
+                else
+                    return false;
+            }
+            set
+            {
+                if (value)
+                    PlayTimer("avoidFront");
+                else
+                    PauseTimer("avoidFront");
+            }
+        }
 
         public List<Monster> Monsters
         {
@@ -67,6 +86,132 @@ namespace Kedrah.Modules
         #endregion
 
         #region Module Functions
+
+        public bool WalkDiagonal()
+        {
+            Tibia.Objects.Creature creature = kedrah.BattleList.GetCreature(kedrah.Player.Target_ID);
+            Monster monster = FindMonster(creature.Name);
+
+            if (!monster.HasDiagonalAttack())
+                return false;
+
+            List<Tibia.Objects.Location> locations = new List<Tibia.Objects.Location>();
+            List<Tibia.Objects.Location> affectedSqms = new List<Tibia.Objects.Location>();
+            Tibia.Objects.Location location = new Tibia.Objects.Location();
+            Tibia.Objects.Item item = new Tibia.Objects.Item(kedrah.Client, 0);
+
+            if (monster.Beam)
+            {
+                int sumX = 0, sumY = 0;
+                if (creature.Direction == Tibia.Constants.TurnDirection.Down)
+                    sumY = 1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Up)
+                    sumY = -1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Right)
+                    sumX = 1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Left)
+                    sumX = -1;
+                for (int i = 1; i < 9; i++)
+                    affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + (sumY * i), creature.Z));
+            }
+            else
+            {
+                int sumX = 0, sumY = 0;
+                if (creature.Direction == Tibia.Constants.TurnDirection.Down)
+                    sumY = 1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Up)
+                    sumY = -1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Right)
+                    sumX = 1;
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Left)
+                    sumX = -1;
+                for (int i = 1; i < 9; i++)
+                    affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + (sumY * i), creature.Z));
+
+                if (creature.Direction == Tibia.Constants.TurnDirection.Down || creature.Direction == Tibia.Constants.TurnDirection.Up)
+                {
+                    sumX = 1;
+                    for (int i = 3; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + sumX, creature.Y + (sumY * i), creature.Z));
+                    sumX = -1;
+                    for (int i = 3; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + sumX, creature.Y + (sumY * i), creature.Z));
+                    sumX = 2;
+                    for (int i = 6; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + sumX, creature.Y + (sumY * i), creature.Z));
+                    sumX = -2;
+                    for (int i = 6; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + sumX, creature.Y + (sumY * i), creature.Z));
+                }
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Right || creature.Direction == Tibia.Constants.TurnDirection.Left)
+                {
+                    sumY = 1;
+                    for (int i = 3; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + sumY, creature.Z));
+                    sumY = -1;
+                    for (int i = 3; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + sumY, creature.Z));
+                    sumY = 2;
+                    for (int i = 6; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + sumY, creature.Z));
+                    sumY = -2;
+                    for (int i = 6; i < 9; i++)
+                        affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + sumY, creature.Z));
+                }
+            }
+
+            bool canWalk = false;
+
+            if (affectedSqms.Contains(kedrah.Player.Location))
+            {
+                if (creature.Y == kedrah.Player.Y)
+                {
+                    location = kedrah.Player.Location;
+                    location.Y -= 1;
+                    locations.Add(location);
+                    location = kedrah.Player.Location;
+                    location.Y += 1;
+                    locations.Add(location);
+                }
+                else if (creature.X == kedrah.Player.X)
+                {
+                    location = kedrah.Player.Location;
+                    location.X -= 1;
+                    locations.Add(location);
+                    location = kedrah.Player.Location;
+                    location.X += 1;
+                    locations.Add(location);
+                }
+                else if (creature.Direction == Tibia.Constants.TurnDirection.Down || creature.Direction == Tibia.Constants.TurnDirection.Up)
+                {
+                    //if (creature.Y > kedrah.Player.Y)
+                }
+            }
+
+            List<Tibia.Objects.Location> sLocations = new List<Tibia.Objects.Location>(locations.Count);
+            int count = locations.Count;
+            Random random = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                int j = random.Next(locations.Count);
+                sLocations.Add(locations[j]);
+                locations.Remove(locations[j]);
+            }
+
+            foreach (Tibia.Objects.Location l in sLocations)
+            {
+                location = l;
+                item.Id = kedrah.Map.CreateMapSquare(location).Tile.Id;
+                canWalk = !item.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) && !item.GetFlag(Tibia.Addresses.DatItem.Flag.Floorchange) && kedrah.BattleList.GetCreaturesOnLoc(location).Count == 0;
+                if (canWalk)
+                    break;
+            }
+            if (canWalk)
+                kedrah.Player.GoTo = location;
+            else
+                return false;
+            return true;
+        }
 
         public string GetBestMageSpell(Monster monster)
         {
@@ -132,7 +277,7 @@ namespace Kedrah.Modules
                     {
                         if (current.Percent >= best.Percent || best.To == "")
                         {
-                            best.Percent = -Math.Abs(current.Percent);
+                            best.Percent = -Math.Abs(current.Percent - 2);
                             best.To = current.To;
                         }
                         eles.Remove(element);
@@ -143,7 +288,7 @@ namespace Kedrah.Modules
                     {
                         if (current.Percent >= best.Percent)
                         {
-                            best.Percent = Math.Abs(current.Percent);
+                            best.Percent = Math.Abs(current.Percent + 2);
                             best.To = current.To;
                         }
                         eles.Remove(element);
@@ -154,8 +299,10 @@ namespace Kedrah.Modules
             catch
             { }
 
-            if ((best.To == "" || best.Percent < 0) && eles.Count > 0)
-                best.To = eles[new Random().Next(0, eles.Count)].ToLower();
+            if (best.Percent < 0 && eles.Count == 0)
+                best.To = "";
+            else
+                best.To = eles.Last();
 
             return best.To.ToLower();
         }
@@ -206,8 +353,17 @@ namespace Kedrah.Modules
                             nav3.MoveToFirstChild();
                             currentElement.To = nav3.Value;
                             nav3.MoveToNext();
-                            int.TryParse(nav3.Value, out currentElement.Percent);
-                            current.AddAttribute(nav2.Name, currentElement);
+                            if (nav2.Name == "beam")
+                                current.Beam = (nav2.Value == "yes") ? true : false;
+                            else if (nav2.Name == "wave")
+                            {
+                                current.Wave = (nav2.Value == "yes") ? true : false;
+                            }
+                            else
+                            {
+                                int.TryParse(nav3.Value, out currentElement.Percent);
+                                current.AddAttribute(nav2.Name, currentElement);
+                            }
                             
                         }
                     }
@@ -222,7 +378,16 @@ namespace Kedrah.Modules
 
         #region Timers
 
-
+        void avoidFront_OnExecute()
+        {
+            try
+            {
+                if (!WalkDiagonal())
+                    avoidFront_OnExecute();
+            }
+            catch
+            { }
+        }
 
         #endregion
 
@@ -234,6 +399,9 @@ namespace Kedrah.Modules
             public List<tElement> Weaknesses;
             public List<tElement> Strongnesses;
             public List<tElement> Immunities;
+
+            public bool Wave;
+            public bool Beam;
 
             public string Name;
 
@@ -248,6 +416,11 @@ namespace Kedrah.Modules
                 Strongnesses = new List<tElement>();
                 Immunities = new List<tElement>();
                 Name = name;
+            }
+
+            public bool HasDiagonalAttack()
+            {
+                return Wave || Beam;
             }
 
             public void AddAttribute(string where, tElement attr)

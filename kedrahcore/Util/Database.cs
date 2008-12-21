@@ -88,6 +88,7 @@ namespace KedrahCore.Util
                 string weaknesses = Regex.Match(html, @"Weak Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string strongnesses = Regex.Match(html, @"Strong Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string immunities = Regex.Match(html, @"Immune To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
+                string abilities = Regex.Match(html, @"Abilities:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
 
                 XmlDocumentFragment docFrag = doc.CreateDocumentFragment();
 
@@ -149,6 +150,16 @@ namespace KedrahCore.Util
                     }
                 }
                 catch { }
+
+                if (abilities.ToLower().Contains("wave"))
+                    fragment += "<wave>yes</wave>";
+                else
+                    fragment += "<wave>no</wave>";
+
+                if (abilities.ToLower().Contains("beam"))
+                    fragment += "<beam>yes</beam>";
+                else
+                    fragment += "<beam>no</beam>";
 
                 fragment = fragment.Replace("&nbsp;", "").Replace("&", "").Replace(";", "").Replace(".", "");
                 docFrag.InnerXml = fragment + "</monster>";
