@@ -19,7 +19,6 @@ namespace Smart_Mini_Tool
             kedrah = new Kedrah.Core();
             if (kedrah.Client == null)
                 Environment.Exit(0);
-            kedrah.Play();
             InitializeComponent();
         }
 
@@ -28,7 +27,6 @@ namespace Smart_Mini_Tool
             uxEnable.Enabled = false;
 
             timer1.Start();
-
             db.CreaturesToFile();
         }
 

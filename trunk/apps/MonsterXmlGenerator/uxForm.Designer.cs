@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.uxEnable = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // uxEnable
@@ -44,16 +44,16 @@
             this.uxEnable.UseVisualStyleBackColor = true;
             this.uxEnable.Click += new System.EventHandler(this.uxEnable_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(12, 59);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(260, 23);
             this.progressBar1.TabIndex = 9;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // uxForm
             // 
@@ -76,8 +76,8 @@
         #endregion
 
         private System.Windows.Forms.Button uxEnable;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

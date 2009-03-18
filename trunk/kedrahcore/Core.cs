@@ -28,8 +28,6 @@ namespace Kedrah
 
         // Timers
 
-        bool wasLoggedIn = false;
-
         #endregion
 
         #region Constructor
@@ -67,9 +65,9 @@ namespace Kedrah
             if (client != null)
             {
                 // Using proxy for now while hook is not done
-                client.StartProxy();
-                client.Proxy.PlayerLogin += new Action(OnLogin);
-                client.Proxy.PlayerLogout += new Action(OnLogout);
+                client.IO.StartProxy();
+                client.IO.Proxy.PlayerLogin += OnLogin;
+                client.IO.Proxy.PlayerLogout += OnLogout;
             }
         }
 
@@ -177,7 +175,7 @@ namespace Kedrah
 
         #region Core Functions
 
-        void OnLogin()
+        void OnLogin(Object sender, EventArgs e)
         {
             /* Start objects */
             map = new Tibia.Objects.Map(client);
@@ -190,11 +188,11 @@ namespace Kedrah
             Modules.Enable();
         }
 
-        void OnLogout()
+        void OnLogout(Object sender, EventArgs e)
         {
             Modules.Disable();
-            if (client.WorldOnlyView)
-                client.WorldOnlyView = false;
+            if (client.Window.WorldOnlyView)
+                client.Window.WorldOnlyView = false;
         }
 
         #endregion

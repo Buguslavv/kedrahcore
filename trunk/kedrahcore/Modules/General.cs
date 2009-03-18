@@ -34,37 +34,37 @@ namespace Kedrah.Modules
             
             // Food eater
             timers.Add("eatFood", new Tibia.Util.Timer(5000, false));
-            timers["eatFood"].OnExecute += new Tibia.Util.Timer.TimerExecution(eatFood_OnExecute);
+            timers["eatFood"].Execute += new Tibia.Util.Timer.TimerExecution(eatFood_OnExecute);
 
             // Make light
             timers.Add("makeLight", new Tibia.Util.Timer(1000, false));
-            timers["makeLight"].OnExecute += new Tibia.Util.Timer.TimerExecution(makeLight_OnExecute);
+            timers["makeLight"].Execute += new Tibia.Util.Timer.TimerExecution(makeLight_OnExecute);
 
             // Reveal fish spots
             timers.Add("revealFishSpots", new Tibia.Util.Timer(1000, false));
-            timers["revealFishSpots"].OnExecute += new Tibia.Util.Timer.TimerExecution(revealFishSpots_OnExecute);
+            timers["revealFishSpots"].Execute += new Tibia.Util.Timer.TimerExecution(revealFishSpots_OnExecute);
 
             // Replace trees
             timers.Add("replaceTrees", new Tibia.Util.Timer(1000, false));
-            timers["replaceTrees"].OnExecute += new Tibia.Util.Timer.TimerExecution(replaceTrees_OnExecute);
+            timers["replaceTrees"].Execute += new Tibia.Util.Timer.TimerExecution(replaceTrees_OnExecute);
 
             // Framerate control
             timers.Add("framerateControl", new Tibia.Util.Timer(50, false));
-            timers["framerateControl"].OnExecute += new Tibia.Util.Timer.TimerExecution(framerateControl_OnExecute);
+            timers["framerateControl"].Execute += new Tibia.Util.Timer.TimerExecution(framerateControl_OnExecute);
 
             // Stack items
             timers.Add("stackItems", new Tibia.Util.Timer(50, false));
-            timers["stackItems"].OnExecute += new Tibia.Util.Timer.TimerExecution(stackItems_OnExecute);
+            timers["stackItems"].Execute += new Tibia.Util.Timer.TimerExecution(stackItems_OnExecute);
 
             // Click Reuse
             timers.Add("clickReuse", new Tibia.Util.Timer(1, false));
-            timers["clickReuse"].OnExecute += new Tibia.Util.Timer.TimerExecution(clickReuse_OnExecute);
+            timers["clickReuse"].Execute += new Tibia.Util.Timer.TimerExecution(clickReuse_OnExecute);
             timers.Add("clickReuseControl", new Tibia.Util.Timer(500, false));
-            timers["clickReuseControl"].OnExecute += new Tibia.Util.Timer.TimerExecution(clickReuseControl_OnExecute);
+            timers["clickReuseControl"].Execute += new Tibia.Util.Timer.TimerExecution(clickReuseControl_OnExecute);
 
             // World only view
             timers.Add("worldOnlyView", new Tibia.Util.Timer(300, false));
-            timers["worldOnlyView"].OnExecute += new Tibia.Util.Timer.TimerExecution(worldOnlyView_OnExecute);
+            timers["worldOnlyView"].Execute += new Tibia.Util.Timer.TimerExecution(worldOnlyView_OnExecute);
 
             #endregion
         }
@@ -128,26 +128,26 @@ namespace Kedrah.Modules
             {
                 if (value)
                 {
-                    if (Tibia.MouseHook.MouseDown == null)
+                    if (Tibia.MouseHook.ButtonDown == null)
                     {
-                        Tibia.MouseHook.MouseDown = null;
-                        Tibia.MouseHook.MouseDown += new Tibia.MouseHook.MouseHookHandler(delegate(System.Windows.Forms.MouseButtons buttons)
+                        Tibia.MouseHook.ButtonDown = null;
+                        Tibia.MouseHook.ButtonDown += new Tibia.MouseHook.MouseButtonHandler(delegate(System.Windows.Forms.MouseButtons buttons)
                         {
-                            if (kedrah.Client.IsActive && buttons == System.Windows.Forms.MouseButtons.Right)
+                            if (kedrah.Client.Window.IsActive && buttons == System.Windows.Forms.MouseButtons.Right)
                             {
                                 reusing = false;
                                 kedrah.Client.ActionState = Tibia.Constants.ActionState.None;
                             }
                             return true;
                         });
-                        Tibia.MouseHook.MouseDown += null;
+                        Tibia.MouseHook.ButtonDown += null;
                     }
                     PlayTimer("clickReuse");
                     PlayTimer("clickReuseControl");
                 }
                 else
                 {
-                    Tibia.MouseHook.MouseDown = null;
+                    Tibia.MouseHook.ButtonDown = null;
                     PauseTimer("clickReuse");
                     PauseTimer("clickReuseControl");
                 }
@@ -277,7 +277,10 @@ namespace Kedrah.Modules
             set
             {
                 showNames = value;
-                kedrah.Map.ShowNames(value);
+                if (value)
+                    kedrah.Map.NameSpyOn();
+                else
+                    kedrah.Map.NameSpyOff();
             }
         }
 
@@ -294,32 +297,32 @@ namespace Kedrah.Modules
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Up, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
                         if (holdingBoostKey)
-                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Up);
+                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Up);
                         holdingBoostKey = true;
                         return true;
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Left, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
                         if (holdingBoostKey)
-                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Left);
+                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Left);
                         holdingBoostKey = true;
                         return true;
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Down, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
                         if (holdingBoostKey)
-                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Down);
+                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Down);
                         holdingBoostKey = true;
                         return true;
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Right, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
                         if (holdingBoostKey)
-                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Right);
+                            if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Right);
                         holdingBoostKey = true;
                         return true;
                     }));
@@ -438,7 +441,7 @@ namespace Kedrah.Modules
                 {
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Enter, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
                         {
                             talking = true;
                             return false;
@@ -455,11 +458,11 @@ namespace Kedrah.Modules
 
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.W, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{UP}");
                             if (!Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt && speedBoost && holdingBoostKey)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Up);
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Up);
                             holdingBoostKey = true;
                             return false;
                         }
@@ -470,11 +473,11 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.A, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{LEFT}");
                             if (!Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt && speedBoost && holdingBoostKey)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Left);
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Left);
                             holdingBoostKey = true;
                             return false;
                         }
@@ -485,11 +488,11 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.S, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{DOWN}");
                             if (!Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt && speedBoost && holdingBoostKey)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Down);
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Down);
                             holdingBoostKey = true;
                             return false;
                         }
@@ -500,11 +503,11 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{RIGHT}");
                             if (!Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt && speedBoost && holdingBoostKey)
-                                kedrah.Player.Walk(Tibia.Constants.WalkDirection.Right);
+                                kedrah.Player.Walk(Tibia.Constants.Direction.Right);
                             holdingBoostKey = true;
                             return false;
                         }
@@ -537,7 +540,7 @@ namespace Kedrah.Modules
 
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Q, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{HOME}");
                             return false;
@@ -549,7 +552,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.E, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{PGUP}");
                             return false;
@@ -561,7 +564,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Z, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{END}");
                             return false;
@@ -573,7 +576,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.X, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{PGDN}");
                             return false;
@@ -590,7 +593,7 @@ namespace Kedrah.Modules
 
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D1, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F1}");
                             return false;
@@ -602,7 +605,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D2, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F2}");
                             return false;
@@ -614,7 +617,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D3, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F3}");
                             return false;
@@ -626,7 +629,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D4, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F4}");
                             return false;
@@ -638,7 +641,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D5, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F5}");
                             return false;
@@ -650,7 +653,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D6, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F6}");
                             return false;
@@ -662,7 +665,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D7, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F7}");
                             return false;
@@ -674,7 +677,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D8, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F8}");
                             return false;
@@ -686,7 +689,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D9, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F9}");
                             return false;
@@ -698,7 +701,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.D0, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F10}");
                             return false;
@@ -710,7 +713,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.OemMinus, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F11}");
                             return false;
@@ -722,7 +725,7 @@ namespace Kedrah.Modules
                     }));
                     Tibia.KeyboardHook.Add(System.Windows.Forms.Keys.Oemplus, new Tibia.KeyboardHook.KeyPressed(delegate()
                     {
-                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive)
+                        if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive)
                         {
                             System.Windows.Forms.SendKeys.Send("{F12}");
                             return false;
@@ -741,7 +744,7 @@ namespace Kedrah.Modules
                         {
                             Tibia.KeyboardHook.Add(key, new Tibia.KeyboardHook.KeyPressed(delegate()
                             {
-                                if (kedrah.Client.LoggedIn && !talking && kedrah.Client.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
+                                if (kedrah.Client.LoggedIn && !talking && kedrah.Client.Window.IsActive && !Tibia.KeyboardHook.Control && !Tibia.KeyboardHook.Alt)
                                 {
                                     return false;
                                 }
@@ -769,7 +772,7 @@ namespace Kedrah.Modules
         {
             get
             {
-                return kedrah.Client.WorldOnlyView;
+                return kedrah.Client.Window.WorldOnlyView;
             }
             set
             {
@@ -777,7 +780,7 @@ namespace Kedrah.Modules
                     PlayTimer("worldOnlyView");
                 else
                     PauseTimer("worldOnlyView");
-                kedrah.Client.WorldOnlyView = value;
+                kedrah.Client.Window.WorldOnlyView = value;
             }
         }
 
@@ -842,17 +845,23 @@ namespace Kedrah.Modules
 
             Tibia.KeyboardHook.Add(spyPlusKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
-                if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
+                if (kedrah.Client.Window.IsActive && kedrah.Client.LoggedIn)
                 {
-                    kedrah.Map.ShowNames(true);
-                    kedrah.Map.FullLight(true);
-                    if (kedrah.Map.ShowFloor(floorOfSpy + 1, true))
+                    kedrah.Map.NameSpyOn();
+                    kedrah.Map.FullLightOn();
+                    if (kedrah.Map.LevelSpyOn(floorOfSpy + 1))
                         floorOfSpy++;
                     if (floorOfSpy == 0)
                     {
-                        kedrah.Map.ShowFloor(0, false);
-                        kedrah.Map.ShowNames(showNames);
-                        kedrah.Map.FullLight(fullLight);
+                        kedrah.Map.LevelSpyOff();
+                        if (showNames)
+                            kedrah.Map.NameSpyOn();
+                        else
+                            kedrah.Map.NameSpyOff();
+                        if (fullLight)
+                            kedrah.Map.FullLightOn();
+                        else
+                            kedrah.Map.FullLightOff();
                     }
                     if (floorOfSpy > 0) sign = "+"; else sign = "";
                     kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
@@ -863,24 +872,30 @@ namespace Kedrah.Modules
 
             Tibia.KeyboardHook.Add(spyMinusKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
-                if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
+                if (kedrah.Client.Window.IsActive && kedrah.Client.LoggedIn)
                 {
                     if (floorOfSpy == 0 && kedrah.Player.Z == 7)
                     {
-                        kedrah.Map.ShowFloor(0, true);
+                        kedrah.Map.LevelSpyOff();
                         kedrah.Client.Statusbar = prefix + prefixCenter;
                     }
                     else
                     {
-                        kedrah.Map.ShowNames(true);
-                        kedrah.Map.FullLight(true);
-                        if (kedrah.Map.ShowFloor(floorOfSpy - 1, true))
+                        kedrah.Map.NameSpyOn();
+                        kedrah.Map.FullLightOn();
+                        if (kedrah.Map.LevelSpyOn(floorOfSpy - 1))
                             floorOfSpy--;
                         if (floorOfSpy == 0)
                         {
-                            kedrah.Map.ShowFloor(0, false);
-                            kedrah.Map.ShowNames(showNames);
-                            kedrah.Map.FullLight(fullLight);
+                            kedrah.Map.LevelSpyOff();
+                            if (showNames)
+                                kedrah.Map.NameSpyOn();
+                            else
+                                kedrah.Map.NameSpyOff();
+                            if (fullLight)
+                                kedrah.Map.FullLightOn();
+                            else
+                                kedrah.Map.FullLightOff();
                         }
                         if (floorOfSpy > 0) sign = "+"; else sign = "";
                         kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
@@ -892,12 +907,12 @@ namespace Kedrah.Modules
 
             Tibia.KeyboardHook.Add(spyCenterKey, new Tibia.KeyboardHook.KeyPressed(delegate()
             {
-                if (kedrah.Client.IsActive && kedrah.Client.LoggedIn)
+                if (kedrah.Client.Window.IsActive && kedrah.Client.LoggedIn)
                 {
-                    kedrah.Map.ShowFloor(0, true);
+                    kedrah.Map.LevelSpyOff();
                     kedrah.Client.Statusbar = prefix + prefixCenter;
-                    kedrah.Map.ShowNames(true);
-                    kedrah.Map.FullLight(true);
+                    kedrah.Map.NameSpyOn();
+                    kedrah.Map.FullLightOn();
                     return false;
                 }
                 return true;
@@ -925,7 +940,7 @@ namespace Kedrah.Modules
 
         public string GetLastMessage()
         {
-            return kedrah.Client.ReadString(Tibia.Addresses.Client.LastMSGText);
+            return kedrah.Client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText);
         }
 
         /// <summary>
@@ -942,7 +957,10 @@ namespace Kedrah.Modules
 
         void eatFood_OnExecute()
         {
-            kedrah.Client.EatFood();
+            Tibia.Objects.Item food = kedrah.Inventory.GetItems().FirstOrDefault(i => i.IsInList(Tibia.Constants.ItemLists.Foods.Values));
+
+            if (food != null)
+                food.Use();
         }
 
         void makeLight_OnExecute()
@@ -953,10 +971,7 @@ namespace Kedrah.Modules
 
         void revealFishSpots_OnExecute()
         {
-            foreach (uint t in Tibia.Constants.Tiles.Water.GetNoFishIds())
-            {
-                kedrah.Map.ReplaceTile(t, 622,true);
-            }
+            
         }
 
         void replaceTrees_OnExecute()
@@ -966,20 +981,17 @@ namespace Kedrah.Modules
 
         void framerateControl_OnExecute()
         {
-            if (kedrah.Client.IsMinimized)
-                kedrah.Client.FPSLimit = 1.5;
-            else if (kedrah.Client.IsActive)
-                kedrah.Client.FPSLimit = 30;
+            if (kedrah.Client.Window.IsMinimized)
+                kedrah.Client.Window.FPSLimit = 1.5;
+            else if (kedrah.Client.Window.IsActive)
+                kedrah.Client.Window.FPSLimit = 30;
             else
-                kedrah.Client.FPSLimit = 15;
+                kedrah.Client.Window.FPSLimit = 15;
         }
 
         void stackItems_OnExecute()
         {
-            foreach (Tibia.Objects.Container c in kedrah.Inventory.GetContainers())
-                foreach (Tibia.Objects.Item i in c.GetItems())
-                    if (i.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable))
-                        kedrah.Inventory.Stack(i.Id);
+            
         }
 
         void clickReuse_OnExecute()
@@ -996,7 +1008,7 @@ namespace Kedrah.Modules
 
         void worldOnlyView_OnExecute()
         {
-            kedrah.Client.WorldOnlyView = true;
+            kedrah.Client.Window.WorldOnlyView = true;
         }
 
         #endregion

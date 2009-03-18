@@ -121,16 +121,6 @@
             this.uxMana.TabIndex = 7;
             this.uxMana.Text = "20";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 9);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Ativar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(169, 18);
@@ -138,11 +128,6 @@
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 10;
             this.textBox1.Text = "Demon";
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 2;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // uxForm
             // 
@@ -166,7 +151,6 @@
             this.Name = "uxForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Smart Mini Tool";
-            this.Load += new System.EventHandler(this.uxForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
