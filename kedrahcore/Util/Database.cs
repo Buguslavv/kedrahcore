@@ -85,8 +85,8 @@ namespace KedrahCore.Util
                 XmlNode currNode;
                 html = Regex.Replace(html, "<(.|\n)*?>", "");
                 html = html.Replace("&nbsp;", "").Replace("&", "").Replace(";", "").Replace("and", ",");
-                string weaknesses = Regex.Match(html, @"Weak Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
-                string strongnesses = Regex.Match(html, @"Strong Against:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
+                string weaknesses = Regex.Match(html, @"Weak To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
+                string strongnesses = Regex.Match(html, @"Strong To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string immunities = Regex.Match(html, @"Immune To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string abilities = Regex.Match(html, @"Abilities:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
 
@@ -96,6 +96,7 @@ namespace KedrahCore.Util
                 {
                     foreach (string weakness in weaknesses.Split(','))
                     {
+
                         string weak = weakness.Trim();
                         int percent;
                         try
@@ -107,10 +108,12 @@ namespace KedrahCore.Util
                             percent = -1;
                         }
 
-                        fragment += "<weakness>" +
-                            "<to>" + weak.Split(' ')[0].Replace("?","") + "</to>" +
-                            "<percent>" + percent + "</percent>" +
-                            "</weakness>";
+                        weak = weak.Split(' ')[0].Replace("?", "");
+                        if (weak.Length > 0)
+                            fragment += "<weakness>" +
+                                "<to>" + weak + "</to>" +
+                                "<percent>" + percent + "</percent>" +
+                                "</weakness>";
                     }
                 }
                 catch { }
@@ -130,10 +133,12 @@ namespace KedrahCore.Util
                             percent = -1;
                         }
 
-                        fragment += "<strongness>" +
-                            "<to>" + strong.Split(' ')[0].Replace("?", "") + "</to>" +
-                            "<percent>" + percent + "</percent>" +
-                            "</strongness>";
+                        strong = strong.Split(' ')[0].Replace("?", "");
+                        if (strong.Length > 1)
+                            fragment += "<strongness>" +
+                                "<to>" + strong + "</to>" +
+                                "<percent>" + percent + "</percent>" +
+                                "</strongness>";
                     }
                 }
                 catch { }
@@ -144,9 +149,11 @@ namespace KedrahCore.Util
                     {
                         string immune = immunitie.Trim();
 
-                        fragment += "<immunity>" +
-                            "<to>" + immune.Split(' ')[0].Replace("?", "") + "</to>" +
-                            "</immunity>";
+                        immune = immune.Split(' ')[0].Replace("?", "");
+                        if (immune.Length > 0)
+                            fragment += "<immunity>" +
+                                "<to>" + immune + "</to>" +
+                                "</immunity>";
                     }
                 }
                 catch { }

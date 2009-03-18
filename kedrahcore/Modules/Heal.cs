@@ -35,7 +35,7 @@ namespace Kedrah.Modules
             
             // Main timer
             timers.Add("healer", new Tibia.Util.Timer(100, false));
-            timers["healer"].OnExecute += new Tibia.Util.Timer.TimerExecution(healer_OnExecute);
+            timers["healer"].Execute += new Tibia.Util.Timer.TimerExecution(healer_OnExecute);
 
             #endregion
         }
@@ -210,13 +210,13 @@ namespace Kedrah.Modules
                 foreach (ItemPercent pot in potionLife)
                 {
                     if (kedrah.Player.HPBar <= pot.Percent)
-                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
+                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item.Id) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
                 }
                 foreach (ItemPercent pot in potionMana)
                 {
                     cP = kedrah.Player.Mana * 100 / kedrah.Player.Mana_Max;
                     if (cP <= pot.Percent)
-                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
+                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item.Id) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
                 }
             }
             if (spellNext.CompareTo(DateTime.Now) <= 0)
@@ -224,21 +224,17 @@ namespace Kedrah.Modules
                 foreach (ItemPercent rune in runeLife)
                 {
                     if (kedrah.Player.HPBar <= rune.Percent)
-                        spellNext = kedrah.Inventory.UseItemOnSelf(rune.Item) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
+                        spellNext = kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 }
                 foreach (SpellPercent spell in reverseSpellLife)
                 {
                     if (kedrah.Player.HPBar <= spell.Percent && kedrah.Player.Mana >= spell.Mana)
-                        spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
+                        spellNext = kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 }
                 if (poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= spellPoisonMana)
-                    spellNext = kedrah.Console.Spell(spellPoison) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
+                    spellNext = kedrah.Console.Say(spellPoison) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
                 if (paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
-                    foreach (SpellPercent spell in spellLife)
-                    {
-                        if (kedrah.Player.HPBar >= spell.Percent && kedrah.Player.Mana >= spell.Mana)
-                            spellNext = kedrah.Console.Spell(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
-                    }
+                    spellNext = kedrah.Console.Say(reverseSpellLife[0].Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
             }
         }
 

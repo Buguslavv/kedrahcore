@@ -44,7 +44,7 @@ namespace Kedrah.Modules
             #region Timers
 
             timers.Add("avoidFront", new Tibia.Util.Timer(2500, false));
-            timers["avoidFront"].OnExecute += new Tibia.Util.Timer.TimerExecution(avoidFront_OnExecute);
+            timers["avoidFront"].Execute += new Tibia.Util.Timer.TimerExecution(avoidFront_OnExecute);
 
             #endregion
         }
@@ -89,7 +89,10 @@ namespace Kedrah.Modules
 
         public bool WalkDiagonal()
         {
-            Tibia.Objects.Creature creature = kedrah.BattleList.GetCreature(kedrah.Player.Target_ID);
+            Tibia.Objects.Creature creature = kedrah.BattleList.GetCreatures().ToList().Find(delegate(Tibia.Objects.Creature c)
+            {
+                return c.Id == kedrah.Player.Target_ID;
+            });
             Monster monster = FindMonster(creature.Name);
 
             if (!monster.HasDiagonalAttack())
@@ -103,13 +106,13 @@ namespace Kedrah.Modules
             if (monster.Beam)
             {
                 int sumX = 0, sumY = 0;
-                if (creature.Direction == Tibia.Constants.TurnDirection.Down)
+                if (creature.Direction == Tibia.Constants.Direction.Down)
                     sumY = 1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Up)
+                else if (creature.Direction == Tibia.Constants.Direction.Up)
                     sumY = -1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Right)
+                else if (creature.Direction == Tibia.Constants.Direction.Right)
                     sumX = 1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Left)
+                else if (creature.Direction == Tibia.Constants.Direction.Left)
                     sumX = -1;
                 for (int i = 1; i < 9; i++)
                     affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + (sumY * i), creature.Z));
@@ -117,18 +120,18 @@ namespace Kedrah.Modules
             else
             {
                 int sumX = 0, sumY = 0;
-                if (creature.Direction == Tibia.Constants.TurnDirection.Down)
+                if (creature.Direction == Tibia.Constants.Direction.Down)
                     sumY = 1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Up)
+                else if (creature.Direction == Tibia.Constants.Direction.Up)
                     sumY = -1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Right)
+                else if (creature.Direction == Tibia.Constants.Direction.Right)
                     sumX = 1;
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Left)
+                else if (creature.Direction == Tibia.Constants.Direction.Left)
                     sumX = -1;
                 for (int i = 1; i < 9; i++)
                     affectedSqms.Add(new Tibia.Objects.Location(creature.X + (sumX * i), creature.Y + (sumY * i), creature.Z));
 
-                if (creature.Direction == Tibia.Constants.TurnDirection.Down || creature.Direction == Tibia.Constants.TurnDirection.Up)
+                if (creature.Direction == Tibia.Constants.Direction.Down || creature.Direction == Tibia.Constants.Direction.Up)
                 {
                     sumX = 1;
                     for (int i = 3; i < 9; i++)
@@ -143,7 +146,7 @@ namespace Kedrah.Modules
                     for (int i = 6; i < 9; i++)
                         affectedSqms.Add(new Tibia.Objects.Location(creature.X + sumX, creature.Y + (sumY * i), creature.Z));
                 }
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Right || creature.Direction == Tibia.Constants.TurnDirection.Left)
+                else if (creature.Direction == Tibia.Constants.Direction.Right || creature.Direction == Tibia.Constants.Direction.Left)
                 {
                     sumY = 1;
                     for (int i = 3; i < 9; i++)
@@ -182,7 +185,7 @@ namespace Kedrah.Modules
                     location.X += 1;
                     locations.Add(location);
                 }
-                else if (creature.Direction == Tibia.Constants.TurnDirection.Down || creature.Direction == Tibia.Constants.TurnDirection.Up)
+                else if (creature.Direction == Tibia.Constants.Direction.Down || creature.Direction == Tibia.Constants.Direction.Up)
                 {
                     //if (creature.Y > kedrah.Player.Y)
                 }
@@ -200,9 +203,15 @@ namespace Kedrah.Modules
 
             foreach (Tibia.Objects.Location l in sLocations)
             {
+                int countMonsters;
+                countMonsters = kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c)
+                {
+                    return c.Location.Equals(l);
+                }).Count;
+
                 location = l;
-                item.Id = kedrah.Map.CreateMapSquare(location).Tile.Id;
-                canWalk = !item.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) && !item.GetFlag(Tibia.Addresses.DatItem.Flag.Floorchange) && kedrah.BattleList.GetCreaturesOnLoc(location).Count == 0;
+                item.Id = kedrah.Map.GetTile(location).Ground.Id;
+                canWalk = !item.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) && !item.GetFlag(Tibia.Addresses.DatItem.Flag.Floorchange) && countMonsters == 0;
                 if (canWalk)
                     break;
             }
