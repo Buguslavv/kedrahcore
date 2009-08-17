@@ -11,14 +11,10 @@ namespace Smart_Mini_Tool
 {
     public partial class uxForm : Form
     {
-        Kedrah.Core kedrah;
-        KedrahCore.Util.Database db = new KedrahCore.Util.Database();
+        Kedrah.Util.Database db = new Kedrah.Util.Database();
 
         public uxForm()
         {
-            kedrah = new Kedrah.Core();
-            if (kedrah.Client == null)
-                Environment.Exit(0);
             InitializeComponent();
         }
 

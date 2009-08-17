@@ -7,21 +7,17 @@ using System.Web;
 using System.Linq;
 using System.Xml;
 
-namespace KedrahCore.Util
-{
-    public class Database
-    {
+namespace Kedrah.Util {
+    public class Database {
         public static string filename = "Monsters.xml";
         public int pdone = -1;
 
-        public void CreaturesToFile()
-        {
+        public void CreaturesToFile() {
             string url = "http://tibia.wikia.com/index.php?title=List_of_Creatures&printable=yes";
 
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
 
-            request.BeginGetResponse(delegate(IAsyncResult ar)
-            {
+            request.BeginGetResponse(delegate(IAsyncResult ar) {
                 string html = Tibia.Website.GetHTML(ar);
 
                 pdone = 0;
@@ -30,10 +26,8 @@ namespace KedrahCore.Util
             }, request);
         }
 
-        public void CreaturesToFile(string html)
-        {
-            try
-            {
+        public void CreaturesToFile(string html) {
+            try {
                 string url;
                 XmlDocument doc = new XmlDocument();
                 XmlTextWriter xmlWriter = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
@@ -53,31 +47,26 @@ namespace KedrahCore.Util
                 foreach (Match nameMatched in namesMatched)
                     names.Add(nameMatched.Groups[1].Value);
 
-                foreach (string name in names)
-                {
+                foreach (string name in names) {
                     url = "http://tibia.wikia.com/index.php?title=" + name + "&printable=yes";
                     request = (HttpWebRequest)HttpWebRequest.Create(url);
                     string fragment = "<monster>" +
                     "<name>" + name.Split('%')[0].Trim().Replace('_', ' ').Trim() + "</name>";
 
-                    request.BeginGetResponse(delegate(IAsyncResult ar)
-                    {
+                    request.BeginGetResponse(delegate(IAsyncResult ar) {
                         string nhtml = Tibia.Website.GetHTML(ar);
 
                         CreaturesToFile(nhtml, fragment);
                     }, request);
                 }
             }
-            catch
-            {
-                
+            catch {
+
             }
         }
 
-        public void CreaturesToFile(string html, string fragment)
-        {
-            try
-            {
+        public void CreaturesToFile(string html, string fragment) {
+            try {
                 XmlTextReader reader = new XmlTextReader(filename);
                 XmlDocument doc = new XmlDocument();
                 doc.Load(reader);
@@ -88,23 +77,20 @@ namespace KedrahCore.Util
                 string weaknesses = Regex.Match(html, @"Weak To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string strongnesses = Regex.Match(html, @"Strong To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string immunities = Regex.Match(html, @"Immune To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
+                string neutral = Regex.Match(html, @"Neutral To:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
                 string abilities = Regex.Match(html, @"Abilities:$\n^(.*?)$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Groups[1].Value;
 
                 XmlDocumentFragment docFrag = doc.CreateDocumentFragment();
 
-                try
-                {
-                    foreach (string weakness in weaknesses.Split(','))
-                    {
+                try {
+                    foreach (string weakness in weaknesses.Split(',')) {
 
                         string weak = weakness.Trim();
                         int percent;
-                        try
-                        {
+                        try {
                             percent = int.Parse(Regex.Match(weak, @"\((.*?)\)", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value.Trim("-+%".ToCharArray()));
                         }
-                        catch
-                        {
+                        catch {
                             percent = -1;
                         }
 
@@ -116,20 +102,17 @@ namespace KedrahCore.Util
                                 "</weakness>";
                     }
                 }
-                catch { }
+                catch {
+                }
 
-                try
-                {
-                    foreach (string strongness in strongnesses.Split(','))
-                    {
+                try {
+                    foreach (string strongness in strongnesses.Split(',')) {
                         string strong = strongness.Trim();
                         int percent;
-                        try
-                        {
+                        try {
                             percent = int.Parse(Regex.Match(strong, @"\((.*?)\)", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value.Trim("-+%".ToCharArray()));
                         }
-                        catch
-                        {
+                        catch {
                             percent = -1;
                         }
 
@@ -141,12 +124,25 @@ namespace KedrahCore.Util
                                 "</strongness>";
                     }
                 }
-                catch { }
+                catch {
+                }
 
-                try
-                {
-                    foreach (string immunitie in immunities.Split(','))
-                    {
+                try {
+                    foreach (string neutralitie in neutral.Split(',')) {
+                        string n = neutralitie.Trim();
+
+                        n = n.Split(' ')[0].Replace("?", "");
+                        if (n.Length > 0)
+                            fragment += "<neutral>" +
+                                "<to>" + n + "</to>" +
+                                "</neutral>";
+                    }
+                }
+                catch {
+                }
+
+                try {
+                    foreach (string immunitie in immunities.Split(',')) {
                         string immune = immunitie.Trim();
 
                         immune = immune.Split(' ')[0].Replace("?", "");
@@ -156,7 +152,8 @@ namespace KedrahCore.Util
                                 "</immunity>";
                     }
                 }
-                catch { }
+                catch {
+                }
 
                 if (abilities.ToLower().Contains("wave"))
                     fragment += "<wave>yes</wave>";
@@ -175,8 +172,7 @@ namespace KedrahCore.Util
                 currNode.InsertAfter(docFrag, currNode.LastChild);
                 doc.Save(filename);
             }
-            catch
-            {
+            catch {
 
             }
             pdone++;

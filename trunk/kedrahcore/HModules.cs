@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah
-{
-    public class HModules
-    {
+namespace Kedrah {
+    public class HModules {
         #region Objects/Variables
 
         // Hardek Modules
@@ -21,8 +19,7 @@ namespace Kedrah
         /// <summary>
         /// HModules constructor.
         /// </summary>
-        public HModules(Core core)
-        {
+        public HModules(Core core) {
             /* Instantiate modules */
             general = new Modules.General(core);
             heal = new Modules.Heal(core);
@@ -33,38 +30,29 @@ namespace Kedrah
 
         #region Get/Set Objects
 
-        public Modules.General General
-        {
-            get
-            {
+        public Modules.General General {
+            get {
                 return general;
             }
-            set
-            {
+            set {
                 general = value;
             }
         }
 
-        public Modules.Heal Heal
-        {
-            get
-            {
+        public Modules.Heal Heal {
+            get {
                 return heal;
             }
-            set
-            {
+            set {
                 heal = value;
             }
         }
 
-        public Modules.Targeting Targeting
-        {
-            get
-            {
+        public Modules.Targeting Targeting {
+            get {
                 return targeting;
             }
-            set
-            {
+            set {
                 targeting = value;
             }
         }
@@ -73,14 +61,12 @@ namespace Kedrah
 
         #region HModules Functions
 
-        internal void Enable()
-        {
+        internal void Enable() {
             General.Enable();
             Heal.Enable();
         }
 
-        internal void Disable()
-        {
+        internal void Disable() {
             General.Disable();
             Heal.Disable();
         }

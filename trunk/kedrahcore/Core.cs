@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah
-{
-    public class Core
-    {
+namespace Kedrah {
+    public class Core {
         #region Objects/Variables
 
         /// <sumary>
@@ -22,6 +20,7 @@ namespace Kedrah
         Tibia.Objects.BattleList battleList = null;
         Tibia.Objects.Inventory inventory = null;
         Tibia.Objects.Console console = null;
+        Tibia.Packets.HookProxy proxy = null;
 
         // Hardek Modules
         HModules modules;
@@ -36,137 +35,129 @@ namespace Kedrah
         /// Core constructor.
         /// </summary>
         public Core()
-        {
+            : this("Kedrah Core") {
+        }
+
+        /// <summary>
+        /// Core constructor.
+        /// </summary>
+        public Core(string clientChooserTitle) {
             /* Instantiate modules */
             modules = new HModules(this);
 
             /* Instantiate timers */
 
-            /* Enable Keyboard Hook */
+            /* Enable Keyboard/Mouse Hook */
             Tibia.KeyboardHook.Enable();
-            Tibia.MouseHook.Enable();
+            //Tibia.MouseHook.Enable();
 
-            foreach (Tibia.Objects.Client c in Tibia.Objects.Client.GetClients())
-            {
-                kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + c.Process.Id.ToString());
-                if (!c.LoggedIn && kedrahMutex.WaitOne(0, false))
-                {
-                    client = c;
-                    break;
+            do {
+                Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
+                clientChooserOptions.Title = clientChooserTitle;
+                clientChooserOptions.ShowOTOption = true;
+                client = Tibia.Util.ClientChooser.ShowBox(clientChooserOptions);
+
+                if (client != null) {
+                    kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + client.Process.Id.ToString());
+
+                    if (!kedrahMutex.WaitOne(0, false)) {
+                        client = null;
+                        continue;
+                    }
+
+                    proxy = new Tibia.Packets.HookProxy(client);
+                    proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
+                    proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
+
+                    if (client.LoggedIn)
+                        OnLogin(null);
                 }
-            }
-            if (client == null)
-            {
-                string path = System.IO.Path.Combine(Environment.GetEnvironmentVariable(Environment.SpecialFolder.ProgramFiles.ToString()), @"Tibia\Tibia.exe");
-                if (System.IO.File.Exists(path))
-                    client = Tibia.Objects.Client.OpenMC(path, "");
-                kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + client.Process.Id.ToString());
-            }
-            if (client != null)
-            {
-                // Using proxy for now while hook is not done
-                client.IO.StartProxy();
-                client.IO.Proxy.PlayerLogin += OnLogin;
-                client.IO.Proxy.PlayerLogout += OnLogout;
-            }
+
+                break;
+            } while (client == null);
         }
 
         #endregion
 
         #region Get/Set Objects
 
-        public Tibia.Objects.Client Client
-        {
-            get
-            {
+        public Tibia.Objects.Client Client {
+            get {
                 return client;
             }
-            set
-            {
+            set {
                 client = value;
             }
         }
 
-        public Tibia.Objects.Player Player
-        {
-            get
-            {
+        public Tibia.Objects.Player Player {
+            get {
                 return player;
             }
-            set
-            {
+            set {
                 player = value;
             }
         }
 
-        public Tibia.Objects.Map Map
-        {
-            get
-            {
+        public Tibia.Objects.Map Map {
+            get {
                 return map;
             }
-            set
-            {
+            set {
                 map = value;
             }
         }
 
-        public Tibia.Objects.Screen Screen
-        {
-            get
-            {
+        public Tibia.Objects.Screen Screen {
+            get {
                 return screen;
             }
-            set
-            {
+            set {
                 screen = value;
             }
         }
 
-        public Tibia.Objects.BattleList BattleList
-        {
-            get
-            {
+        public Tibia.Objects.BattleList BattleList {
+            get {
                 return battleList;
             }
-            set
-            {
+            set {
                 battleList = value;
             }
         }
 
-        public Tibia.Objects.Inventory Inventory
-        {
-            get
-            {
+        public Tibia.Objects.Inventory Inventory {
+            get {
                 return inventory;
             }
-            set
-            {
+            set {
                 inventory = value;
             }
         }
 
-        public Tibia.Objects.Console Console
-        {
-            get
-            {
+        public Tibia.Packets.HookProxy Proxy {
+            get {
+                return proxy;
+            }
+            set {
+                proxy = value;
+            }
+        }
+
+        public Tibia.Objects.Console Console {
+            get {
                 return console;
             }
-            set
-            {
+            set {
                 console = value;
             }
         }
 
-        public HModules Modules
-        {
-            get
-            {
+        public HModules Modules {
+            get {
                 return modules;
             }
-            set
-            {
+            set {
                 modules = value;
             }
         }
@@ -175,9 +166,7 @@ namespace Kedrah
 
         #region Core Functions
 
-        void OnLogin(Object sender, EventArgs e)
-        {
-            /* Start objects */
+        bool OnLogin(Tibia.Packets.IncomingPacket packet) {
             map = new Tibia.Objects.Map(client);
             screen = new Tibia.Objects.Screen(client);
             battleList = new Tibia.Objects.BattleList(client);
@@ -186,13 +175,19 @@ namespace Kedrah
             System.Threading.Thread.Sleep(300);
             player = client.GetPlayer();
             Modules.Enable();
+            return true;
         }
 
-        void OnLogout(Object sender, EventArgs e)
-        {
+        bool OnLogout(Tibia.Packets.OutgoingPacket packet) {
             Modules.Disable();
             if (client.Window.WorldOnlyView)
                 client.Window.WorldOnlyView = false;
+
+            return true;
+        }
+
+        void Close() {
+            client.Dll.DisconnectPipe();
         }
 
         #endregion

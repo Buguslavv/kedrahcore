@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah
-{
-    public class Module : IModule
-    {
+namespace Kedrah {
+    public class Module : IModule {
         #region Variables/Objects
 
         public Core kedrah;
@@ -22,8 +20,7 @@ namespace Kedrah
         /// General module constructor.
         /// <param name="core"></param>
         /// </summary>
-        public Module(Core core)
-        {
+        public Module(Core core) {
             kedrah = core;
             Disable();
         }
@@ -32,23 +29,20 @@ namespace Kedrah
 
         #region Module Functions
 
-        public virtual void Enable()
-        {
+        public virtual void Enable() {
             enabled = true;
             if (running)
                 Play();
         }
 
-        public virtual void Disable()
-        {
+        public virtual void Disable() {
             foreach (Tibia.Util.Timer timer in timers.Values)
                 if (timer.State == Tibia.Util.TimerState.Running)
                     timer.Pause();
             enabled = false;
         }
 
-        public virtual void Play()
-        {
+        public virtual void Play() {
             running = true;
             if (enabled)
                 foreach (Tibia.Util.Timer timer in timers.Values)
@@ -56,21 +50,18 @@ namespace Kedrah
                         timer.Start();
         }
 
-        public virtual void Pause()
-        {
+        public virtual void Pause() {
             running = false;
             foreach (Tibia.Util.Timer timer in timers.Values)
                 if (timer.State == Tibia.Util.TimerState.Running)
                     timer.Pause();
         }
 
-        public void PauseTimer(string p)
-        {
+        public void PauseTimer(string p) {
             timers[p].Stop();
         }
 
-        public void PlayTimer(string p)
-        {
+        public void PlayTimer(string p) {
             if (enabled)
                 timers[p].Start();
             else
