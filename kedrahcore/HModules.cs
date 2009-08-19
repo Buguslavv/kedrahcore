@@ -64,11 +64,13 @@ namespace Kedrah {
         internal void Enable() {
             General.Enable();
             Heal.Enable();
+            Targeting.Enable();
         }
 
         internal void Disable() {
             General.Disable();
             Heal.Disable();
+            Targeting.Disable();
         }
 
         #endregion

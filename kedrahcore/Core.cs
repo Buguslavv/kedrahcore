@@ -175,11 +175,13 @@ namespace Kedrah {
             System.Threading.Thread.Sleep(300);
             player = client.GetPlayer();
             Modules.Enable();
+
             return true;
         }
 
         bool OnLogout(Tibia.Packets.OutgoingPacket packet) {
             Modules.Disable();
+
             if (client.Window.WorldOnlyView)
                 client.Window.WorldOnlyView = false;
 
