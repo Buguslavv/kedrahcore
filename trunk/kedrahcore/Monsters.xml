@@ -17321,9 +17321,6 @@
     <immunity>
       <to>Fire</to>
     </immunity>
-    <immunity>
-      <to>Fire</to>
-    </immunity>
     <wave>no</wave>
     <beam>no</beam>
   </monster>

@@ -3,15 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2AC544A0-7273-45B0-901B-494ED8020DB4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KedrahCore</RootNamespace>
+    <RootNamespace>Kedrah</RootNamespace>
     <AssemblyName>KedrahCore</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,15 +28,18 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,11 +55,13 @@
     <Compile Include="HModules.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="Modules\Cavebot.cs" />
     <Compile Include="Modules\General.cs" />
     <Compile Include="Modules\Heal.cs" />
     <Compile Include="Modules\Targeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Database.cs" />
+    <Compile Include="Util\WebServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TibiaAPIRepos\trunk\tibiaapi\TibiaAPI.csproj">
