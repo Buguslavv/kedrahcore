@@ -49,7 +49,7 @@ namespace Kedrah {
 
             /* Enable Keyboard/Mouse Hook */
             Tibia.KeyboardHook.Enable();
-            //Tibia.MouseHook.Enable();
+            Tibia.MouseHook.Enable();
 
             do {
                 Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
@@ -65,6 +65,7 @@ namespace Kedrah {
                         continue;
                     }
 
+                    client.Dll.InitializePipe();
                     proxy = new Tibia.Packets.HookProxy(client);
                     proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
                     proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
@@ -83,6 +84,9 @@ namespace Kedrah {
 
         public Tibia.Objects.Client Client {
             get {
+                if (client == null || client.HasExited)
+                    Environment.Exit(1);
+
                 return client;
             }
             set {

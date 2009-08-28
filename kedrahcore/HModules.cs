@@ -8,9 +8,10 @@ namespace Kedrah {
         #region Objects/Variables
 
         // Hardek Modules
-        Modules.General general;
-        Modules.Heal heal;
-        Modules.Targeting targeting;
+        Kedrah.Modules.Cavebot cavebot;
+        Kedrah.Modules.General general;
+        Kedrah.Modules.Heal heal;
+        Kedrah.Modules.Targeting targeting;
 
         #endregion
 
@@ -21,16 +22,26 @@ namespace Kedrah {
         /// </summary>
         public HModules(Core core) {
             /* Instantiate modules */
-            general = new Modules.General(core);
-            heal = new Modules.Heal(core);
-            targeting = new Modules.Targeting(core);
+            cavebot = new Kedrah.Modules.Cavebot(core);
+            general = new Kedrah.Modules.General(core);
+            heal = new Kedrah.Modules.Heal(core);
+            targeting = new Kedrah.Modules.Targeting(core);
         }
 
         #endregion
 
         #region Get/Set Objects
 
-        public Modules.General General {
+        public Kedrah.Modules.Cavebot Cavebot {
+            get {
+                return cavebot;
+            }
+            set {
+                cavebot = value;
+            }
+        }
+
+        public Kedrah.Modules.General General {
             get {
                 return general;
             }
@@ -39,7 +50,7 @@ namespace Kedrah {
             }
         }
 
-        public Modules.Heal Heal {
+        public Kedrah.Modules.Heal Heal {
             get {
                 return heal;
             }
@@ -48,7 +59,7 @@ namespace Kedrah {
             }
         }
 
-        public Modules.Targeting Targeting {
+        public Kedrah.Modules.Targeting Targeting {
             get {
                 return targeting;
             }
