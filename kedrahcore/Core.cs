@@ -35,13 +35,13 @@ namespace Kedrah {
         /// Core constructor.
         /// </summary>
         public Core()
-            : this("Kedrah Core") {
+            : this("Kedrah Core", false) {
         }
 
         /// <summary>
         /// Core constructor.
         /// </summary>
-        public Core(string clientChooserTitle) {
+        public Core(string clientChooserTitle, bool useWPF) {
             /* Instantiate modules */
             modules = new HModules(this);
 
@@ -55,7 +55,11 @@ namespace Kedrah {
                 Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
                 clientChooserOptions.Title = clientChooserTitle;
                 clientChooserOptions.ShowOTOption = true;
-                client = Tibia.Util.ClientChooser.ShowBox(clientChooserOptions);
+
+                if (useWPF)
+                    client = Tibia.Util.ClientChooserWPF.ShowBox(clientChooserOptions);
+                else
+                    client = Tibia.Util.ClientChooser.ShowBox(clientChooserOptions);
 
                 if (client != null) {
                     kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + client.Process.Id.ToString());
