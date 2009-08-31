@@ -71,6 +71,7 @@ namespace Kedrah {
 
                     client.Dll.InitializePipe();
                     proxy = new Tibia.Packets.HookProxy(client);
+                    client.Process.Exited += new EventHandler(ClientClosed);
                     proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
                     proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
 
@@ -174,7 +175,7 @@ namespace Kedrah {
 
         #region Core Functions
 
-        bool OnLogin(Tibia.Packets.IncomingPacket packet) {
+        private bool OnLogin(Tibia.Packets.IncomingPacket packet) {
             map = new Tibia.Objects.Map(client);
             screen = new Tibia.Objects.Screen(client);
             battleList = new Tibia.Objects.BattleList(client);
@@ -187,7 +188,7 @@ namespace Kedrah {
             return true;
         }
 
-        bool OnLogout(Tibia.Packets.OutgoingPacket packet) {
+        private bool OnLogout(Tibia.Packets.OutgoingPacket packet) {
             Modules.Disable();
 
             if (client.Window.WorldOnlyView)
@@ -196,8 +197,8 @@ namespace Kedrah {
             return true;
         }
 
-        void Close() {
-            client.Dll.DisconnectPipe();
+        void ClientClosed(object sender, EventArgs args) {
+            Environment.Exit(0);
         }
 
         #endregion
