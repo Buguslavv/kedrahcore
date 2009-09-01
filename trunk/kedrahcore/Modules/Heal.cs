@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +7,18 @@ namespace Kedrah.Modules {
     public class Heal : Module {
         #region Variables/Objects
 
-        hList<ItemPercent> potionLife, runeLife, potionMana;
-        hList<SpellPercent> spellLife, reverseSpellLife;
-        DateTime spellNext = DateTime.Now, potionNext = DateTime.Now;
-        bool poison = false, paralyze = false;
-        uint potionExhaustion = 700, spellExhaustion = 1080, spellPoisonMana = 30;
-        string spellPoison = Tibia.Constants.Spells.Antidote.Words;
+        public HealList<ItemPercent> PotionLife { get; set; };
+        public HealList<ItemPercent> RuneLife { get; set; };
+        public HealList<ItemPercent> PotionMana { get; set; };
+        public HealList<SpellPercent> SpellLife { get; set; };
+        public DateTime SpellNext { get; set; } = DateTime.Now;
+        public DateTime PotionNext { get; set; } = DateTime.Now;
+        public bool Poison { get; set; } = false;
+        public bool Paralyze { get; set; } = false;
+        public ushort PotionExhaustion { get; set; } = 700;
+        public ushort SpellExhaustion { get; set; } = 1080;
+        public ushort SpellPoisonMana { get; set; } = 30;
+        public string SpellPoison { get; set; } = Tibia.Constants.Spells.Antidote.Words;
 
         #endregion
 
@@ -23,10 +29,10 @@ namespace Kedrah.Modules {
         /// </summary>
         public Heal(Core core)
             : base(core) {
-            potionLife = new hList<ItemPercent>();
-            runeLife = new hList<ItemPercent>();
-            potionMana = new hList<ItemPercent>();
-            spellLife = new hList<SpellPercent>();
+            PotionLife = new HealList<ItemPercent>();
+            RuneLife = new HealList<ItemPercent>();
+            PotionMana = new HealList<ItemPercent>();
+            SpellLife = new HealList<SpellPercent>();
 
             #region Timers
 
@@ -56,105 +62,11 @@ namespace Kedrah.Modules {
             }
         }
 
-        public bool Poison {
-            get {
-                return poison;
-            }
-            set {
-                poison = value;
-            }
-        }
-
-        public bool Paralyze {
-            get {
-                return paralyze;
-            }
-            set {
-                paralyze = value;
-            }
-        }
-
-        public string SpellPoisonMana {
-            get {
-                return spellPoison;
-            }
-            set {
-                spellPoison = value;
-            }
-        }
-
-        public uint SpellPoisonWords {
-            get {
-                return spellPoisonMana;
-            }
-            set {
-                spellPoisonMana = value;
-            }
-        }
-
-        public uint PotionExhaustion {
-            get {
-                return potionExhaustion;
-            }
-            set {
-                potionExhaustion = value;
-            }
-        }
-
-        public uint SpellExhaustion {
-            get {
-                return spellExhaustion;
-            }
-            set {
-                spellExhaustion = value;
-            }
-        }
-
-        public hList<ItemPercent> PotionLife {
-
-            get {
-                return potionLife;
-            }
-            set {
-                potionLife = value;
-            }
-        }
-
-        public hList<ItemPercent> PotionMana {
-            get {
-                return potionMana;
-            }
-            set {
-                potionMana = value;
-            }
-        }
-
-        public hList<ItemPercent> RuneLife {
-            get {
-                return runeLife;
-            }
-            set {
-                runeLife = value;
-            }
-        }
-
-        public hList<SpellPercent> SpellLife {
-            get {
-                spellLife.Sort(new Comparison<SpellPercent>(compareSpellPercents));
-                reverseSpellLife = spellLife;
-                reverseSpellLife.Reverse();
-                return spellLife;
-            }
-            set {
-                spellLife = value;
-            }
-        }
-
         #endregion
 
         #region Module Functions
 
-        int compareSpellPercents(SpellPercent sp1, SpellPercent sp2) {
+        private int CompareSpellPercents(SpellPercent sp1, SpellPercent sp2) {
             return sp1.Percent == sp2.Percent ? 0 : sp1.Percent > sp2.Percent ? 1 : -1;
         }
 
@@ -163,51 +75,49 @@ namespace Kedrah.Modules {
         #region Timers
 
         void healer_OnExecute() {
-            int cP = 0;
-
             if (!kedrah.Client.LoggedIn)
                 return;
 
             if (potionNext.CompareTo(DateTime.Now) <= 0) {
-                foreach (ItemPercent pot in potionLife) {
-                    if (kedrah.Player.HPBar <= pot.Percent)
-                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item.Id) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
-                }
-                foreach (ItemPercent pot in potionMana) {
-                    cP = kedrah.Player.Mana * 100 / kedrah.Player.Mana_Max;
-                    if (cP <= pot.Percent)
-                        potionNext = kedrah.Inventory.UseItemOnSelf(pot.Item.Id) ? DateTime.Now.AddMilliseconds(potionExhaustion) : DateTime.Now;
-                }
+                foreach (ItemPercent potion in PotionLife)
+                    if (kedrah.Player.HPBar <= potion.Percent)
+                        PotionNext = kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+
+                foreach (ItemPercent potion in PotionMana)
+                    if ((kedrah.Player.Mana * 100 / kedrah.Player.Mana_Max) <= potion.Percent)
+                        PotionNext = kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+
             }
-            if (spellNext.CompareTo(DateTime.Now) <= 0) {
-                foreach (ItemPercent rune in runeLife) {
+            if (SpellNext.CompareTo(DateTime.Now) <= 0) {
+                foreach (ItemPercent rune in RuneLife)
                     if (kedrah.Player.HPBar <= rune.Percent)
-                        spellNext = kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
-                }
-                foreach (SpellPercent spell in reverseSpellLife) {
+                        SpellNext = kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+
+                foreach (SpellPercent spell in SpellLife)
                     if (kedrah.Player.HPBar <= spell.Percent && kedrah.Player.Mana >= spell.Mana)
-                        spellNext = kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
-                }
-                if (poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= spellPoisonMana)
-                    spellNext = kedrah.Console.Say(spellPoison) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
-                if (paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
-                    spellNext = kedrah.Console.Say(spellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(spellExhaustion) : DateTime.Now;
+                        SpellNext = kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+
+                if (Poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= SpellPoisonMana)
+                    SpellNext = kedrah.Console.Say(SpellPoison) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+
+                if (Paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
+                    SpellNext = kedrah.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
             }
         }
 
         #endregion
     }
 
-    public class hList<T> : List<T> {
+    public class HealList<T> : List<T> {
         public void RemoveDuplicates() {
             Dictionary<T, int> uniqueStore = new Dictionary<T, int>();
             List<T> inputList = new List<T>(this);
             this.Clear();
 
-            foreach (T currValue in inputList) {
-                if (!uniqueStore.ContainsKey(currValue)) {
-                    uniqueStore.Add(currValue, 0);
-                    this.Add(currValue);
+            foreach (T currentValue in inputList) {
+                if (!uniqueStore.ContainsKey(currentValue)) {
+                    uniqueStore.Add(currentValue, 0);
+                    this.Add(currentValue);
                 }
             }
         }
