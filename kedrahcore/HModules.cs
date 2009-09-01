@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +17,9 @@ namespace Kedrah {
 
         #region Constructor
 
-        /// <summary>
+        /// <summary>  
         /// HModules constructor.
-        /// </summary>
+        /// </summary> 
         public HModules(Core core) {
             /* Instantiate modules */
             cavebot = new Kedrah.Modules.Cavebot(core);
