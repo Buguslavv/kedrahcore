@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
+using Tibia.Objects;
+using Tibia.Constants;
 
 namespace Kedrah.Modules {
     public class Targeting : Module {
         #region Enums/Structures
 
-        public struct tElement {
+        public struct Element {
             public string To;
             public int Percent;
 
-            public tElement(string to, int percent) {
+            public Element(string to, int percent) {
                 To = to;
                 Percent = percent;
             }
@@ -53,24 +54,20 @@ namespace Kedrah.Modules {
 
         #region Variables/Objects
 
-        byte distance = 2;
-        List<Monster> monsters = new List<Monster>();
-        List<Target> targets = new List<Target>();
+        private Creature creature;
+        private Target target;
 
         public bool AttackedOnly, Reachable, Shootable;
+        public byte Distance = 2;
         public byte OthersMonsters;
-        Dictionary<string, byte> targetSelection = new Dictionary<string, byte>();
-
-        Target target;
-        Tibia.Objects.Creature creature;
+        public Dictionary<string, byte> TargetSelection = new Dictionary<string, byte>();
+        public List<Monster> Monsters = new List<Monster>();
+        public List<Target> Targets = new List<Target>();
 
         #endregion
 
         #region Constructor/Destructor
 
-        /// <summary>
-        /// Targeting module constructor.
-        /// </summary>
         public Targeting(Core core)
             : base(core) {
             LoadMonstersFromXmlResource();
@@ -79,18 +76,17 @@ namespace Kedrah.Modules {
             Reachable = true;
             Shootable = false;
             OthersMonsters = 0;
-            targetSelection.Add("distance", 0);
-            targetSelection.Add("health", 0);
-            targetSelection.Add("priority", 100);
-            targetSelection.Add("stick", 0);
+            TargetSelection.Add("distance", 0);
+            TargetSelection.Add("health", 0);
+            TargetSelection.Add("priority", 100);
+            TargetSelection.Add("stick", 0);
 
             #region Timers
 
-            // Target selection timer
-            timers.Add("target", new Tibia.Util.Timer(500, false));
-            timers["target"].Execute += new Tibia.Util.Timer.TimerExecution(target_OnExecute);
-            timers.Add("action", new Tibia.Util.Timer(2000, false));
-            timers["action"].Execute += new Tibia.Util.Timer.TimerExecution(action_OnExecute);
+            Timers.Add("target", new Tibia.Util.Timer(500, false));
+            Timers["target"].Execute += new Tibia.Util.Timer.TimerExecution(Target_OnExecute);
+            Timers.Add("action", new Tibia.Util.Timer(2000, false));
+            Timers["action"].Execute += new Tibia.Util.Timer.TimerExecution(Action_OnExecute);
 
             #endregion
         }
@@ -101,16 +97,16 @@ namespace Kedrah.Modules {
 
         public long ActionDelay {
             get {
-                return timers["action"].Interval;
+                return Timers["action"].Interval;
             }
             set {
-                timers["action"].Interval = value;
+                Timers["action"].Interval = value;
             }
         }
 
         public bool Attacker {
             get {
-                if (timers["target"].State == Tibia.Util.TimerState.Running)
+                if (Timers["target"].State == Tibia.Util.TimerState.Running)
                     return true;
                 else
                     return false;
@@ -129,49 +125,12 @@ namespace Kedrah.Modules {
 
         public long AttackDelay {
             get {
-                return timers["target"].Interval;
+                return Timers["target"].Interval;
             }
             set {
-                timers["target"].Interval = value;
+                Timers["target"].Interval = value;
             }
         }
-
-        public byte Distance {
-            get {
-                return distance;
-            }
-            set {
-                distance = value;
-            }
-        }
-
-        public List<Monster> Monsters {
-            get {
-                return monsters;
-            }
-            set {
-                monsters = value;
-            }
-        }
-
-        public List<Target> Targets {
-            get {
-                return targets;
-            }
-            set {
-                targets = value;
-            }
-        }
-
-        public Dictionary<string, byte> TargetSelection {
-            get {
-                return targetSelection;
-            }
-            set {
-                targetSelection = value;
-            }
-        }
-
 
         #endregion
 
@@ -195,9 +154,6 @@ namespace Kedrah.Modules {
             this.Targets.Add(new Target(monster, action, priority, security, stance, attackMode, followMode));
         }
 
-        /// <summary>
-        /// Enables the Targeting module.
-        /// </summary>
         public override void Enable() {
             base.Enable();
         }
@@ -207,7 +163,7 @@ namespace Kedrah.Modules {
         }
 
         public Monster FindMonster(string name, bool sensitive) {
-            return monsters.Find(new MonsterFinder(name, sensitive).Match);
+            return Monsters.Find(new MonsterFinder(name, sensitive).Match);
         }
 
         public Target FindTarget(string name, byte hpbar) {
@@ -215,21 +171,21 @@ namespace Kedrah.Modules {
         }
 
         public Target FindTarget(string name, byte hpbar, bool sensitive) {
-            return targets.Find(new TargetFinder(name, hpbar, sensitive).Match);
+            return Targets.Find(new TargetFinder(name, hpbar, sensitive).Match);
         }
 
         public string GetBestElementIn(Monster monster, string[] elements) {
             if (monster == null)
                 return "";
 
-            List<List<tElement>> elementLists = new List<List<tElement>>();
+            List<List<Element>> elementLists = new List<List<Element>>();
 
             elementLists.Add(monster.Weaknesses);
             elementLists.Add(monster.Neutral);
             elementLists.Add(monster.Strongnesses);
 
-            foreach (List<tElement> elementList in elementLists)
-                foreach (tElement element in elementList)
+            foreach (List<Element> elementList in elementLists)
+                foreach (Element element in elementList)
                     if (elements.Contains(element.To, StringComparer.OrdinalIgnoreCase))
                         return element.To;
 
@@ -290,7 +246,7 @@ namespace Kedrah.Modules {
             iterator = nav.Select(expr);
 
             Monster current;
-            tElement currentElement;
+            Element currentElement;
 
             while (iterator.MoveNext()) {
                 nav2 = iterator.Current.Clone();
@@ -303,7 +259,7 @@ namespace Kedrah.Modules {
                     nav2.MoveToFirstChild();
 
                     while (nav2.MoveToNext()) {
-                        currentElement = new tElement();
+                        currentElement = new Element();
                         nav3 = nav2.Clone();
                         nav3.MoveToFirstChild();
                         currentElement.To = nav3.Value;
@@ -322,12 +278,12 @@ namespace Kedrah.Modules {
                     }
                 }
 
-                monsters.Add(current);
+                Monsters.Add(current);
             }
         }
 
         public void SelectTarget() {
-            if (!kedrah.Client.LoggedIn)
+            if (!Kedrah.Client.LoggedIn)
                 return;
 
             Tibia.Objects.Creature selected = null;
@@ -338,12 +294,12 @@ namespace Kedrah.Modules {
             verifier.Add("health", new double[2] { 0, 0 });
             verifier.Add("priority", new double[2] { 0, 0 });
             verifier.Add("stick", new double[2] { 0, 0 });
-            List<KeyValuePair<string, byte>> items = targetSelection.OrderByDescending(s => s.Value).ToList();
+            List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
 
-            foreach (Tibia.Objects.Creature creature in kedrah.BattleList.GetCreatures()) {
+            foreach (Creature creature in Kedrah.BattleList.GetCreatures()) {
                 Target target = FindTarget(creature.Name, (byte)creature.HPBar);
 
-                if (creature.IsSelf() || creature.Type != Tibia.Constants.CreatureType.NPC)
+                if (creature.IsSelf() || creature.Type != CreatureType.NPC)
                     continue;
 
                 if (Reachable && !creature.IsReachable())
@@ -360,7 +316,7 @@ namespace Kedrah.Modules {
                 }
 
                 if (OthersMonsters > 0) {
-                    var playersAround = kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c) {
+                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c) {
                         return c.DistanceTo(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == Tibia.Constants.CreatureType.Player) && (!c.IsSelf());
                     });
 
@@ -380,18 +336,18 @@ namespace Kedrah.Modules {
                     continue;
                 }
 
-                verifier["distance"][0] = selected.DistanceTo(kedrah.Player.Location);
+                verifier["distance"][0] = selected.DistanceTo(Kedrah.Player.Location);
                 verifier["health"][0] = (double)selected.HPBar;
                 verifier["priority"][0] = (double)selectedTarget.Priority;
                 verifier["stick"][0] = (double)selected.Id;
-                verifier["distance"][1] = creature.DistanceTo(kedrah.Player.Location);
+                verifier["distance"][1] = creature.DistanceTo(Kedrah.Player.Location);
                 verifier["health"][1] = (double)creature.HPBar;
                 verifier["priority"][1] = (double)target.Priority;
                 verifier["stick"][1] = (double)creature.Id;
 
                 foreach (KeyValuePair<string, byte> v in items) {
                     if (v.Key == "stick") {
-                        if (creature.Id == kedrah.Player.Target_ID) {
+                        if (creature.Id == Kedrah.Player.Target_ID) {
                             selected = creature;
                             selectedTarget = target;
                         }
@@ -415,42 +371,39 @@ namespace Kedrah.Modules {
 
         #region Timers
 
-        void target_OnExecute() {
+        private void Target_OnExecute() {
             if (this.target == null || this.creature == null)
                 return;
 
-            kedrah.Client.FollowMode = this.target.FollowMode;
-            kedrah.Client.AttackMode = this.target.AttackMode;
+            Kedrah.Client.FollowMode = this.target.FollowMode;
+            Kedrah.Client.AttackMode = this.target.AttackMode;
 
             if (this.target.Action == FightActions.Attack) {
-                kedrah.Player.Stop();
+                Kedrah.Player.Stop();
                 this.creature.Attack();
             }
             else if (this.target.Action == FightActions.Follow) {
-                kedrah.Player.Stop();
+                Kedrah.Player.Stop();
                 this.creature.Follow();
             }
         }
 
-        void action_OnExecute() {
+        private void Action_OnExecute() {
             if (this.target == null || this.creature == null)
                 return;
 
             foreach (FightExtraPair extra in this.target.Extra)
-                extra.Execute(this.creature, kedrah.Inventory);
+                extra.Execute(this.creature, Kedrah.Inventory);
         }
 
         #endregion
 
         #region Auxiliar Classes
-        /// <summary>
-        /// Represents a monster information.
-        /// </summary>
         public class Monster {
-            public List<tElement> Immunities;
-            public List<tElement> Neutral;
-            public List<tElement> Strongnesses;
-            public List<tElement> Weaknesses;
+            public List<Element> Immunities;
+            public List<Element> Neutral;
+            public List<Element> Strongnesses;
+            public List<Element> Weaknesses;
 
             public bool Beam;
             public bool Wave;
@@ -460,10 +413,10 @@ namespace Kedrah.Modules {
             /// <summary>
             /// </summary>
             public Monster(string name) {
-                Weaknesses = new List<tElement>();
-                Strongnesses = new List<tElement>();
-                Immunities = new List<tElement>();
-                Neutral = new List<tElement>();
+                Weaknesses = new List<Element>();
+                Strongnesses = new List<Element>();
+                Immunities = new List<Element>();
+                Neutral = new List<Element>();
                 Name = name;
             }
 
@@ -471,17 +424,17 @@ namespace Kedrah.Modules {
                 return Wave || Beam;
             }
 
-            public void AddAttribute(string where, tElement attr) {
+            public void AddAttribute(string where, Element attr) {
                 attr.To = attr.To.ToLower();
 
                 switch (where) {
                     case "weakness":
                         Weaknesses.Add(attr);
-                        Weaknesses.Sort(new Comparison<tElement>(compareElements));
+                        Weaknesses.Sort(new Comparison<Element>(compareElements));
                         break;
                     case "strongness":
                         Strongnesses.Add(attr);
-                        Strongnesses.Sort(new Comparison<tElement>(compareElementsReverse));
+                        Strongnesses.Sort(new Comparison<Element>(compareElementsReverse));
                         break;
                     case "immunity":
                         Immunities.Add(attr);
@@ -492,11 +445,11 @@ namespace Kedrah.Modules {
                 }
             }
 
-            int compareElements(tElement e1, tElement e2) {
+            int compareElements(Element e1, Element e2) {
                 return e1.Percent == e2.Percent ? 0 : e1.Percent < e2.Percent ? 1 : -1;
             }
 
-            int compareElementsReverse(tElement e1, tElement e2) {
+            int compareElementsReverse(Element e1, Element e2) {
                 return e1.Percent == e2.Percent ? 0 : e1.Percent > e2.Percent ? 1 : -1;
             }
         }
@@ -561,9 +514,6 @@ namespace Kedrah.Modules {
             }
         }
 
-        /// <summary>
-        /// Represents a extra action executer
-        /// </summary>
         public class FightExtraPair {
             private FightExtra Type;
             private Tibia.Objects.Item Item;
@@ -607,9 +557,6 @@ namespace Kedrah.Modules {
             }
         }
 
-        /// <summary>
-        /// Represents a target information.
-        /// </summary>
         public class Target : Monster {
             public FightActions Action;
             public byte Priority;

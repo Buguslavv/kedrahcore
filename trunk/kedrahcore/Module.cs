@@ -7,21 +7,17 @@ namespace Kedrah {
     public class Module : IModule {
         #region Variables/Objects
 
-        public Core kedrah;
+        public Core Kedrah;
 
-        public bool enabled = false, running = false;
-        public Dictionary<string, Tibia.Util.Timer> timers = new Dictionary<string, Tibia.Util.Timer>();
+        public bool Enabled = false, Running = false;
+        public Dictionary<string, Tibia.Util.Timer> Timers = new Dictionary<string, Tibia.Util.Timer>();
 
         #endregion
 
         #region Constructor/Destructor
 
-        /// <summary>
-        /// General module constructor.
-        /// <param name="core"></param>
-        /// </summary>
         public Module(Core core) {
-            kedrah = core;
+            Kedrah = core;
             Disable();
         }
 
@@ -30,42 +26,42 @@ namespace Kedrah {
         #region Module Functions
 
         public virtual void Enable() {
-            enabled = true;
-            if (running)
+            Enabled = true;
+            if (Running)
                 Play();
         }
 
         public virtual void Disable() {
-            foreach (Tibia.Util.Timer timer in timers.Values)
+            foreach (Tibia.Util.Timer timer in Timers.Values)
                 if (timer.State == Tibia.Util.TimerState.Running)
                     timer.Pause();
-            enabled = false;
+            Enabled = false;
         }
 
         public virtual void Play() {
-            running = true;
-            if (enabled)
-                foreach (Tibia.Util.Timer timer in timers.Values)
+            Running = true;
+            if (Enabled)
+                foreach (Tibia.Util.Timer timer in Timers.Values)
                     if (timer.State == Tibia.Util.TimerState.Paused)
                         timer.Start();
         }
 
         public virtual void Pause() {
-            running = false;
-            foreach (Tibia.Util.Timer timer in timers.Values)
+            Running = false;
+            foreach (Tibia.Util.Timer timer in Timers.Values)
                 if (timer.State == Tibia.Util.TimerState.Running)
                     timer.Pause();
         }
 
         public void PauseTimer(string p) {
-            timers[p].Stop();
+            Timers[p].Stop();
         }
 
         public void PlayTimer(string p) {
-            if (enabled)
-                timers[p].Start();
+            if (Enabled)
+                Timers[p].Start();
             else
-                timers[p].Pause();
+                Timers[p].Pause();
         }
 
         #endregion
