@@ -7,103 +7,23 @@ namespace Kedrah.Modules {
     public class Heal : Module {
         #region Variables/Objects
 
-        private DateTime spellNext;
-        private DateTime potionNext;
-        private bool poison;
-        private bool paralize;
-        private ushort potionExhaustion;
-        private ushort spellExhaustion;
-        private ushort spellPoisonMana;
-        private string spellPoison;
-
-        public HealList<ItemPercent> PotionLife { 
-            get;
-            set;
-        }
-        public HealList<ItemPercent> RuneLife {
-            get;
-            set;
-        }
-        public HealList<ItemPercent> PotionMana {
-            get;
-            set;
-        }
-        public HealList<SpellPercent> SpellLife {
-            get;
-            set;
-        }
-        public DateTime SpellNext {
-            get {
-                return spellNext;
-            }
-            set {
-                spellNext = DateTime.Now;
-            }
-        }
-        public DateTime PotionNext {
-            get {
-                return potionNext;
-            }
-            set {
-                 potionNext = DateTime.Now;
-            }
-        }
-        public bool Poison {
-            get {
-                return poison;
-            }
-            set {
-                poison = false;
-            }
-        }
-        public bool Paralyze {
-            get {
-                return paralize;
-            }
-            set {
-                 paralize = false;
-            }
-        }
-        public ushort PotionExhaustion {
-            get {
-                return potionExhaustion;
-            }
-            set {
-                potionExhaustion = 700;
-            }
-        }
-        public ushort SpellExhaustion {
-            get {
-                return spellExhaustion;
-            }
-            set {
-                spellExhaustion = 1080;
-            }
-        }
-        public ushort SpellPoisonMana  {
-            get {
-                return spellPoisonMana;
-            }
-            set {
-                spellPoisonMana = 30;
-            }
-        }
-        public string SpellPoison {
-            get {
-                return spellPoison;
-            }
-            set {
-                spellPoison = Tibia.Constants.Spells.Antidote.Words;
-                }
-        }
+        public bool Poison = false;
+        public bool Paralyze = false;
+        public DateTime PotionNext = DateTime.Now;
+        public DateTime SpellNext = DateTime.Now;
+        public HealList<ItemPercent> PotionLife;
+        public HealList<ItemPercent> RuneLife;
+        public HealList<ItemPercent> PotionMana;
+        public HealList<SpellPercent> SpellLife;
+        public string SpellPoisonWords = Tibia.Constants.Spells.Antidote.Words;
+        public ushort PotionExhaustion = 700;
+        public ushort SpellExhaustion = 1080;
+        public ushort SpellPoisonMana = 30;
 
         #endregion
 
         #region Constructor/Destructor
 
-        /// <summary>
-        /// Heal module constructor.
-        /// </summary>
         public Heal(Core core)
             : base(core) {
             PotionLife = new HealList<ItemPercent>();
@@ -113,9 +33,8 @@ namespace Kedrah.Modules {
 
             #region Timers
 
-            // Main timer
-            timers.Add("healer", new Tibia.Util.Timer(100, false));
-            timers["healer"].Execute += new Tibia.Util.Timer.TimerExecution(healer_OnExecute);
+            Timers.Add("healer", new Tibia.Util.Timer(100, false));
+            Timers["healer"].Execute += new Tibia.Util.Timer.TimerExecution(Healer_OnExecute);
 
             #endregion
         }
@@ -126,7 +45,7 @@ namespace Kedrah.Modules {
 
         public bool Healer {
             get {
-                if (timers["healer"].State == Tibia.Util.TimerState.Running)
+                if (Timers["healer"].State == Tibia.Util.TimerState.Running)
                     return true;
                 else
                     return false;
@@ -143,7 +62,7 @@ namespace Kedrah.Modules {
 
         #region Module Functions
 
-        private int CompareSpellPercents(SpellPercent sp1, SpellPercent sp2) {
+        private int compareSpellPercents(SpellPercent sp1, SpellPercent sp2) {
             return sp1.Percent == sp2.Percent ? 0 : sp1.Percent > sp2.Percent ? 1 : -1;
         }
 
@@ -151,34 +70,34 @@ namespace Kedrah.Modules {
 
         #region Timers
 
-        void healer_OnExecute() {
-            if (!kedrah.Client.LoggedIn)
+        private void Healer_OnExecute() {
+            if (!Kedrah.Client.LoggedIn)
                 return;
 
-            if (potionNext.CompareTo(DateTime.Now) <= 0) {
+            if (PotionNext.CompareTo(DateTime.Now) <= 0) {
                 foreach (ItemPercent potion in PotionLife)
-                    if (kedrah.Player.HPBar <= potion.Percent)
-                        PotionNext = kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                    if (Kedrah.Player.HPBar <= potion.Percent)
+                        PotionNext = Kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
 
                 foreach (ItemPercent potion in PotionMana)
-                    if ((kedrah.Player.Mana * 100 / kedrah.Player.Mana_Max) <= potion.Percent)
-                        PotionNext = kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                    if ((Kedrah.Player.Mana * 100 / Kedrah.Player.Mana_Max) <= potion.Percent)
+                        PotionNext = Kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
 
             }
             if (SpellNext.CompareTo(DateTime.Now) <= 0) {
                 foreach (ItemPercent rune in RuneLife)
-                    if (kedrah.Player.HPBar <= rune.Percent)
-                        SpellNext = kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    if (Kedrah.Player.HPBar <= rune.Percent)
+                        SpellNext = Kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
 
                 foreach (SpellPercent spell in SpellLife)
-                    if (kedrah.Player.HPBar <= spell.Percent && kedrah.Player.Mana >= spell.Mana)
-                        SpellNext = kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    if (Kedrah.Player.HPBar <= spell.Percent && Kedrah.Player.Mana >= spell.Mana)
+                        SpellNext = Kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
 
-                if (Poison && kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && kedrah.Player.Mana >= SpellPoisonMana)
-                    SpellNext = kedrah.Console.Say(SpellPoison) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                if (Poison && Kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && Kedrah.Player.Mana >= SpellPoisonMana)
+                    SpellNext = Kedrah.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
 
-                if (Paralyze && kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
-                    SpellNext = kedrah.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                if (Paralyze && Kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
+                    SpellNext = Kedrah.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
             }
         }
 

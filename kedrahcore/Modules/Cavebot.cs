@@ -11,9 +11,6 @@ namespace Kedrah.Modules {
 
         #region Constructor/Destructor
 
-        /// <summary>
-        /// Cavebot module constructor.
-        /// </summary>
         public Cavebot(Core core)
             : base(core) {
 
