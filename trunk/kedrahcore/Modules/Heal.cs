@@ -7,18 +7,95 @@ namespace Kedrah.Modules {
     public class Heal : Module {
         #region Variables/Objects
 
-        public HealList<ItemPercent> PotionLife { get; set; };
-        public HealList<ItemPercent> RuneLife { get; set; };
-        public HealList<ItemPercent> PotionMana { get; set; };
-        public HealList<SpellPercent> SpellLife { get; set; };
-        public DateTime SpellNext { get; set; } = DateTime.Now;
-        public DateTime PotionNext { get; set; } = DateTime.Now;
-        public bool Poison { get; set; } = false;
-        public bool Paralyze { get; set; } = false;
-        public ushort PotionExhaustion { get; set; } = 700;
-        public ushort SpellExhaustion { get; set; } = 1080;
-        public ushort SpellPoisonMana { get; set; } = 30;
-        public string SpellPoison { get; set; } = Tibia.Constants.Spells.Antidote.Words;
+        private DateTime spellNext;
+        private DateTime potionNext;
+        private bool poison;
+        private bool paralize;
+        private ushort potionExhaustion;
+        private ushort spellExhaustion;
+        private ushort spellPoisonMana;
+        private string spellPoison;
+
+        public HealList<ItemPercent> PotionLife { 
+            get;
+            set;
+        }
+        public HealList<ItemPercent> RuneLife {
+            get;
+            set;
+        }
+        public HealList<ItemPercent> PotionMana {
+            get;
+            set;
+        }
+        public HealList<SpellPercent> SpellLife {
+            get;
+            set;
+        }
+        public DateTime SpellNext {
+            get {
+                return spellNext;
+            }
+            set {
+                spellNext = DateTime.Now;
+            }
+        }
+        public DateTime PotionNext {
+            get {
+                return potionNext;
+            }
+            set {
+                 potionNext = DateTime.Now;
+            }
+        }
+        public bool Poison {
+            get {
+                return poison;
+            }
+            set {
+                poison = false;
+            }
+        }
+        public bool Paralyze {
+            get {
+                return paralize;
+            }
+            set {
+                 paralize = false;
+            }
+        }
+        public ushort PotionExhaustion {
+            get {
+                return potionExhaustion;
+            }
+            set {
+                potionExhaustion = 700;
+            }
+        }
+        public ushort SpellExhaustion {
+            get {
+                return spellExhaustion;
+            }
+            set {
+                spellExhaustion = 1080;
+            }
+        }
+        public ushort SpellPoisonMana  {
+            get {
+                return spellPoisonMana;
+            }
+            set {
+                spellPoisonMana = 30;
+            }
+        }
+        public string SpellPoison {
+            get {
+                return spellPoison;
+            }
+            set {
+                spellPoison = Tibia.Constants.Spells.Antidote.Words;
+                }
+        }
 
         #endregion
 

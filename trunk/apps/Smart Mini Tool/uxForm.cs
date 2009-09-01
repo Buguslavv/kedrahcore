@@ -11,10 +11,10 @@ namespace Smart_Mini_Tool
 {
     public partial class uxForm : Form
     {
-        Kedrah.Core kedrah;
+        Kedrah.Core kedrah; // objeto principal da dll
 
         public uxForm()
-        {
+        {//inicia as parada
             kedrah = new Kedrah.Core();
             if (kedrah.Client == null)
                 Environment.Exit(0);
@@ -23,7 +23,7 @@ namespace Smart_Mini_Tool
 
         private void uxEnable_Click(object sender, EventArgs e)
         {
-            uint percent, exhaustion, mana;
+            uint percent, exhaustion, mana;//healer mais simples do mundo, acho que ta bugado isso, mas enfim
             if (UInt32.TryParse(uxPercent.Text, out percent) && percent <= 100 && UInt32.TryParse(uxExhaustion.Text, out exhaustion) && UInt32.TryParse(uxMana.Text, out mana))
             {
                 uxPercent.Enabled = !uxPercent.Enabled;

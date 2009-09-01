@@ -73,13 +73,16 @@
     <Compile Include="Util\WebServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TibiaAPI\tibiaapi\TibiaAPI.csproj">
+    <EmbeddedResource Include="Monsters.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tibia API\TibiaAPI.csproj">
       <Project>{4D132EB7-B97D-461D-85CF-949FF5A7BA96}</Project>
       <Name>TibiaAPI</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Monsters.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
