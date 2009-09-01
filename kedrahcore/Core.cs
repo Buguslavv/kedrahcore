@@ -69,14 +69,17 @@ namespace Kedrah {
                         continue;
                     }
 
-                    client.Dll.InitializePipe();
                     proxy = new Tibia.Packets.HookProxy(client);
                     client.Process.Exited += new EventHandler(ClientClosed);
                     proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
                     proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
 
-                    if (client.LoggedIn)
-                        OnLogin(null);
+                    if (client.LoggedIn) {
+                        try {
+                            OnLogin(null);
+                        }
+                        catch {}
+                    }
                 }
 
                 break;
