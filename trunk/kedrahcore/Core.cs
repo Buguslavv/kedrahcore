@@ -18,7 +18,7 @@ namespace Kedrah {
         public Tibia.Objects.Console Console = null;
         public Tibia.Packets.HookProxy Proxy = null;
 
-        HModules Modules;
+        public HModules Modules;
 
         #endregion
 
