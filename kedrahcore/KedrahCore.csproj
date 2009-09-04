@@ -71,7 +71,6 @@
     <Compile Include="Modules\Targeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Database.cs" />
-    <Compile Include="Util\PathFinder.cs" />
     <Compile Include="Util\WebServer.cs" />
   </ItemGroup>
   <ItemGroup>

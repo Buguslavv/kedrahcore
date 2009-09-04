@@ -130,7 +130,7 @@ namespace Kedrah.Modules {
 
             if (Kedrah.Modules.Looter.LootBodies.Count > 0) {
                 for (int i = 0; i < Kedrah.Modules.Looter.LootBodies.Count; i++)
-                    if (!Kedrah.PathFinder.Reachable(Kedrah.Modules.Looter.LootBodies[i].Body.Location.GroundLocation))
+                    if (!Reachable(Kedrah.Modules.Looter.LootBodies[i].Body.Location.GroundLocation))
                         Kedrah.Modules.Looter.LootBodies.RemoveAt(i--);
 
                 Kedrah.Modules.Looter.LootBodies.Sort();
