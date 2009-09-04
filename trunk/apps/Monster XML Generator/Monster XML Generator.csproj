@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9976EBB7-FA41-4293-B983-3BCFFC14D6A5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KedrahCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Hardek\trunk\HardekSuite\bin\Release\KedrahCore.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,10 +46,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TibiaAPI, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Hardek\trunk\HardekSuite\bin\Release\TibiaAPI.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="uxForm.cs">
@@ -87,6 +79,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TibiaAPI\tibiaapi\TibiaAPI.csproj">
+      <Project>{4D132EB7-B97D-461D-85CF-949FF5A7BA96}</Project>
+      <Name>TibiaAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\kedrahcore\KedrahCore.csproj">
+      <Project>{2AC544A0-7273-45B0-901B-494ED8020DB4}</Project>
+      <Name>KedrahCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

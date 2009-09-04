@@ -308,12 +308,8 @@ namespace Kedrah.Modules {
                 if (AttackedOnly && !creature.IsAttacking())
                     continue;
 
-                if (target == null) {
-                    target = FindTarget("All", 50);
-
-                    if (target == null)
-                        continue;
-                }
+                if (target == null)
+                    continue;
 
                 if (OthersMonsters > 0) {
                     var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c) {
@@ -372,20 +368,22 @@ namespace Kedrah.Modules {
         #region Timers
 
         private void Target_OnExecute() {
+            SelectTarget();
+
             if (this.target == null || this.creature == null)
                 return;
 
             Kedrah.Client.FollowMode = this.target.FollowMode;
             Kedrah.Client.AttackMode = this.target.AttackMode;
+            Tibia.Packets.Outgoing.FightModesPacket.Send(Kedrah.Client, (byte)Kedrah.Client.AttackMode, (byte)Kedrah.Client.FollowMode, (byte)Kedrah.Client.SafeMode);
 
-            if (this.target.Action == FightActions.Attack) {
-                Kedrah.Player.Stop();
+            if (this.creature.Id == Kedrah.Player.Target_ID)
+                return;
+
+            if (this.target.Action == FightActions.Attack)
                 this.creature.Attack();
-            }
-            else if (this.target.Action == FightActions.Follow) {
-                Kedrah.Player.Stop();
+            else if (this.target.Action == FightActions.Follow)
                 this.creature.Follow();
-            }
         }
 
         private void Action_OnExecute() {
@@ -410,8 +408,6 @@ namespace Kedrah.Modules {
 
             public string Name;
 
-            /// <summary>
-            /// </summary>
             public Monster(string name) {
                 Weaknesses = new List<Element>();
                 Strongnesses = new List<Element>();
@@ -507,6 +503,9 @@ namespace Kedrah.Modules {
 
             public bool IsMatch(Target s) {
                 bool hp = (s.HPRange[0] <= hpbar && s.HPRange[1] <= hpbar);
+                if (s.Name == "All")
+                    return true;
+
                 if (!Sensitive)
                     return (hp && s.Name.ToLower() == name.ToLower());
                 else
