@@ -10,6 +10,7 @@ namespace Kedrah {
         public Kedrah.Modules.Cavebot Cavebot;
         public Kedrah.Modules.General General;
         public Kedrah.Modules.Heal Heal;
+        public Kedrah.Modules.Looter Looter;
         public Kedrah.Modules.Targeting Targeting;
 
         #endregion
@@ -20,6 +21,7 @@ namespace Kedrah {
             Cavebot = new Kedrah.Modules.Cavebot(core);
             General = new Kedrah.Modules.General(core);
             Heal = new Kedrah.Modules.Heal(core);
+            Looter = new Kedrah.Modules.Looter(core);
             Targeting = new Kedrah.Modules.Targeting(core);
         }
 
@@ -28,14 +30,18 @@ namespace Kedrah {
         #region HModules Functions
 
         internal void Enable() {
+            Cavebot.Enable();
             General.Enable();
             Heal.Enable();
+            Looter.Enable();
             Targeting.Enable();
         }
 
         internal void Disable() {
+            Cavebot.Disable();
             General.Disable();
             Heal.Disable();
+            Looter.Disable();
             Targeting.Disable();
         }
 

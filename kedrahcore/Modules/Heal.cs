@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections;
 
 namespace Kedrah.Modules {
     public class Heal : Module {
@@ -11,10 +11,10 @@ namespace Kedrah.Modules {
         public bool Paralyze = false;
         public DateTime PotionNext = DateTime.Now;
         public DateTime SpellNext = DateTime.Now;
-        public HealList<ItemPercent> PotionLife;
-        public HealList<ItemPercent> RuneLife;
-        public HealList<ItemPercent> PotionMana;
-        public HealList<SpellPercent> SpellLife;
+        public List<ItemPercent> PotionLife;
+        public List<ItemPercent> PotionMana;
+        public List<ItemPercent> RuneLife;
+        public List<SpellPercent> SpellLife;
         public string SpellPoisonWords = Tibia.Constants.Spells.Antidote.Words;
         public ushort PotionExhaustion = 700;
         public ushort SpellExhaustion = 1080;
@@ -26,10 +26,10 @@ namespace Kedrah.Modules {
 
         public Heal(Core core)
             : base(core) {
-            PotionLife = new HealList<ItemPercent>();
-            RuneLife = new HealList<ItemPercent>();
-            PotionMana = new HealList<ItemPercent>();
-            SpellLife = new HealList<SpellPercent>();
+            PotionLife = new List<ItemPercent>();
+            PotionMana = new List<ItemPercent>();
+            RuneLife = new List<ItemPercent>();
+            SpellLife = new List<SpellPercent>();
 
             #region Timers
 
@@ -51,19 +51,16 @@ namespace Kedrah.Modules {
                     return false;
             }
             set {
-                if (value)
+                if (value) {
+                    PotionLife.Sort();
+                    PotionMana.Sort();
+                    RuneLife.Sort();
+                    SpellLife.Sort();
                     PlayTimer("healer");
+                }
                 else
                     PauseTimer("healer");
             }
-        }
-
-        #endregion
-
-        #region Module Functions
-
-        private int compareSpellPercents(SpellPercent sp1, SpellPercent sp2) {
-            return sp1.Percent == sp2.Percent ? 0 : sp1.Percent > sp2.Percent ? 1 : -1;
         }
 
         #endregion
@@ -104,27 +101,7 @@ namespace Kedrah.Modules {
         #endregion
     }
 
-    public class HealList<T> : List<T> {
-        public void RemoveDuplicates() {
-            Dictionary<T, int> uniqueStore = new Dictionary<T, int>();
-            List<T> inputList = new List<T>(this);
-            this.Clear();
-
-            foreach (T currentValue in inputList) {
-                if (!uniqueStore.ContainsKey(currentValue)) {
-                    uniqueStore.Add(currentValue, 0);
-                    this.Add(currentValue);
-                }
-            }
-        }
-
-        public void Insert(T item) {
-            base.Add(item);
-            this.RemoveDuplicates();
-        }
-    }
-
-    public struct ItemPercent {
+    public struct ItemPercent : IComparable<ItemPercent> {
         public uint Percent;
         public Tibia.Objects.Item Item;
 
@@ -132,9 +109,13 @@ namespace Kedrah.Modules {
             this.Percent = percent;
             this.Item = item;
         }
+
+        public int CompareTo(ItemPercent other) {
+            return Percent.CompareTo(other.Percent);
+        }
     }
 
-    public struct SpellPercent {
+    public struct SpellPercent : IComparable<SpellPercent> {
         public uint Percent;
         public string Spell;
         public uint Mana;
@@ -143,6 +124,10 @@ namespace Kedrah.Modules {
             this.Percent = percent;
             this.Spell = spell;
             this.Mana = mana;
+        }
+
+        public int CompareTo(SpellPercent other) {
+            return Percent.CompareTo(other.Percent);
         }
     }
 }
