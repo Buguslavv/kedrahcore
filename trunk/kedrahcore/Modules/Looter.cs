@@ -85,10 +85,8 @@ namespace Kedrah.Modules {
                 TileAddThingPacket p = (TileAddThingPacket)packet;
 
                 if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacentTo(Kedrah.Player.Location))) {
-                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer)) {
-                        LootBodies.Add(new LootBody(p.Item, Kedrah.Player));
-                        //LootBodies.Sort();
-                    }
+                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer))
+                        LootBodies.Add(new LootBody(p.Item, Kedrah));
                 }
             }
 
@@ -280,20 +278,12 @@ namespace Kedrah.Modules {
             if (Kedrah.Player.IsWalking)
                 return;
 
-            if (lootContainers.Count == 0 && LootBodies.Count > 0 && (Kedrah.Player.Target_ID == 0 || LootBodies[0].Body.Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location))) {
-                if (!Kedrah.Player.Location.IsAdjacentTo(LootBodies[0].Body.Location.GroundLocation))
-                    if (Kedrah.PathFinder.Reachable(LootBodies[0].Body.Location.GroundLocation))
-                        while (!Kedrah.Player.Location.IsAdjacentTo(LootBodies[0].Body.Location.GroundLocation)) {
-                            if (!Kedrah.Player.IsWalking)
-                                if (Kedrah.Player.Target_ID == 0)
-                                    Kedrah.Player.GoTo = LootBodies[0].Body.Location.GroundLocation;
-                                else
-                                    return;
-                            Thread.Sleep(100);
-                        }
+            if (lootContainers.Count == 0 && LootBodies.Count > 0)
+                LootBodies.Sort();
+            else
+                return;
 
-                Kedrah.Player.Stop();
-                Thread.Sleep(100);
+            if (LootBodies[0].Body.Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location) && !Kedrah.Player.IsWalking) {
                 LootBodies[0].Body.OpenAsContainer((byte)Kedrah.Inventory.GetContainers().Count());
                 Thread.Sleep(100);
                 LootBodies.RemoveAt(0);
@@ -323,15 +313,28 @@ namespace Kedrah.Modules {
 
     public class LootBody : IComparable<LootBody> {
         public Item Body;
-        public Player Player;
+        public Core Kedrah;
 
-        public LootBody(Item body, Player player) {
+        public LootBody(Item body, Core core) {
             Body = body;
-            Player = player;
+            Kedrah = core;
         }
 
         public int CompareTo(LootBody other) {
-            return Body.Location.GroundLocation.DistanceTo(Player.Location).CompareTo(other.Body.Location.GroundLocation.DistanceTo(Player.Location));
+            int comparisson = Body.Location.GroundLocation.DistanceTo(Kedrah.Player.Location).CompareTo(other.Body.Location.GroundLocation.DistanceTo(Kedrah.Player.Location));
+
+            if (comparisson == 0) {
+                List<Item> tileItems = Kedrah.Map.GetTile(Body.Location.GroundLocation).Items;
+                List<Item> tileOtherItems = Kedrah.Map.GetTile(other.Body.Location.GroundLocation).Items;
+
+                if (tileItems.Count > 0)
+                    comparisson = (tileItems.Last().Id == Body.Id) ? -1 : 0;
+
+                if (comparisson == 0 && tileOtherItems.Count > 0)
+                    comparisson = (tileOtherItems.Last().Id == other.Body.Id) ? 1 : 0;
+            }
+
+            return comparisson;
         }
     }
 }
