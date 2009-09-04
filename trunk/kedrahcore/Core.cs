@@ -17,7 +17,6 @@ namespace Kedrah {
         public Tibia.Objects.Inventory Inventory = null;
         public Tibia.Objects.Console Console = null;
         public Tibia.Packets.HookProxy Proxy = null;
-        public Kedrah.Util.PathFinder PathFinder = null;
 
         public HModules Modules;
 
@@ -57,7 +56,6 @@ namespace Kedrah {
                     Proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
                     
                     Modules = new HModules(this);
-                    PathFinder = new Kedrah.Util.PathFinder(this);
 
                     if (Client.LoggedIn) {
                         try {
