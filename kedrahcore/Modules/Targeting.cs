@@ -377,13 +377,18 @@ namespace Kedrah.Modules {
             Kedrah.Client.AttackMode = this.target.AttackMode;
             Tibia.Packets.Outgoing.FightModesPacket.Send(Kedrah.Client, (byte)Kedrah.Client.AttackMode, (byte)Kedrah.Client.FollowMode, (byte)Kedrah.Client.SafeMode);
 
-            if (this.creature.Id == Kedrah.Player.Target_ID)
-                return;
+            if (this.target.Action == FightActions.Attack) {
+                if (creature.Id != Kedrah.Player.Target_ID)
+                    Kedrah.Player.Stop();
 
-            if (this.target.Action == FightActions.Attack)
                 this.creature.Attack();
-            else if (this.target.Action == FightActions.Follow)
+            }
+            else if (target.Action == FightActions.Follow) {
+                if (creature.Id != Kedrah.Player.Target_ID)
+                    Kedrah.Player.Stop();
+
                 this.creature.Follow();
+            }
         }
 
         private void Action_OnExecute() {
