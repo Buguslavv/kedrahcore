@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Tibia.Objects;
 using Tibia.Constants;
+using System.Threading;
 
 namespace Kedrah.Modules {
     public class Cavebot : Module {
@@ -15,13 +16,14 @@ namespace Kedrah.Modules {
         public Item Pick = Tibia.Constants.Items.Tool.Pick;
         public Item Rope = Tibia.Constants.Items.Tool.Rope;
         public Item Shovel = Tibia.Constants.Items.Tool.Shovel;
+        public List<Item> LootBodies = new List<Item>();
 
         #endregion
 
         #region Constructor/Destructor
 
-        public Cavebot(Core core)
-            : base(core) {
+        public Cavebot(ref Core core)
+            : base(ref core) {
 
             #region Timers
 
@@ -68,23 +70,6 @@ namespace Kedrah.Modules {
             return Kedrah.Player.Location.Offset(1, 1, 0);
         }
 
-        private static Tibia.Objects.Location AdjustLocation(Tibia.Objects.Location location, int xDiff, int yDiff) {
-            int xNew = location.X - xDiff;
-            int yNew = location.Y - yDiff;
-
-            if (xNew > 17)
-                xNew -= 18;
-            else if (xNew < 0)
-                xNew += 18;
-
-            if (yNew > 13)
-                yNew -= 14;
-            else if (yNew < 0)
-                yNew += 14;
-
-            return new Tibia.Objects.Location(xNew, yNew, location.Z);
-        }
-
         public bool Reachable(Tibia.Objects.Location location) {
             IEnumerable<Tibia.Objects.Tile> tileList = Kedrah.Map.GetTilesOnSameFloor();
             Tibia.Objects.Tile playerTile = Kedrah.Map.GetTileWithPlayer();
@@ -92,24 +77,16 @@ namespace Kedrah.Modules {
 
             if (playerTile == null || destinationTile == null)
                 return false;
+            else if (location.IsAdjacentTo(Kedrah.Player.Location))
+                return true;
 
-            int xDiff, yDiff;
-            int playerZ = Kedrah.Client.Memory.ReadInt32(Tibia.Addresses.Player.Z);
-            var creatures = Kedrah.Client.BattleList.GetCreatures().Where(c => c.Z == playerZ);
-            int playerId = Kedrah.Client.Memory.ReadInt32(Tibia.Addresses.Player.Id);
-
-            xDiff = (int)playerTile.MemoryLocation.X - 8;
-            yDiff = (int)playerTile.MemoryLocation.Y - 6;
-
-            playerTile.MemoryLocation = AdjustLocation(playerTile.MemoryLocation, xDiff, yDiff);
-            destinationTile.MemoryLocation = AdjustLocation(destinationTile.MemoryLocation, xDiff, yDiff);
+            IEnumerable<Creature> creatures = Kedrah.Client.BattleList.GetCreatures().Where(c => c.Z == Kedrah.Player.Z);
 
             foreach (Tibia.Objects.Tile tile in tileList) {
-                tile.MemoryLocation = AdjustLocation(tile.MemoryLocation, xDiff, yDiff);
-
                 if (tile.Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) || tile.Ground.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath) ||
-                    tile.Items.Any(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) || i.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath) || Kedrah.Client.PathFinder.ModifiedItems.ContainsKey(i.Id)) ||
-                    creatures.Any(c => tile.Objects.Any(o => o.Data == c.Id && o.Data != playerId))) {
+                    tile.Items.Any(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking) || i.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath) ||
+                    Kedrah.Client.PathFinder.ModifiedItems.ContainsKey(i.Id)) ||
+                    creatures.Any(c => tile.Objects.Any(o => o.Data == c.Id && o.Data != Kedrah.Player.Id))) {
                     Kedrah.Client.PathFinder.Grid[tile.MemoryLocation.X, tile.MemoryLocation.Y] = 0;
                 }
                 else {
@@ -124,20 +101,27 @@ namespace Kedrah.Modules {
 
         #region Timers
 
-        private void Walk_OnExecute() {
+        public void Walk_OnExecute() {
             if (Kedrah.Player.Target_ID != 0)
                 return;
 
-            if (Kedrah.Modules.Looter.LootBodies.Count > 0) {
-                for (int i = 0; i < Kedrah.Modules.Looter.LootBodies.Count; i++)
-                    if (!Reachable(Kedrah.Modules.Looter.LootBodies[i].Body.Location.GroundLocation))
-                        Kedrah.Modules.Looter.LootBodies.RemoveAt(i--);
+            if (LootBodies.Count > 0) {
+                LootBodies.RemoveAll(delegate(Item i) { return !Reachable(i.Location.GroundLocation); });
+                LootBodies.Sort(new Comparison<Item>(delegate(Item i1, Item i2) { return i1.Location.GroundLocation.DistanceTo(Kedrah.Player.Location).CompareTo(i2.Location.GroundLocation.DistanceTo(Kedrah.Player.Location)); }));
 
-                Kedrah.Modules.Looter.LootBodies.Sort();
-                LootBody body = Kedrah.Modules.Looter.LootBodies[0];
+                if (!LootBodies[0].Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location) && !Kedrah.Player.IsWalking) {
+                    Location location = LootBodies[0].Location.GroundLocation;
 
-                if (!body.Body.Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location) && !Kedrah.Player.IsWalking)
-                    Kedrah.Player.GoTo = body.Body.Location.GroundLocation;
+                    foreach (Tile t in Kedrah.Map.GetTilesOnSameFloor())
+                        if (t.Location.IsAdjacentTo(LootBodies[0].Location.GroundLocation) && t.Location.DistanceTo(Kedrah.Player.Location) < location.DistanceTo(Kedrah.Player.Location))
+                            location = t.Location;
+
+                    Kedrah.Player.GoTo = location;
+                }
+                else if (!Kedrah.Player.IsWalking) {
+                    LootBodies[0].OpenAsContainer((byte)Kedrah.Inventory.GetContainers().Count());
+                    LootBodies.RemoveAt(0);
+                }
 
                 return;
             }
@@ -159,7 +143,8 @@ namespace Kedrah.Modules {
                         Iterator++;
                         break;
                     case WaypointType.Approach:
-
+                        if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= 1)
+                            Iterator++;
                         break;
                     case WaypointType.Ladder:
                         if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= 1) {

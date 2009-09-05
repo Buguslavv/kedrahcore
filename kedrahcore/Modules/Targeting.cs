@@ -68,8 +68,8 @@ namespace Kedrah.Modules {
 
         #region Constructor/Destructor
 
-        public Targeting(Core core)
-            : base(core) {
+        public Targeting(ref Core core)
+            : base(ref core) {
             LoadMonstersFromXmlResource();
 
             Reachable = false;
@@ -476,10 +476,7 @@ namespace Kedrah.Modules {
             }
 
             public bool IsMatch(Monster s) {
-                if (!Sensitive)
-                    return (s.Name.ToLower() == name.ToLower());
-                else
-                    return (s.Name == name);
+                return (string.Compare(s.Name, name, !Sensitive) == 0);
             }
         }
 
@@ -508,13 +505,10 @@ namespace Kedrah.Modules {
 
             public bool IsMatch(Target s) {
                 bool hp = (s.HPRange[0] <= hpbar && s.HPRange[1] <= hpbar);
-                if (s.Name == "All")
+                if (string.Compare(s.Name, "All", false) == 0)
                     return true;
 
-                if (!Sensitive)
-                    return (hp && s.Name.ToLower() == name.ToLower());
-                else
-                    return (hp && s.Name == name);
+                return (hp && string.Compare(s.Name, name, !Sensitive) == 0);
             }
         }
 

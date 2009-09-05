@@ -10,6 +10,9 @@ namespace Kedrah.Modules {
     public class General : Module {
         #region Variables/Objects
 
+        [DllImport("User32.dll")]
+        private static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
+
         private bool talking = false;
         private bool holdingBoostKey = true;
         private int floorOfSpy = 0;
@@ -26,8 +29,8 @@ namespace Kedrah.Modules {
 
         #region Constructor/Destructor
 
-        public General(Core core)
-            : base(core) {
+        public General(ref Core core)
+            : base(ref core) {
             #region Timers
 
             Timers.Add("eatFood", new Tibia.Util.Timer(5000, false));
@@ -42,16 +45,14 @@ namespace Kedrah.Modules {
             Timers.Add("replaceTrees", new Tibia.Util.Timer(1000, false));
             Timers["replaceTrees"].Execute += new Tibia.Util.Timer.TimerExecution(ReplaceTrees_OnExecute);
 
-            Timers.Add("framerateControl", new Tibia.Util.Timer(50, false));
+            Timers.Add("framerateControl", new Tibia.Util.Timer(500, false));
             Timers["framerateControl"].Execute += new Tibia.Util.Timer.TimerExecution(FramerateControl_OnExecute);
 
-            Timers.Add("stackItems", new Tibia.Util.Timer(50, false));
+            Timers.Add("stackItems", new Tibia.Util.Timer(300, false));
             Timers["stackItems"].Execute += new Tibia.Util.Timer.TimerExecution(StackItems_OnExecute);
 
-            Timers.Add("clickReuse", new Tibia.Util.Timer(1, false));
+            Timers.Add("clickReuse", new Tibia.Util.Timer(100, false));
             Timers["clickReuse"].Execute += new Tibia.Util.Timer.TimerExecution(ClickReuse_OnExecute);
-            Timers.Add("clickReuseControl", new Tibia.Util.Timer(500, false));
-            Timers["clickReuseControl"].Execute += new Tibia.Util.Timer.TimerExecution(ClickReuseControl_OnExecute);
 
             Timers.Add("worldOnlyView", new Tibia.Util.Timer(300, false));
             Timers["worldOnlyView"].Execute += new Tibia.Util.Timer.TimerExecution(WorldOnlyView_OnExecute);
@@ -106,26 +107,10 @@ namespace Kedrah.Modules {
                     return false;
             }
             set {
-                if (value) {
-                    if (Tibia.MouseHook.ButtonDown == null) {
-                        Tibia.MouseHook.ButtonDown = null;
-                        Tibia.MouseHook.ButtonDown += new Tibia.MouseHook.MouseButtonHandler(delegate(System.Windows.Forms.MouseButtons buttons) {
-                            if (Kedrah.Client.Window.IsActive && buttons == System.Windows.Forms.MouseButtons.Right) {
-                                reusing = false;
-                                Kedrah.Client.ActionState = Tibia.Constants.ActionState.None;
-                            }
-                            return true;
-                        });
-                        Tibia.MouseHook.ButtonDown += null;
-                    }
+                if (value)
                     PlayTimer("clickReuse");
-                    PlayTimer("clickReuseControl");
-                }
-                else {
-                    Tibia.MouseHook.ButtonDown = null;
+                else
                     PauseTimer("clickReuse");
-                    PauseTimer("clickReuseControl");
-                }
             }
         }
 
@@ -796,13 +781,14 @@ namespace Kedrah.Modules {
         }
 
         void ClickReuse_OnExecute() {
-            if (reusing)
-                Kedrah.Client.ActionState = Tibia.Constants.ActionState.Using;
-        }
-
-        void ClickReuseControl_OnExecute() {
-            if (Kedrah.Client.ActionState == Tibia.Constants.ActionState.Using)
-                reusing = true;
+            if (GetAsyncKeyState(Keys.RButton) != 0 && Kedrah.Client.ActionState == Tibia.Constants.ActionState.Using) {
+                Kedrah.Client.Window.ActionStateFreezer = false;
+                Kedrah.Client.ActionState = Tibia.Constants.ActionState.None;
+            }
+            else if (Kedrah.Client.ActionState == Tibia.Constants.ActionState.Using)
+                Kedrah.Client.Window.ActionStateFreezer = true;
+            else
+                Kedrah.Client.Window.ActionStateFreezer = false;
         }
 
         void WorldOnlyView_OnExecute() {

@@ -24,8 +24,8 @@ namespace Kedrah.Modules {
 
         #region Constructor/Destructor
 
-        public Heal(Core core)
-            : base(core) {
+        public Heal(ref Core core)
+            : base(ref core) {
             PotionLife = new List<ItemPercent>();
             PotionMana = new List<ItemPercent>();
             RuneLife = new List<ItemPercent>();
