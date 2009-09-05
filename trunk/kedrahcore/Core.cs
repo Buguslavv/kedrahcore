@@ -16,7 +16,7 @@ namespace Kedrah {
         public Tibia.Objects.BattleList BattleList = null;
         public Tibia.Objects.Inventory Inventory = null;
         public Tibia.Objects.Console Console = null;
-        public Tibia.Packets.ProxyBase Proxy = null;
+        public Tibia.Packets.Proxy Proxy = null;
 
         public HModules Modules;
 
@@ -25,7 +25,7 @@ namespace Kedrah {
         #region Constructor
 
         public Core()
-            : this("Kedrah Core", "", true, false) {
+            : this("Kedrah Core", "", false, false) {
         }
 
         public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF) {
@@ -35,6 +35,7 @@ namespace Kedrah {
                 Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
                 clientChooserOptions.Title = clientChooserTitle;
                 clientChooserOptions.ShowOTOption = true;
+                clientChooserOptions.OfflineOnly = true;
 
                 if (useWPF)
                     Client = Tibia.Util.ClientChooserWPF.ShowBox(clientChooserOptions);
@@ -51,27 +52,14 @@ namespace Kedrah {
 
                     System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.AboveNormal;
 
-                    if (hookProxy)
-                        Proxy = new Tibia.Packets.HookProxy(Client);
-                    else if (Client.LoggedIn) {
-                        Client = null;
-                        continue;
-                    }
-                    else {
-                        Client.IO.StartProxy();
-                        Proxy = Client.IO.Proxy;
-                    }
+                    Client.IO.StartProxy();
+                    Proxy = Client.IO.Proxy;
 
                     Client.Process.Exited += new EventHandler(ClientClosed);
                     Proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
                     Proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
 
                     Modules = new HModules(this);
-
-                    if (Client.LoggedIn) {
-                        System.Threading.Thread.Sleep(500);
-                        OnLogin(null);
-                    }
                 }
 
                 break;

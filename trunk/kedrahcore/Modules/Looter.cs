@@ -58,9 +58,8 @@ namespace Kedrah.Modules {
 
         private bool IsLootContainer(byte number) {
             Tibia.Objects.Container container = Kedrah.Inventory.GetContainer(number);
-            Tibia.Objects.Item item = new Tibia.Objects.Item(Kedrah.Client, (uint)container.Id);
 
-            if ((number == 0) || (Tibia.Constants.ItemLists.Containers.ContainsKey(item.Id) && !(item.Id == Tibia.Constants.Items.Container.BagBrown.Id && container.HasParent)))
+            if ((number == 0) || (Tibia.Constants.ItemLists.Containers.ContainsKey((uint) container.Id) && !(container.Id == Tibia.Constants.Items.Container.BagBrown.Id && container.HasParent)))
                 return false;
 
             return true;
@@ -69,9 +68,7 @@ namespace Kedrah.Modules {
         private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet) {
             if (Looting && LootItems.Count > 0) {
                 ContainerOpenPacket p = (ContainerOpenPacket)packet;
-
-                if (IsLootContainer(p.Id))
-                    lootContainers.Enqueue(p.Id);
+                lootContainers.Enqueue(p.Id);
             }
 
             return true;
