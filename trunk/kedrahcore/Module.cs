@@ -16,7 +16,7 @@ namespace Kedrah {
 
         #region Constructor/Destructor
 
-        public Module(Core core) {
+        public Module(ref Core core) {
             Kedrah = core;
             Disable();
         }

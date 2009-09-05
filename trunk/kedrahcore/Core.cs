@@ -16,7 +16,7 @@ namespace Kedrah {
         public Tibia.Objects.BattleList BattleList = null;
         public Tibia.Objects.Inventory Inventory = null;
         public Tibia.Objects.Console Console = null;
-        public Tibia.Packets.HookProxy Proxy = null;
+        public Tibia.Packets.ProxyBase Proxy = null;
 
         public HModules Modules;
 
@@ -25,12 +25,11 @@ namespace Kedrah {
         #region Constructor
 
         public Core()
-            : this("Kedrah Core", "", false) {
+            : this("Kedrah Core", "", true, false) {
         }
 
-        public Core(string clientChooserTitle, string mutexName, bool useWPF) {
+        public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF) {
             Tibia.KeyboardHook.Enable();
-            Tibia.MouseHook.Enable();
 
             do {
                 Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
@@ -50,18 +49,28 @@ namespace Kedrah {
                         continue;
                     }
 
-                    Proxy = new Tibia.Packets.HookProxy(Client);
+                    System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.AboveNormal;
+
+                    if (hookProxy)
+                        Proxy = new Tibia.Packets.HookProxy(Client);
+                    else if (Client.LoggedIn) {
+                        Client = null;
+                        continue;
+                    }
+                    else {
+                        Client.IO.StartProxy();
+                        Proxy = Client.IO.Proxy;
+                    }
+
                     Client.Process.Exited += new EventHandler(ClientClosed);
                     Proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
                     Proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
-                    
+
                     Modules = new HModules(this);
 
                     if (Client.LoggedIn) {
-                        try {
-                            OnLogin(null);
-                        }
-                        catch {}
+                        System.Threading.Thread.Sleep(500);
+                        OnLogin(null);
                     }
                 }
 
@@ -74,11 +83,11 @@ namespace Kedrah {
         #region Core Functions
 
         private bool OnLogin(Tibia.Packets.IncomingPacket packet) {
-            Map = new Tibia.Objects.Map(Client);
-            Screen = new Tibia.Objects.Screen(Client);
-            BattleList = new Tibia.Objects.BattleList(Client);
-            Inventory = new Tibia.Objects.Inventory(Client);
-            Console = new Tibia.Objects.Console(Client);
+            Map = Client.Map;
+            Screen = Client.Screen;
+            BattleList = Client.BattleList;
+            Inventory = Client.Inventory;
+            Console = Client.Console;
             System.Threading.Thread.Sleep(300);
             Player = Client.GetPlayer();
             Modules.Enable();

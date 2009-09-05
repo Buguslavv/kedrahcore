@@ -19,15 +19,14 @@ namespace Kedrah.Modules {
         public bool OpenBodies = true;
         public bool OpenDistantBodies = true;
         public bool OpenNextContainer = true;
-        public List<LootBody> LootBodies = new List<LootBody>();
         public List<LootItem> LootItems = new List<LootItem>();
 
         #endregion
 
         #region Constructor/Destructor
 
-        public Looter(Core core)
-            : base(core) {
+        public Looter(ref Core core)
+            : base(ref core) {
             for (ushort i = 0; i < 9000; i++) {
                 if (i != (ushort)Tibia.Constants.Items.Container.BagBrown.Id && i != (ushort)Tibia.Constants.Items.Food.Meat.Id && i != (ushort)Tibia.Constants.Items.Food.Ham.Id)
                     LootItems.Add(new LootItem(i, 0, ""));
@@ -40,8 +39,6 @@ namespace Kedrah.Modules {
 
             Timers.Add("looting", new Tibia.Util.Timer(100, false));
             Timers["looting"].Execute += new Tibia.Util.Timer.TimerExecution(Looting_OnExecute);
-            Timers.Add("openBodies", new Tibia.Util.Timer(100, false));
-            Timers["openBodies"].Execute += new Tibia.Util.Timer.TimerExecution(OpenBodies_OnExecute);
 
             #endregion
         }
@@ -85,8 +82,9 @@ namespace Kedrah.Modules {
                 TileAddThingPacket p = (TileAddThingPacket)packet;
 
                 if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacentTo(Kedrah.Player.Location))) {
-                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer))
-                        LootBodies.Add(new LootBody(p.Item, Kedrah));
+                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z) {
+                        Kedrah.Modules.Cavebot.LootBodies.Add(p.Item);
+                    }
                 }
             }
 
@@ -252,14 +250,10 @@ namespace Kedrah.Modules {
                     return false;
             }
             set {
-                if (value) {
+                if (value)
                     PlayTimer("looting");
-                    PlayTimer("openBodies");
-                }
-                else {
+                else
                     PauseTimer("looting");
-                    PauseTimer("openBodies");
-                }
             }
         }
 
@@ -270,24 +264,6 @@ namespace Kedrah.Modules {
         private void Looting_OnExecute() {
             if (Kedrah.Client.LoggedIn && lootContainers.Count > 0)
                 Loot(lootContainers.Dequeue());
-        }
-
-        public void OpenBodies_OnExecute() {
-            if (!Kedrah.Client.LoggedIn)
-                return;
-            if (Kedrah.Player.IsWalking)
-                return;
-
-            if (lootContainers.Count == 0 && LootBodies.Count > 0)
-                LootBodies.Sort();
-            else
-                return;
-
-            if (LootBodies[0].Body.Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location) && !Kedrah.Player.IsWalking) {
-                LootBodies[0].Body.OpenAsContainer((byte)Kedrah.Inventory.GetContainers().Count());
-                Thread.Sleep(100);
-                LootBodies.RemoveAt(0);
-            }
         }
 
         #endregion
@@ -308,33 +284,6 @@ namespace Kedrah.Modules {
 
         public override string ToString() {
             return Id.ToString() + " Container " + (Container + 1).ToString() + " (" + Description + ")";
-        }
-    }
-
-    public class LootBody : IComparable<LootBody> {
-        public Item Body;
-        public Core Kedrah;
-
-        public LootBody(Item body, Core core) {
-            Body = body;
-            Kedrah = core;
-        }
-
-        public int CompareTo(LootBody other) {
-            int comparisson = Body.Location.GroundLocation.DistanceTo(Kedrah.Player.Location).CompareTo(other.Body.Location.GroundLocation.DistanceTo(Kedrah.Player.Location));
-
-            if (comparisson == 0) {
-                List<Item> tileItems = Kedrah.Map.GetTile(Body.Location.GroundLocation).Items;
-                List<Item> tileOtherItems = Kedrah.Map.GetTile(other.Body.Location.GroundLocation).Items;
-
-                if (tileItems.Count > 0)
-                    comparisson = (tileItems.Last().Id == Body.Id) ? -1 : 0;
-
-                if (comparisson == 0 && tileOtherItems.Count > 0)
-                    comparisson = (tileOtherItems.Last().Id == other.Body.Id) ? 1 : 0;
-            }
-
-            return comparisson;
         }
     }
 }

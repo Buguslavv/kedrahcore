@@ -18,11 +18,11 @@ namespace Kedrah {
         #region Constructor
 
         public HModules(Core core) {
-            Cavebot = new Kedrah.Modules.Cavebot(core);
-            General = new Kedrah.Modules.General(core);
-            Heal = new Kedrah.Modules.Heal(core);
-            Looter = new Kedrah.Modules.Looter(core);
-            Targeting = new Kedrah.Modules.Targeting(core);
+            Cavebot = new Kedrah.Modules.Cavebot(ref core);
+            General = new Kedrah.Modules.General(ref core);
+            Heal = new Kedrah.Modules.Heal(ref core);
+            Looter = new Kedrah.Modules.Looter(ref core);
+            Targeting = new Kedrah.Modules.Targeting(ref core);
         }
 
         #endregion
