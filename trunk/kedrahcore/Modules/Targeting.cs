@@ -61,7 +61,6 @@ namespace Kedrah.Modules {
         public byte Distance = 2;
         public byte OthersMonsters;
         public Dictionary<string, byte> TargetSelection = new Dictionary<string, byte>();
-        public List<Monster> Monsters = new List<Monster>();
         public List<Target> Targets = new List<Target>();
 
         #endregion
@@ -70,8 +69,6 @@ namespace Kedrah.Modules {
 
         public Targeting(ref Core core)
             : base(ref core) {
-            LoadMonstersFromXmlResource();
-
             Reachable = false;
             Reachable = true;
             Shootable = false;
@@ -137,149 +134,69 @@ namespace Kedrah.Modules {
         #region Module Functions
 
         public void AddTarget(string name) {
-            Monster monster = FindMonster(name);
+            CreatureData c = null;
 
-            if (monster == null)
-                monster = new Monster(name);
+            if (CreatureLists.AllCreatures.ContainsKey(name))
+                c = CreatureLists.AllCreatures[name];
+            else
+                c = new CreatureData(name, 0, 0, 0, 0, 0, false, false, FrontAttack.None, null, null, null, null, null);
 
-            this.Targets.Add(new Target(monster));
+            Targets.Add(new Target(c));
         }
 
         public void AddTarget(string name, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode) {
-            Monster monster = FindMonster(name);
+            CreatureData c = null;
 
-            if (monster == null)
-                monster = new Monster(name);
+            if (CreatureLists.AllCreatures.ContainsKey(name))
+                c = CreatureLists.AllCreatures[name];
+            else
+                c = new CreatureData(name, 0, 0, 0, 0, 0, false, false, FrontAttack.None, null, null, null, null, null);
 
-            this.Targets.Add(new Target(monster, action, priority, security, stance, attackMode, followMode));
+            this.Targets.Add(new Target(c, action, priority, security, stance, attackMode, followMode));
         }
 
         public override void Enable() {
             base.Enable();
         }
 
-        public Monster FindMonster(string name) {
-            return FindMonster(name, false);
+        public string GetBestMageSpell(CreatureData creatureData) {
+            return GetBestMageSpell(creatureData, "exori mort", "exori tera", "exori vis", "exori flam", "exori frigo");
         }
 
-        public Monster FindMonster(string name, bool sensitive) {
-            return Monsters.Find(new MonsterFinder(name, sensitive).Match);
-        }
+        public string GetBestMageSpell(CreatureData creatureData, string deathSpell, string earthSpell, string energySpell, string fireSpell, string iceSpell) {
+            DamageType damageType = creatureData.GetWeakness(new List<DamageType>() { DamageType.Death, DamageType.Earth, DamageType.Energy, DamageType.Fire, DamageType.Ice });
 
-        public Target FindTarget(string name, byte hpbar) {
-            return FindTarget(name, hpbar, false);
-        }
-
-        public Target FindTarget(string name, byte hpbar, bool sensitive) {
-            return Targets.Find(new TargetFinder(name, hpbar, sensitive).Match);
-        }
-
-        public string GetBestElementIn(Monster monster, string[] elements) {
-            if (monster == null)
-                return "";
-
-            List<List<Element>> elementLists = new List<List<Element>>();
-
-            elementLists.Add(monster.Weaknesses);
-            elementLists.Add(monster.Neutral);
-            elementLists.Add(monster.Strongnesses);
-
-            foreach (List<Element> elementList in elementLists)
-                foreach (Element element in elementList)
-                    if (elements.Contains(element.To, StringComparer.OrdinalIgnoreCase))
-                        return element.To;
-
-            return "";
-        }
-
-        public string GetBestMageSpell(Monster monster) {
-            return GetBestMageSpell(monster, "exori flam", "exori vis", "exori frigo", "exori tera", "exori mort");
-        }
-
-        public string GetBestMageSpell(Monster monster, string fireSpell, string energySpell, string iceSpell, string earthSpell, string deathSpell) {
-            string element = GetBestElementIn(monster, new string[] { "fire", "energy", "ice", "earth", "death" });
-
-            switch (element) {
-                case "fire":
-                    return fireSpell;
-                case "energy":
-                    return energySpell;
-                case "ice":
-                    return iceSpell;
-                case "earth":
-                    return earthSpell;
-                case "death":
+            switch (damageType) {
+                case DamageType.Death:
                     return deathSpell;
+                case DamageType.Earth:
+                    return earthSpell;
+                case DamageType.Energy:
+                    return energySpell;
+                case DamageType.Fire:
+                    return fireSpell;
+                case DamageType.Ice:
+                    return iceSpell;
             }
 
-            return deathSpell;
+            return iceSpell;
         }
 
-        public string GetBestPaladinSpell(Monster monster) {
-            return GetBestPaladinSpell(monster, "exori con", "exori san");
+        public string GetBestPaladinSpell(CreatureData creatureData) {
+            return GetBestPaladinSpell(creatureData, "exori san", "exori con");
         }
 
-        public string GetBestPaladinSpell(Monster monster, string physicalSpell, string holySpell) {
-            string element = GetBestElementIn(monster, new string[] { "physical", "holy" });
+        public string GetBestPaladinSpell(CreatureData creatureData, string holySpell, string physicalSpell) {
+            DamageType damageType = creatureData.GetWeakness(new List<DamageType>() { DamageType.Holy, DamageType.Physical });
 
-            switch (element) {
-                case "physical":
-                    return physicalSpell;
-                case "holy":
+            switch (damageType) {
+                case DamageType.Holy:
                     return holySpell;
+                case DamageType.Physical:
+                    return physicalSpell;
             }
 
             return holySpell;
-        }
-
-        public void LoadMonstersFromXmlResource() {
-            XPathDocument doc;
-            XPathNavigator nav, nav2, nav3;
-            XPathExpression expr;
-            XPathNodeIterator iterator, iterator2;
-            System.IO.Stream file = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Kedrah.Monsters.xml");
-
-            doc = new XPathDocument(file);
-            nav = doc.CreateNavigator();
-
-            expr = nav.Compile("/monsters/monster/name");
-            iterator = nav.Select(expr);
-
-            Monster current;
-            Element currentElement;
-
-            while (iterator.MoveNext()) {
-                nav2 = iterator.Current.Clone();
-                expr = nav.Compile("/monsters/monster[name='" + nav2.Value + "']");
-                iterator2 = nav.Select(expr);
-                current = new Monster(nav2.Value);
-
-                while (iterator2.MoveNext()) {
-                    nav2 = iterator2.Current.Clone();
-                    nav2.MoveToFirstChild();
-
-                    while (nav2.MoveToNext()) {
-                        currentElement = new Element();
-                        nav3 = nav2.Clone();
-                        nav3.MoveToFirstChild();
-                        currentElement.To = nav3.Value;
-                        nav3.MoveToNext();
-
-                        if (nav2.Name == "beam")
-                            current.Beam = (nav2.Value == "yes") ? true : false;
-                        else if (nav2.Name == "wave") {
-                            current.Wave = (nav2.Value == "yes") ? true : false;
-                        }
-                        else {
-                            int.TryParse(nav3.Value, out currentElement.Percent);
-                            current.AddAttribute(nav2.Name, currentElement);
-                        }
-
-                    }
-                }
-
-                Monsters.Add(current);
-            }
         }
 
         public void SelectTarget() {
@@ -297,7 +214,11 @@ namespace Kedrah.Modules {
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
 
             foreach (Creature creature in Kedrah.BattleList.GetCreatures()) {
-                Target target = FindTarget(creature.Name, (byte)creature.HPBar);
+                Target target = Targets.Find(delegate(Target t) { 
+                    return (string.Compare(t.Name, "All", false) == 0 || 
+                        string.Compare(t.Name, creature.Name, true) == 0 && 
+                        (t.HPRange[0] <= creature.HPBar && t.HPRange[1] <= creature.HPBar)); 
+                });
 
                 if (creature.IsSelf() || creature.Type != CreatureType.NPC)
                     continue;
@@ -402,83 +323,6 @@ namespace Kedrah.Modules {
         #endregion
 
         #region Auxiliar Classes
-        public class Monster {
-            public List<Element> Immunities;
-            public List<Element> Neutral;
-            public List<Element> Strongnesses;
-            public List<Element> Weaknesses;
-
-            public bool Beam;
-            public bool Wave;
-
-            public string Name;
-
-            public Monster(string name) {
-                Weaknesses = new List<Element>();
-                Strongnesses = new List<Element>();
-                Immunities = new List<Element>();
-                Neutral = new List<Element>();
-                Name = name;
-            }
-
-            public bool HasFrontAttack() {
-                return Wave || Beam;
-            }
-
-            public void AddAttribute(string where, Element attr) {
-                attr.To = attr.To.ToLower();
-
-                switch (where) {
-                    case "weakness":
-                        Weaknesses.Add(attr);
-                        Weaknesses.Sort(new Comparison<Element>(compareElements));
-                        break;
-                    case "strongness":
-                        Strongnesses.Add(attr);
-                        Strongnesses.Sort(new Comparison<Element>(compareElementsReverse));
-                        break;
-                    case "immunity":
-                        Immunities.Add(attr);
-                        break;
-                    case "neutral":
-                        Neutral.Add(attr);
-                        break;
-                }
-            }
-
-            int compareElements(Element e1, Element e2) {
-                return e1.Percent == e2.Percent ? 0 : e1.Percent < e2.Percent ? 1 : -1;
-            }
-
-            int compareElementsReverse(Element e1, Element e2) {
-                return e1.Percent == e2.Percent ? 0 : e1.Percent > e2.Percent ? 1 : -1;
-            }
-        }
-
-        public class MonsterFinder {
-            private string name;
-            private bool Sensitive;
-
-            public MonsterFinder(string n) {
-                name = n;
-                Sensitive = true;
-            }
-
-            public MonsterFinder(string n, bool sensitive) {
-                name = n;
-                Sensitive = sensitive;
-            }
-
-            public Predicate<Monster> Match {
-                get {
-                    return IsMatch;
-                }
-            }
-
-            public bool IsMatch(Monster s) {
-                return (string.Compare(s.Name, name, !Sensitive) == 0);
-            }
-        }
 
         public class TargetFinder {
             private string name;
@@ -555,7 +399,7 @@ namespace Kedrah.Modules {
             }
         }
 
-        public class Target : Monster {
+        public class Target : CreatureData {
             public FightActions Action;
             public byte Priority;
             public byte[] HPRange = { 0, 100 };
@@ -565,18 +409,12 @@ namespace Kedrah.Modules {
             public Tibia.Constants.Follow FollowMode;
             public List<FightExtraPair> Extra;
 
-            public Target(Monster monster)
-                : this(monster, FightActions.None, 0, FightSecurity.Automatic, FightStances.Stand, Tibia.Constants.Attack.FullAttack, Tibia.Constants.Follow.DoNotFollow) {
+            public Target(CreatureData c)
+                : this(c, FightActions.None, 0, FightSecurity.Automatic, FightStances.Stand, Tibia.Constants.Attack.FullAttack, Tibia.Constants.Follow.DoNotFollow) {
             }
 
-            public Target(Monster monster, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
-                : base(monster.Name) {
-                this.Immunities = monster.Immunities;
-                this.Neutral = monster.Neutral;
-                this.Strongnesses = monster.Strongnesses;
-                this.Weaknesses = monster.Weaknesses;
-                this.Beam = monster.Beam;
-                this.Wave = monster.Wave;
+            public Target(CreatureData c, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
+                : base(c.Name, c.HitPoints, c.ExperiencePoints, c.SummonMana, c.ConvinceMana, c.MaxDamage, c.CanIllusion, c.CanSeeInvisible, c.FrontAttack, c.Immunities, c.Strengths, c.Weaknesses, c.Sounds, c.Loot) {
                 this.Action = action;
                 this.Priority = priority;
                 this.Security = security;
