@@ -324,38 +324,6 @@ namespace Kedrah.Modules {
 
         #region Auxiliar Classes
 
-        public class TargetFinder {
-            private string name;
-            private byte hpbar;
-            private bool Sensitive;
-
-            public TargetFinder(string n, byte hp) {
-                name = n;
-                hpbar = hp;
-                Sensitive = true;
-            }
-
-            public TargetFinder(string n, byte hp, bool sensitive) {
-                name = n;
-                hpbar = hp;
-                Sensitive = sensitive;
-            }
-
-            public Predicate<Target> Match {
-                get {
-                    return IsMatch;
-                }
-            }
-
-            public bool IsMatch(Target s) {
-                bool hp = (s.HPRange[0] <= hpbar && s.HPRange[1] <= hpbar);
-                if (string.Compare(s.Name, "All", false) == 0)
-                    return true;
-
-                return (hp && string.Compare(s.Name, name, !Sensitive) == 0);
-            }
-        }
-
         public class FightExtraPair {
             private FightExtra Type;
             private Tibia.Objects.Item Item;
