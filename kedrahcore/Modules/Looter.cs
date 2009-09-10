@@ -112,6 +112,12 @@ namespace Kedrah.Modules
                         }
                         else
                         {
+                            if (lastBody != null)
+                            {
+                                Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                                lastBody = null;
+                            }
+
                             lastBody = p.Item;
                         }
                     }
@@ -130,16 +136,18 @@ namespace Kedrah.Modules
                 if (OpenBodies == OpenBodyRule.Allowed)
                 {
                     Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                    lastBody = null;
                 }
                 else
                 {
                     if (EatFromMonsters)
                     {
-                        foreach (var item in ItemLists.Food)
+                        foreach (var item in ItemLists.Foods)
                         {
                             if (p.Message.ToLower().Contains(item.Value.Name.ToLower()))
                             {
                                 Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                                lastBody = null;
                                 break;
                             }
                         }
@@ -150,6 +158,7 @@ namespace Kedrah.Modules
                         if (p.Message.ToLower().Contains(item.Description.ToLower()))
                         {
                             Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                            lastBody = null;
                             break;
                         }
                     }
@@ -312,7 +321,7 @@ namespace Kedrah.Modules
 
             if (EatFromMonsters)
             {
-                Item food = containterEnumerable.FirstOrDefault(i => Tibia.Constants.ItemLists.Food.ContainsKey(i.Id));
+                Item food = containterEnumerable.FirstOrDefault(i => Tibia.Constants.ItemLists.Foods.ContainsKey(i.Id));
 
                 if (food != null)
                     for (int i = 0; i < food.Count; i++)
