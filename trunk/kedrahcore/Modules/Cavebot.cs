@@ -316,7 +316,7 @@ namespace Kedrah.Modules
                 }
                 else if (!Kedrah.Player.IsWalking)
                 {
-                    Kedrah.Modules.WaitStatus = WaitStatus.OpenBody;
+                    Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
                     LootBodies[0].OpenAsContainer((byte)Kedrah.Inventory.GetContainers().Count());
                     LootBodies.RemoveAt(0);
                 }

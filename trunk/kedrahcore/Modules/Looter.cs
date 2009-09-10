@@ -18,8 +18,9 @@ namespace Kedrah.Modules
         private static ushort maxTries = 10;
         private static AutoResetEvent lootEvent = new AutoResetEvent(false);
         private Queue<byte> lootContainers = new Queue<byte>();
+        private Item lastBody = null;
         public bool EatFromMonsters = true;
-        public bool OpenBodies = true;
+        public OpenBodyRule OpenBodies = OpenBodyRule.Filtered;
         public bool OpenDistantBodies = true;
         public bool OpenNextContainer = true;
         public List<LootItem> LootItems = new List<LootItem>();
@@ -33,6 +34,7 @@ namespace Kedrah.Modules
         {
             Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
             Kedrah.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
+            Kedrah.Proxy.ReceivedTextMessageIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTextMessageIncomingPacket);
 
             #region Timers
 
@@ -46,7 +48,7 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
-        private void AddLootByRatio(double ratio)
+        public void AddLootByRatio(double ratio)
         {
             foreach (var i in ItemDataLists.AllItems)
             {
@@ -96,7 +98,7 @@ namespace Kedrah.Modules
 
         bool Proxy_ReceivedTileAddThingIncomingPacket(Tibia.Packets.IncomingPacket packet)
         {
-            if (Looting && OpenBodies)
+            if (Looting && OpenBodies != OpenBodyRule.None)
             {
                 TileAddThingPacket p = (TileAddThingPacket)packet;
 
@@ -104,9 +106,56 @@ namespace Kedrah.Modules
                 {
                     if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z)
                     {
-                        Kedrah.Modules.Cavebot.LootBodies.Add(p.Item);
+                        if (OpenBodies == OpenBodyRule.All)
+                        {
+                            Kedrah.Modules.Cavebot.LootBodies.Add(p.Item);
+                        }
+                        else
+                        {
+                            lastBody = p.Item;
+                        }
                     }
                 }
+            }
+
+            return true;
+        }
+
+        bool Proxy_ReceivedTextMessageIncomingPacket(Tibia.Packets.IncomingPacket packet)
+        {
+            if (Looting && lastBody != null)
+            {
+                TextMessagePacket p = (TextMessagePacket)packet;
+
+                if (OpenBodies == OpenBodyRule.Allowed)
+                {
+                    Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                }
+                else
+                {
+                    if (EatFromMonsters)
+                    {
+                        foreach (var item in ItemLists.Food)
+                        {
+                            if (p.Message.ToLower().Contains(item.Value.Name.ToLower()))
+                            {
+                                Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                                break;
+                            }
+                        }
+                    }
+
+                    foreach (LootItem item in LootItems)
+                    {
+                        if (p.Message.ToLower().Contains(item.Description.ToLower()))
+                        {
+                            Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                            break;
+                        }
+                    }
+                }
+
+                lastBody = null;
             }
 
             return true;
@@ -281,7 +330,7 @@ namespace Kedrah.Modules
 
             if (bag != null)
             {
-                Kedrah.Modules.WaitStatus = WaitStatus.OpenBody;
+                Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
                 bag.OpenAsContainer(container.Number);
             }
             else
@@ -327,6 +376,14 @@ namespace Kedrah.Modules
         }
 
         #endregion
+    }
+
+    public enum OpenBodyRule
+    {
+        None,
+        Filtered,
+        Allowed,
+        All
     }
 
     public class LootItem
