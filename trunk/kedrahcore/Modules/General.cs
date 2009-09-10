@@ -1058,7 +1058,7 @@ namespace Kedrah.Modules
 
         void EatFood_OnExecute()
         {
-            Tibia.Objects.Item food = Kedrah.Inventory.GetItems().FirstOrDefault(i => i.IsInList(Tibia.Constants.ItemLists.Food.Values));
+            Tibia.Objects.Item food = Kedrah.Inventory.GetItems().FirstOrDefault(i => i.IsInList(Tibia.Constants.ItemLists.Foods.Values));
 
             if (food != null)
             {

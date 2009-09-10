@@ -107,8 +107,6 @@ namespace Kedrah.Modules
             return result;
         }
 
-        #endregion
-
         private Waypoint FloorChangerWaypoint(Location destination)
         {
             sbyte change = (sbyte)(destination.Z - Kedrah.Player.Z);
@@ -293,6 +291,8 @@ namespace Kedrah.Modules
 
             return false;
         }
+
+        #endregion
 
         #region Timers
 
