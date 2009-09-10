@@ -171,6 +171,22 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        public void AddAllCreatures()
+        {
+            foreach (var c in CreatureLists.AllCreatures)
+            {
+                Targets.Add(new Target(c.Value, FightActions.Attack, 0, FightSecurity.Automatic, FightStances.Stand, Attack.FullAttack, Follow.DoNotFollow));
+            }
+        }
+
+        public void AddAllCreatures(FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
+        {
+            foreach (var c in CreatureLists.AllCreatures)
+            {
+                Targets.Add(new Target(c.Value, action, priority, security, stance, attackMode, followMode));
+            }
+        }
+
         public void AddTarget(string name)
         {
             CreatureData c = null;

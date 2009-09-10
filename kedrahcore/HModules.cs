@@ -58,7 +58,6 @@ namespace Kedrah
     public enum WaitStatus
     {
         Idle,
-        OpenBody,
         OpenContainer,
         LootItems
     }
