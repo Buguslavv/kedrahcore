@@ -22,7 +22,7 @@ Basic functions that require less logic.
  * ~~IP Changer~~
  * Fishing
 ----
-== Heal ==
+== ~~Heal~~ ==
 Healing with varied methods.
  * ~~Refill Life / Mana~~
  * ~~Exhaustion controller~~
