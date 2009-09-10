@@ -21,14 +21,14 @@ Basic functions that require less logic.
  * ~~World Only View~~
  * ~~IP Changer~~
  * Fishing
-
+----
 == Heal ==
 Healing with varied methods.
  * ~~Refill Life / Mana~~
  * ~~Exhaustion controller~~
  * ~~Paralyze heal~~
  * ~~Poison heal~~
-
+----
 == Targeting ==
 Behave according to creatures and players.
  * ~~Switch spells automatically based on damage types~~
@@ -53,7 +53,7 @@ Behave according to creatures and players.
    * Equip item
    * Cast spell
  * Lock target
-
+----
 == Cavebot ==
 Walking around and execute custom actions.
  * Walking
@@ -68,7 +68,7 @@ Walking around and execute custom actions.
    * ~~Walk~~
  * ~~Find floor changer~~
  * Leave trap
-
+----
 == Loot ==
 Open creatures and get desired items.
  * ~~Get listed items~~
@@ -79,13 +79,13 @@ Open creatures and get desired items.
  * ~~Eat from corpses~~
  * ~~Only open owned creatures~~
  * ~~Only open bodies that contains desired loot~~
-
+----
 == Maker ==
 Enchant items, cast spells, make runes.
  * Make Runes
  * Enchant Items (Spears)
  * Cast Spells
-
+----
 == Charger ==
 Equip items based on conditions.
  * Move item to slot if
@@ -93,7 +93,7 @@ Equip items based on conditions.
    * Target
    * Mana / Health ammount
    * Flag (drunk, paralyze)
-
+----
 == Statistics ==
 Gather statistics such as experience, skills, spells.
  * Experience yield (per supply, per time, global)
@@ -111,7 +111,7 @@ Gather statistics such as experience, skills, spells.
    * Average (absolute, percent)
    * Maximun (absolute, percent)
    * Last (absolute, percent)
-
+----
 == Security ==
 Perform actions according to ingame events.
  * Element on screen (GM, CM, Player, NPC
@@ -122,11 +122,11 @@ Perform actions according to ingame events.
  * Low mana / health
  * Disconnected
  * Message
-
+----
 == Context Menu ==
 Generate ingame context menus, linking to other modules.
  * Add/Remove/Edit context menus
-
+----
 == Context Menu ==
 Generate screen icons linking to other modules.
  * Add/Remove/Edit icons
