@@ -8,33 +8,41 @@ using System.Xml.XPath;
 using Tibia.Objects;
 using Tibia.Constants;
 
-namespace Kedrah.Modules {
-    public class Targeting : Module {
+namespace Kedrah.Modules
+{
+    public class Targeting : Module
+    {
         #region Enums/Structures
 
-        public struct Element {
+        public struct Element
+        {
             public string To;
             public int Percent;
 
-            public Element(string to, int percent) {
+            public Element(string to, int percent)
+            {
                 To = to;
                 Percent = percent;
             }
         }
 
-        public enum FightActions {
+        public enum FightActions
+        {
             Attack,
             Follow,
             None
         }
 
-        public enum FightExtra {
+        public enum FightExtra
+        {
             Spell,
             ItemEquip,
-            ItemUse
+            ItemUse,
+            AutoSpell
         }
 
-        public enum FightStances {
+        public enum FightStances
+        {
             Stand,
             Follow,
             Distance,
@@ -42,7 +50,8 @@ namespace Kedrah.Modules {
             ParryFollow
         }
 
-        public enum FightSecurity {
+        public enum FightSecurity
+        {
             Wave,
             Beam,
             Both,
@@ -57,7 +66,20 @@ namespace Kedrah.Modules {
         private Creature creature;
         private Target target;
 
-        public bool AttackedOnly, Reachable, Shootable;
+        public static Dictionary<DamageType, string> MageStrikes = new Dictionary<DamageType, string> { 
+            { DamageType.Death, "exori mort" },
+            { DamageType.Earth, "exori tera" },
+            { DamageType.Energy, "exori vis" },
+            { DamageType.Fire, "exori flam" },
+            { DamageType.Ice, "exori frigo" }
+        };
+
+        public static Dictionary<DamageType, string> PaladinStrikes = new Dictionary<DamageType, string> { 
+            { DamageType.Holy, "exori san" },
+            { DamageType.Physical, "exori con" }
+        };
+
+        public bool AttackedOnly, Reachable, Shootable, IsTargeting;
         public byte Distance = 2;
         public byte OthersMonsters;
         public Dictionary<string, byte> TargetSelection = new Dictionary<string, byte>();
@@ -68,7 +90,8 @@ namespace Kedrah.Modules {
         #region Constructor/Destructor
 
         public Targeting(ref Core core)
-            : base(ref core) {
+            : base(ref core)
+        {
             Reachable = false;
             Reachable = true;
             Shootable = false;
@@ -92,39 +115,54 @@ namespace Kedrah.Modules {
 
         #region Get/Set Objects
 
-        public long ActionDelay {
-            get {
+        public long ActionDelay
+        {
+            get
+            {
                 return Timers["action"].Interval;
             }
-            set {
+            set
+            {
                 Timers["action"].Interval = value;
             }
         }
 
-        public bool Attacker {
-            get {
+        public bool Attacker
+        {
+            get
+            {
                 if (Timers["target"].State == Tibia.Util.TimerState.Running)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     PlayTimer("target");
                     PlayTimer("action");
                 }
-                else {
+                else
+                {
                     PauseTimer("target");
                     PauseTimer("action");
                 }
             }
         }
 
-        public long AttackDelay {
-            get {
+        public long AttackDelay
+        {
+            get
+            {
                 return Timers["target"].Interval;
             }
-            set {
+            set
+            {
                 Timers["target"].Interval = value;
             }
         }
@@ -133,40 +171,54 @@ namespace Kedrah.Modules {
 
         #region Module Functions
 
-        public void AddTarget(string name) {
+        public void AddTarget(string name)
+        {
             CreatureData c = null;
 
             if (CreatureLists.AllCreatures.ContainsKey(name))
+            {
                 c = CreatureLists.AllCreatures[name];
+            }
             else
+            {
                 c = new CreatureData(name, 0, 0, 0, 0, 0, false, false, FrontAttack.None, null, null, null, null, null);
+            }
 
             Targets.Add(new Target(c));
         }
 
-        public void AddTarget(string name, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode) {
+        public void AddTarget(string name, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
+        {
             CreatureData c = null;
 
             if (CreatureLists.AllCreatures.ContainsKey(name))
+            {
                 c = CreatureLists.AllCreatures[name];
+            }
             else
+            {
                 c = new CreatureData(name, 0, 0, 0, 0, 0, false, false, FrontAttack.None, null, null, null, null, null);
+            }
 
-            this.Targets.Add(new Target(c, action, priority, security, stance, attackMode, followMode));
+            Targets.Add(new Target(c, action, priority, security, stance, attackMode, followMode));
         }
 
-        public override void Enable() {
+        public override void Enable()
+        {
             base.Enable();
         }
 
-        public string GetBestMageSpell(CreatureData creatureData) {
+        public string GetBestMageSpell(CreatureData creatureData)
+        {
             return GetBestMageSpell(creatureData, "exori mort", "exori tera", "exori vis", "exori flam", "exori frigo");
         }
 
-        public string GetBestMageSpell(CreatureData creatureData, string deathSpell, string earthSpell, string energySpell, string fireSpell, string iceSpell) {
+        public string GetBestMageSpell(CreatureData creatureData, string deathSpell, string earthSpell, string energySpell, string fireSpell, string iceSpell)
+        {
             DamageType damageType = creatureData.GetWeakness(new List<DamageType>() { DamageType.Death, DamageType.Earth, DamageType.Energy, DamageType.Fire, DamageType.Ice });
 
-            switch (damageType) {
+            switch (damageType)
+            {
                 case DamageType.Death:
                     return deathSpell;
                 case DamageType.Earth:
@@ -182,14 +234,17 @@ namespace Kedrah.Modules {
             return iceSpell;
         }
 
-        public string GetBestPaladinSpell(CreatureData creatureData) {
+        public string GetBestPaladinSpell(CreatureData creatureData)
+        {
             return GetBestPaladinSpell(creatureData, "exori san", "exori con");
         }
 
-        public string GetBestPaladinSpell(CreatureData creatureData, string holySpell, string physicalSpell) {
+        public string GetBestPaladinSpell(CreatureData creatureData, string holySpell, string physicalSpell)
+        {
             DamageType damageType = creatureData.GetWeakness(new List<DamageType>() { DamageType.Holy, DamageType.Physical });
 
-            switch (damageType) {
+            switch (damageType)
+            {
                 case DamageType.Holy:
                     return holySpell;
                 case DamageType.Physical:
@@ -199,9 +254,12 @@ namespace Kedrah.Modules {
             return holySpell;
         }
 
-        public void SelectTarget() {
+        public void SelectTarget()
+        {
             if (!Kedrah.Client.LoggedIn)
+            {
                 return;
+            }
 
             Tibia.Objects.Creature selected = null;
             Target selectedTarget = null;
@@ -213,41 +271,55 @@ namespace Kedrah.Modules {
             verifier.Add("stick", new double[2] { 0, 0 });
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
 
-            foreach (Creature creature in Kedrah.BattleList.GetCreatures()) {
-                Target target = Targets.Find(delegate(Target t) { 
-                    return (string.Compare(t.Name, "All", false) == 0 || 
-                        string.Compare(t.Name, creature.Name, true) == 0 && 
-                        (t.HPRange[0] <= creature.HPBar && t.HPRange[1] <= creature.HPBar)); 
+            foreach (Creature creature in Kedrah.BattleList.GetCreatures())
+            {
+                Target target = Targets.Find(delegate(Target t)
+                {
+                    return (string.Compare(t.Name, "All", false) == 0 || string.Compare(t.Name, creature.Name, true) == 0 && (t.HPRange[0] <= creature.HPBar && t.HPRange[1] <= creature.HPBar));
                 });
 
                 if (creature.IsSelf() || creature.Type != CreatureType.NPC)
+                {
                     continue;
+                }
 
                 if (Reachable && !creature.IsReachable())
+                {
                     continue;
+                }
 
                 if (AttackedOnly && !creature.IsAttacking())
+                {
                     continue;
+                }
 
                 if (target == null)
+                {
                     continue;
+                }
 
-                if (OthersMonsters > 0) {
-                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c) {
+                if (OthersMonsters > 0)
+                {
+                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c)
+                    {
                         return c.DistanceTo(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == Tibia.Constants.CreatureType.Player) && (!c.IsSelf());
                     });
 
                     if (playersAround.Count > 0 && !creature.IsAttacking())
+                    {
                         continue;
+                    }
                 }
 
-                if (selected == null) {
+                if (selected == null)
+                {
                     selected = creature;
                     selectedTarget = target;
                     continue;
                 }
 
-                if (selectedTarget.Action != FightActions.Attack && target.Action == FightActions.Attack) {
+                if (selectedTarget.Action != FightActions.Attack && target.Action == FightActions.Attack)
+                {
                     selected = creature;
                     selectedTarget = target;
                     continue;
@@ -262,9 +334,12 @@ namespace Kedrah.Modules {
                 verifier["priority"][1] = (double)target.Priority;
                 verifier["stick"][1] = (double)creature.Id;
 
-                foreach (KeyValuePair<string, byte> v in items) {
-                    if (v.Key == "stick") {
-                        if (creature.Id == Kedrah.Player.Target_ID) {
+                foreach (KeyValuePair<string, byte> v in items)
+                {
+                    if (v.Key == "stick")
+                    {
+                        if (creature.Id == Kedrah.Player.RedSquare)
+                        {
                             selected = creature;
                             selectedTarget = target;
                         }
@@ -272,7 +347,8 @@ namespace Kedrah.Modules {
                         break;
                     }
 
-                    if (verifier[v.Key][0] > verifier[v.Key][1]) {
+                    if (verifier[v.Key][0] > verifier[v.Key][1])
+                    {
                         selected = creature;
                         selectedTarget = target;
                         break;
@@ -288,71 +364,119 @@ namespace Kedrah.Modules {
 
         #region Timers
 
-        private void Target_OnExecute() {
+        private void Target_OnExecute()
+        {
+            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            {
+                return;
+            }
+
             SelectTarget();
 
-            if (this.target == null || this.creature == null)
+            if (target == null || creature == null)
+            {
+                IsTargeting = false;
                 return;
+            }
 
-            Kedrah.Client.FollowMode = this.target.FollowMode;
-            Kedrah.Client.AttackMode = this.target.AttackMode;
+            IsTargeting = true;
+
+            Kedrah.Client.FollowMode = target.FollowMode;
+            Kedrah.Client.AttackMode = target.AttackMode;
             Tibia.Packets.Outgoing.FightModesPacket.Send(Kedrah.Client, (byte)Kedrah.Client.AttackMode, (byte)Kedrah.Client.FollowMode, (byte)Kedrah.Client.SafeMode);
 
-            if (this.target.Action == FightActions.Attack) {
-                if (creature.Id != Kedrah.Player.Target_ID)
+            if (target.Action == FightActions.Attack)
+            {
+                if (creature.Id != Kedrah.Player.RedSquare)
+                {
                     Kedrah.Player.Stop();
-
-                this.creature.Attack();
+                    creature.Attack();
+                }
+                else
+                {
+                    Tibia.Packets.Outgoing.AttackPacket.Send(Kedrah.Client, (uint) Kedrah.Player.RedSquare);
+                }
             }
-            else if (target.Action == FightActions.Follow) {
-                if (creature.Id != Kedrah.Player.Target_ID)
+            else if (target.Action == FightActions.Follow)
+            {
+                if (creature.Id != Kedrah.Player.RedSquare)
+                {
                     Kedrah.Player.Stop();
-
-                this.creature.Follow();
+                    creature.Follow();
+                }
+                else
+                {
+                    Tibia.Packets.Outgoing.FollowPacket.Send(Kedrah.Client, (uint)Kedrah.Player.RedSquare);
+                }
             }
         }
 
-        private void Action_OnExecute() {
-            if (this.target == null || this.creature == null)
+        private void Action_OnExecute()
+        {
+            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            {
                 return;
+            }
 
-            foreach (FightExtraPair extra in this.target.Extra)
-                extra.Execute(this.creature, Kedrah.Inventory);
+            if (target == null || creature == null)
+            {
+                return;
+            }
+
+            foreach (FightExtraPair extra in target.Extra)
+            {
+                extra.Execute(creature, Kedrah.Inventory);
+            }
         }
 
         #endregion
 
         #region Auxiliar Classes
 
-        public class FightExtraPair {
+        public class FightExtraPair
+        {
             private FightExtra Type;
             private Tibia.Objects.Item Item;
             private Tibia.Constants.SlotNumber Slot;
             private string Spell;
+            private Dictionary<DamageType, string> SpellTypes;
 
-            public FightExtraPair(FightExtra type, Tibia.Objects.Item item) {
+            public FightExtraPair(FightExtra type, Tibia.Objects.Item item)
+            {
                 this.Type = type;
                 this.Item = item;
                 this.Slot = Tibia.Constants.SlotNumber.Ammo;
                 this.Spell = "";
             }
 
-            public FightExtraPair(FightExtra type, Tibia.Objects.Item item, Tibia.Constants.SlotNumber slot) {
+            public FightExtraPair(FightExtra type, Tibia.Objects.Item item, Tibia.Constants.SlotNumber slot)
+            {
                 this.Type = type;
                 this.Item = item;
                 this.Slot = slot;
                 this.Spell = "";
             }
 
-            public FightExtraPair(FightExtra type, string spell) {
+            public FightExtraPair(FightExtra type, string spell)
+            {
                 this.Type = type;
                 this.Item = null;
                 this.Slot = Tibia.Constants.SlotNumber.Ammo;
                 this.Spell = spell;
             }
 
-            public void Execute(Tibia.Objects.Creature creature, Tibia.Objects.Inventory inventory) {
-                switch (this.Type) {
+            public FightExtraPair(FightExtra type, Dictionary<DamageType, string> spellTypes)
+            {
+                this.Type = type;
+                this.Item = null;
+                this.Slot = Tibia.Constants.SlotNumber.Ammo;
+                this.SpellTypes = spellTypes;
+            }
+
+            public void Execute(Tibia.Objects.Creature creature, Tibia.Objects.Inventory inventory)
+            {
+                switch (this.Type)
+                {
                     case FightExtra.ItemEquip:
                         Tibia.Objects.ItemLocation loc = new Tibia.Objects.ItemLocation();
                         this.Item.Move(inventory.GetItemInSlot(this.Slot).Location);
@@ -363,11 +487,16 @@ namespace Kedrah.Modules {
                     case FightExtra.Spell:
                         this.Item.Client.Console.Say(this.Spell);
                         break;
+                    case FightExtra.AutoSpell:
+                        DamageType type = creature.Data.GetWeakness(SpellTypes.Keys.ToList());
+                        this.Item.Client.Console.Say(SpellTypes[type]);
+                        break;
                 }
             }
         }
 
-        public class Target : CreatureData {
+        public class Target : CreatureData
+        {
             public FightActions Action;
             public byte Priority;
             public byte[] HPRange = { 0, 100 };
@@ -378,11 +507,13 @@ namespace Kedrah.Modules {
             public List<FightExtraPair> Extra;
 
             public Target(CreatureData c)
-                : this(c, FightActions.None, 0, FightSecurity.Automatic, FightStances.Stand, Tibia.Constants.Attack.FullAttack, Tibia.Constants.Follow.DoNotFollow) {
+                : this(c, FightActions.None, 0, FightSecurity.Automatic, FightStances.Stand, Tibia.Constants.Attack.FullAttack, Tibia.Constants.Follow.DoNotFollow)
+            {
             }
 
             public Target(CreatureData c, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
-                : base(c.Name, c.HitPoints, c.ExperiencePoints, c.SummonMana, c.ConvinceMana, c.MaxDamage, c.CanIllusion, c.CanSeeInvisible, c.FrontAttack, c.Immunities, c.Strengths, c.Weaknesses, c.Sounds, c.Loot) {
+                : base(c.Name, c.HitPoints, c.ExperiencePoints, c.SummonMana, c.ConvinceMana, c.MaxDamage, c.CanIllusion, c.CanSeeInvisible, c.FrontAttack, c.Immunities, c.Strengths, c.Weaknesses, c.Sounds, c.Loot)
+            {
                 this.Action = action;
                 this.Priority = priority;
                 this.Security = security;

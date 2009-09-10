@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah {
-    public class Core {
+namespace Kedrah
+{
+    public class Core
+    {
         #region Objects/Variables
 
         static private System.Threading.Mutex kedrahMutex;
@@ -25,27 +27,36 @@ namespace Kedrah {
         #region Constructor
 
         public Core()
-            : this("Kedrah Core", "", false, false) {
+            : this("Kedrah Core", "", false, false)
+        {
         }
 
-        public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF) {
+        public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF)
+        {
             Tibia.KeyboardHook.Enable();
 
-            do {
+            do
+            {
                 Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
                 clientChooserOptions.Title = clientChooserTitle;
                 clientChooserOptions.ShowOTOption = true;
                 clientChooserOptions.OfflineOnly = true;
 
                 if (useWPF)
+                {
                     Client = Tibia.Util.ClientChooserWPF.ShowBox(clientChooserOptions);
+                }
                 else
+                {
                     Client = Tibia.Util.ClientChooser.ShowBox(clientChooserOptions);
+                }
 
-                if (Client != null) {
+                if (Client != null)
+                {
                     kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + mutexName + Client.Process.Id.ToString());
 
-                    if (!kedrahMutex.WaitOne(0, false)) {
+                    if (!kedrahMutex.WaitOne(0, false))
+                    {
                         Client = null;
                         continue;
                     }
@@ -70,7 +81,8 @@ namespace Kedrah {
 
         #region Core Functions
 
-        private bool OnLogin(Tibia.Packets.IncomingPacket packet) {
+        private bool OnLogin(Tibia.Packets.IncomingPacket packet)
+        {
             Map = Client.Map;
             Screen = Client.Screen;
             BattleList = Client.BattleList;
@@ -83,16 +95,20 @@ namespace Kedrah {
             return true;
         }
 
-        private bool OnLogout(Tibia.Packets.OutgoingPacket packet) {
+        private bool OnLogout(Tibia.Packets.OutgoingPacket packet)
+        {
             Modules.Disable();
 
             if (Client.Window.WorldOnlyView)
+            {
                 Client.Window.WorldOnlyView = false;
+            }
 
             return true;
         }
 
-        void ClientClosed(object sender, EventArgs args) {
+        void ClientClosed(object sender, EventArgs args)
+        {
             Environment.Exit(0);
         }
 
