@@ -7,9 +7,12 @@ using Tibia.Packets.Incoming;
 using Tibia.Util;
 using Tibia.Objects;
 using System.Threading;
+using Tibia.Constants;
 
-namespace Kedrah.Modules {
-    public class Looter : Module {
+namespace Kedrah.Modules
+{
+    public class Looter : Module
+    {
         #region Variables/Objects
 
         private static ushort maxTries = 10;
@@ -26,12 +29,8 @@ namespace Kedrah.Modules {
         #region Constructor/Destructor
 
         public Looter(ref Core core)
-            : base(ref core) {
-            for (ushort i = 0; i < 9000; i++) {
-                if (i != (ushort)Tibia.Constants.Items.Container.BagBrown.Id && i != (ushort)Tibia.Constants.Items.Food.Meat.Id && i != (ushort)Tibia.Constants.Items.Food.Ham.Id)
-                    LootItems.Add(new LootItem(i, 0, ""));
-            }
-
+            : base(ref core)
+        {
             Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
             Kedrah.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
 
@@ -47,26 +46,47 @@ namespace Kedrah.Modules {
 
         #region Module Functions
 
-        private void AdjustStackOrder(IEnumerable<Tibia.Objects.Item> cItems, Tibia.Objects.Item item) {
-            foreach (Item i in cItems) {
-                if (i.Location.StackOrder > item.Location.StackOrder) {
+        private void AddLootByRatio(double ratio)
+        {
+            foreach (var i in ItemDataLists.AllItems)
+            {
+                if (i.Value.ValueRatio >= ratio)
+                {
+                    LootItem lootItem = new LootItem((ushort)i.Value.Id, 0, i.Value.Name);
+                    LootItems.Add(lootItem);
+                }
+            }
+        }
+
+        private void AdjustStackOrder(IEnumerable<Tibia.Objects.Item> cItems, Tibia.Objects.Item item)
+        {
+            foreach (Item i in cItems)
+            {
+                if (i.Location.StackOrder > item.Location.StackOrder)
+                {
                     i.Location.StackOrder--;
                     i.Location.ContainerSlot--;
                 }
             }
         }
 
-        private bool IsLootContainer(byte number) {
+        private bool IsLootContainer(byte number)
+        {
             Tibia.Objects.Container container = Kedrah.Inventory.GetContainer(number);
 
-            if ((number == 0) || (Tibia.Constants.ItemLists.Containers.ContainsKey((uint) container.Id) && !(container.Id == Tibia.Constants.Items.Container.BagBrown.Id && container.HasParent)))
+            if ((number == 0) || (Tibia.Constants.ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Tibia.Constants.Items.Container.NormalBag.Id && container.HasParent)))
+            {
                 return false;
+            }
 
             return true;
         }
 
-        private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet) {
-            if (Looting && LootItems.Count > 0) {
+        private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet)
+        {
+            if (Looting && LootItems.Count > 0)
+            {
+                Kedrah.Modules.WaitStatus = WaitStatus.Idle;
                 ContainerOpenPacket p = (ContainerOpenPacket)packet;
                 lootContainers.Enqueue(p.Id);
             }
@@ -74,12 +94,16 @@ namespace Kedrah.Modules {
             return true;
         }
 
-        bool Proxy_ReceivedTileAddThingIncomingPacket(Tibia.Packets.IncomingPacket packet) {
-            if (Looting && OpenBodies) {
+        bool Proxy_ReceivedTileAddThingIncomingPacket(Tibia.Packets.IncomingPacket packet)
+        {
+            if (Looting && OpenBodies)
+            {
                 TileAddThingPacket p = (TileAddThingPacket)packet;
 
-                if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacentTo(Kedrah.Player.Location))) {
-                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z) {
+                if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacentTo(Kedrah.Player.Location)))
+                {
+                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z)
+                    {
                         Kedrah.Modules.Cavebot.LootBodies.Add(p.Item);
                     }
                 }
@@ -88,15 +112,19 @@ namespace Kedrah.Modules {
             return true;
         }
 
-        private void GetItem(Item item, Container container) {
-            if (item.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable)) {
+        private void GetItem(Item item, Container container)
+        {
+            if (item.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable))
+            {
                 var lootContainerItem = container.GetItems().FirstOrDefault(lCItem => lCItem.Id == item.Id && lCItem.Count < 100);
 
-                if (lootContainerItem != null && (lootContainerItem.Count + item.Count <= 100 || container.Amount < container.Volume)) {
+                if (lootContainerItem != null && (lootContainerItem.Count + item.Count <= 100 || container.Amount < container.Volume))
+                {
                     item.Move(lootContainerItem.Location);
                     AdjustStackOrder(container.GetItems(), item);
                 }
-                else if (lootContainerItem == null && container.Amount < container.Volume) {
+                else if (lootContainerItem == null && container.Amount < container.Volume)
+                {
                     var itemLocation = new ItemLocation();
                     itemLocation.Type = Tibia.Constants.ItemLocationType.Container;
                     itemLocation.ContainerId = container.Number;
@@ -104,20 +132,25 @@ namespace Kedrah.Modules {
                     item.Move(itemLocation);
                     AdjustStackOrder(container.GetItems(), item);
                 }
-                else if (OpenNextContainer) {
-                    if (lootContainerItem != null) {
+                else if (OpenNextContainer)
+                {
+                    if (lootContainerItem != null)
+                    {
                         item.Move(lootContainerItem.Location);
                     }
 
                     var newContainer = container.GetItems().FirstOrDefault(newItemContainer => newItemContainer.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
 
-                    if (newContainer != null) {
+                    if (newContainer != null)
+                    {
                         newContainer.OpenAsContainer(container.Number);
                     }
                 }
             }
-            else {
-                if (container.Amount < container.Volume) {
+            else
+            {
+                if (container.Amount < container.Volume)
+                {
                     var itemLocation = new ItemLocation();
                     itemLocation.Type = Tibia.Constants.ItemLocationType.Container;
                     itemLocation.ContainerId = container.Number;
@@ -125,35 +158,45 @@ namespace Kedrah.Modules {
                     item.Move(itemLocation);
                     AdjustStackOrder(container.GetItems(), item);
                 }
-                else if (OpenNextContainer) {
+                else if (OpenNextContainer)
+                {
                     var newContainer = container.GetItems().FirstOrDefault(newItemContainer => newItemContainer.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
 
-                    if (newContainer != null) {
+                    if (newContainer != null)
+                    {
                         newContainer.OpenAsContainer(container.Number);
                     }
                 }
             }
         }
 
-        private Container GetLootContainer(Item item) {
-            foreach (Container lootContainer in Kedrah.Inventory.GetContainers()) {
-                if (!IsLootContainer(lootContainer.Number)) {
-                    if (lootContainer.Amount < lootContainer.Volume) {
+        private Container GetLootContainer(Item item)
+        {
+            foreach (Container lootContainer in Kedrah.Inventory.GetContainers())
+            {
+                if (!IsLootContainer(lootContainer.Number))
+                {
+                    if (lootContainer.Amount < lootContainer.Volume)
+                    {
                         return lootContainer;
                     }
-                    else if (item.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable)) {
+                    else if (item.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable))
+                    {
                         var lootContainerItem = lootContainer.GetItems().FirstOrDefault(lCItem => lCItem.Id == item.Id && lCItem.Count < 100);
 
                         if ((lootContainerItem != null && (lootContainerItem.Count + item.Count <= 100 || lootContainer.Amount < lootContainer.Volume)) ||
-                            (lootContainerItem == null && lootContainer.Amount < lootContainer.Volume)) {
+                            (lootContainerItem == null && lootContainer.Amount < lootContainer.Volume))
+                        {
                             return lootContainer;
                         }
                     }
 
-                    if (OpenNextContainer && lootContainer.Amount >= lootContainer.Volume) {
+                    if (OpenNextContainer && lootContainer.Amount >= lootContainer.Volume)
+                    {
                         var newContainer = lootContainer.GetItems().FirstOrDefault(newItemContainer => newItemContainer.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
 
-                        if (newContainer != null) {
+                        if (newContainer != null)
+                        {
                             newContainer.OpenAsContainer(lootContainer.Number);
                             Thread.Sleep(100);
                             return null;
@@ -165,22 +208,31 @@ namespace Kedrah.Modules {
             return null;
         }
 
-        private void Loot(byte number) {
-            Kedrah.Player.Stop();
+        private void Loot(byte number)
+        {
+            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            {
+                return;
+            }
 
             Container container = Kedrah.Inventory.GetContainer(number);
 
             if (container == null || !IsLootContainer(number))
                 return;
 
+            Kedrah.Modules.WaitStatus = WaitStatus.LootItems;
+            Kedrah.Player.Stop();
+
             IEnumerable<Item> containterEnumerable = container.GetItems();
             List<Item> containerItems = containterEnumerable.ToList();
 
-            while (containerItems.Count > 0) {
+            while (containerItems.Count > 0)
+            {
                 Item item = containerItems.Last();
                 LootItem lootItem = LootItems.Find(delegate(LootItem loot) { return loot.Id == item.Id; });
 
-                if (lootItem != null) {
+                if (lootItem != null)
+                {
                     Container lootContainer = null;
 
                     #region Select container
@@ -197,7 +249,8 @@ namespace Kedrah.Modules {
 
                     int startAmmount = container.Amount;
 
-                    for (int i = 0; i < maxTries && container.Amount == startAmmount; i++) {
+                    for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
+                    {
                         GetItem(item, lootContainer);
                         Thread.Sleep(100);
                     }
@@ -208,11 +261,13 @@ namespace Kedrah.Modules {
 
             #region Eat Foot
 
-            if (EatFromMonsters) {
-                Item food = containterEnumerable.FirstOrDefault(i => Tibia.Constants.ItemLists.Foods.ContainsKey(i.Id));
+            if (EatFromMonsters)
+            {
+                Item food = containterEnumerable.FirstOrDefault(i => Tibia.Constants.ItemLists.Food.ContainsKey(i.Id));
 
                 if (food != null)
-                    for (int i = 0; i < food.Count; i++) {
+                    for (int i = 0; i < food.Count; i++)
+                    {
                         food.Use();
                         Thread.Sleep(100);
                     }
@@ -224,11 +279,15 @@ namespace Kedrah.Modules {
 
             Item bag = containterEnumerable.LastOrDefault(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
 
-            if (bag != null) {
+            if (bag != null)
+            {
+                Kedrah.Modules.WaitStatus = WaitStatus.OpenBody;
                 bag.OpenAsContainer(container.Number);
             }
-            else {
+            else
+            {
                 container.Close();
+                Kedrah.Modules.WaitStatus = WaitStatus.Idle;
             }
             Thread.Sleep(100);
 
@@ -239,14 +298,17 @@ namespace Kedrah.Modules {
 
         #region Get/Set Objects
 
-        public bool Looting {
-            get {
+        public bool Looting
+        {
+            get
+            {
                 if (Timers["looting"].State == Tibia.Util.TimerState.Running)
                     return true;
                 else
                     return false;
             }
-            set {
+            set
+            {
                 if (value)
                     PlayTimer("looting");
                 else
@@ -258,7 +320,8 @@ namespace Kedrah.Modules {
 
         #region Timers
 
-        private void Looting_OnExecute() {
+        private void Looting_OnExecute()
+        {
             if (Kedrah.Client.LoggedIn && lootContainers.Count > 0)
                 Loot(lootContainers.Dequeue());
         }
@@ -266,20 +329,23 @@ namespace Kedrah.Modules {
         #endregion
     }
 
-    public class LootItem {
+    public class LootItem
+    {
         public ushort Id;
         public byte Container;
         public string Description;
 
         public LootItem() { }
 
-        public LootItem(ushort id, byte container, string description) {
+        public LootItem(ushort id, byte container, string description)
+        {
             Id = id;
             Container = container;
             Description = description;
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return Id.ToString() + " Container " + (Container + 1).ToString() + " (" + Description + ")";
         }
     }

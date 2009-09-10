@@ -74,9 +74,6 @@
     <Compile Include="Util\WebServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Monsters.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\TibiaAPI\tibiaapi\TibiaAPI.csproj">
       <Project>{4D132EB7-B97D-461D-85CF-949FF5A7BA96}</Project>
       <Name>TibiaAPI</Name>

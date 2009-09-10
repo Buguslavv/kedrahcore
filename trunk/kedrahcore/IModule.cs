@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah {
-    public interface IModule {
+namespace Kedrah
+{
+    public interface IModule
+    {
         #region Module Functions
 
         void Enable();

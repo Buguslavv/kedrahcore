@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kedrah {
-    public class HModules {
+namespace Kedrah
+{
+    public class HModules
+    {
         #region Objects/Variables
 
         public Kedrah.Modules.Cavebot Cavebot;
@@ -12,12 +14,15 @@ namespace Kedrah {
         public Kedrah.Modules.Heal Heal;
         public Kedrah.Modules.Looter Looter;
         public Kedrah.Modules.Targeting Targeting;
+        public WaitStatus WaitStatus;
 
         #endregion
 
         #region Constructor
 
-        public HModules(Core core) {
+        public HModules(Core core)
+        {
+            WaitStatus = WaitStatus.Idle;
             Cavebot = new Kedrah.Modules.Cavebot(ref core);
             General = new Kedrah.Modules.General(ref core);
             Heal = new Kedrah.Modules.Heal(ref core);
@@ -29,7 +34,8 @@ namespace Kedrah {
 
         #region HModules Functions
 
-        internal void Enable() {
+        internal void Enable()
+        {
             Cavebot.Enable();
             General.Enable();
             Heal.Enable();
@@ -37,7 +43,8 @@ namespace Kedrah {
             Targeting.Enable();
         }
 
-        internal void Disable() {
+        internal void Disable()
+        {
             Cavebot.Disable();
             General.Disable();
             Heal.Disable();
@@ -46,5 +53,13 @@ namespace Kedrah {
         }
 
         #endregion
+    }
+
+    public enum WaitStatus
+    {
+        Idle,
+        OpenBody,
+        OpenContainer,
+        LootItems
     }
 }
