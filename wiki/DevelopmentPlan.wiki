@@ -8,18 +8,18 @@ Basic functions that require less logic.
  * ~~Level Spy~~
  * ~~X-Ray~~
  * ~~Old Show Invisible~~
- * Identify Fish spots
  * ~~Replace Trees~~
  * ~~Click Re-Use~~
  * ~~Eat Food~~
  * ~~ Frame rate Control~~
- * Stack Items
  * ~~Walk over fields~~
  * ~~Avoid Pitfalls~~
  * ~~WASD Walking (Enter to enable/disable chat)~~
  * ~~Speed Boost (Turbo, Dash)~~
  * ~~World Only View~~
  * ~~IP Changer~~
+ * Identify Fish spots
+ * Stack Items
  * Fishing
 ----
 == ~~Heal~~ ==
@@ -32,41 +32,40 @@ Healing with varied methods.
 == Targeting ==
 Behave according to creatures and players.
  * ~~Switch spells automatically based on damage types~~
- * Fight Stance
-   * Stand
-   * Follow
-   * Distance
-   * Parry (2 or less monsters sorrounding)
- * Fight Security (Avoid waves/beams)
  * ~~Fight Mode (Offensive, Balanced, Defensive)~~
  * ~~Follow Mode (Chase, Stand)~~
- * ~~Target monsters~~
-   * ~~Target selection:~~
+ * *~~Target monsters~~*
+   * *~~Target selection:~~*
      * ~~Distance~~
      * ~~Health~~
      * ~~Priority choosen~~
      * ~~Stick~~
    * ~~Actions (Attack, Follow, None)~~
    * ~~Target Ignoring~~
- * Execute some action (Async):
+ * *Execute some action (Async):*
    * Use item/rune
    * Equip item
    * Cast spell
  * Lock target
+ * *Fight Stance*
+   * Stand
+   * Follow
+   * Distance
+   * Parry (2 or less monsters sorrounding)
+ * Fight Security (Avoid waves/beams)
 ----
 == Cavebot ==
 Walking around and execute custom actions.
- * Walking
-   * Action
-   * ~~Approach~~
-   * ~~Ladder~~
-   * ~~Node~~
-   * ~~Pick~~
-   * ~~Rope~~
-   * ~~Shovel~~
-   * ~~Stand~~
-   * ~~Walk~~
+ * ~~Approach~~
+ * ~~Ladder~~
+ * ~~Node~~
+ * ~~Pick~~
+ * ~~Rope~~
+ * ~~Shovel~~
+ * ~~Stand~~
+ * ~~Walk~~
  * ~~Find floor changer~~
+ * Action
  * Leave trap
 ----
 == Loot ==
@@ -74,11 +73,11 @@ Open creatures and get desired items.
  * ~~Get listed items~~
  * ~~Build list by loot value ratio~~
  * ~~Open dead bodies (anywhere)~~
- * Add loot by name
  * ~~Add loot by id~~
  * ~~Eat from corpses~~
  * ~~Only open owned creatures~~
  * ~~Only open bodies that contains desired loot~~
+ * Add loot by name
 ----
 == Maker ==
 Enchant items, cast spells, make runes.
@@ -88,7 +87,7 @@ Enchant items, cast spells, make runes.
 ----
 == Charger ==
 Equip items based on conditions.
- * Move item to slot if
+ * *Move item to slot if*
    * Low ammount
    * Target
    * Mana / Health ammount
@@ -115,7 +114,7 @@ Gather statistics such as experience, skills, spells.
 == Security ==
 Perform actions according to ingame events.
  * Element on screen (GM, CM, Player, NPC
-   * Mark locations
+ * Mark locations
  * Attacked
  * Traped
  * Flags (Logout block, poisoned, etc)
