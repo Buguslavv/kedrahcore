@@ -5,6 +5,8 @@ using System.Text;
 using Tibia.Objects;
 using Tibia.Constants;
 using System.Threading;
+using Kedrah.Objects;
+using Kedrah.Constants;
 
 namespace Kedrah.Modules
 {
@@ -15,9 +17,9 @@ namespace Kedrah.Modules
         private int iterator = 0;
         public List<Waypoint> Waypoints = new List<Waypoint>();
         public int SkipNodes = 3;
-        public Item Pick = Tibia.Constants.Items.Tool.Pick;
-        public Item Rope = Tibia.Constants.Items.Tool.Rope;
-        public Item Shovel = Tibia.Constants.Items.Tool.Shovel;
+        public Item Pick = Items.Tool.Pick;
+        public Item Rope = Items.Tool.Rope;
+        public Item Shovel = Items.Tool.Shovel;
         public List<Item> LootBodies = new List<Item>();
 
         #endregion
@@ -27,9 +29,9 @@ namespace Kedrah.Modules
         public Cavebot(ref Core core)
             : base(ref core)
         {
-            Pick = Tibia.Constants.Items.Tool.Pick;
-            Rope = Tibia.Constants.Items.Tool.Rope;
-            Shovel = Tibia.Constants.Items.Tool.Shovel;
+            Pick = Items.Tool.Pick;
+            Rope = Items.Tool.Rope;
+            Shovel = Items.Tool.Shovel;
 
             #region Timers
 
@@ -354,46 +356,5 @@ namespace Kedrah.Modules
         }
 
         #endregion
-    }
-
-    public enum WaypointType
-    {
-        Action,
-        Approach,
-        Ladder,
-        Node,
-        Pick,
-        Rope,
-        Shovel,
-        Stand,
-        Walk
-    }
-
-    public class Waypoint : IComparable<Waypoint>
-    {
-        public Core Kedrah;
-        public Location Location;
-        public WaypointType Type;
-
-        public Waypoint() { }
-
-        public Waypoint(Location location, WaypointType type, Core kedrah)
-        {
-            Kedrah = kedrah;
-            Location = location;
-            Type = type;
-        }
-
-        public int CompareTo(Waypoint other)
-        {
-            int comparisson = other.Location.DistanceTo(Kedrah.Player.Location).CompareTo(other.Location.DistanceTo(Kedrah.Player.Location));
-
-            return comparisson;
-        }
-
-        public override string ToString()
-        {
-            return Type.ToString() + ": " + Location.ToString();
-        }
     }
 }

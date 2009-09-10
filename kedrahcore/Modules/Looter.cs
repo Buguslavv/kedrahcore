@@ -8,6 +8,8 @@ using Tibia.Util;
 using Tibia.Objects;
 using System.Threading;
 using Tibia.Constants;
+using Kedrah.Constants;
+using Kedrah.Objects;
 
 namespace Kedrah.Modules
 {
@@ -60,7 +62,7 @@ namespace Kedrah.Modules
             }
         }
 
-        private void AdjustStackOrder(IEnumerable<Tibia.Objects.Item> cItems, Tibia.Objects.Item item)
+        private void AdjustStackOrder(IEnumerable<Item> cItems, Item item)
         {
             foreach (Item i in cItems)
             {
@@ -74,9 +76,9 @@ namespace Kedrah.Modules
 
         private bool IsLootContainer(byte number)
         {
-            Tibia.Objects.Container container = Kedrah.Inventory.GetContainer(number);
+            Container container = Kedrah.Inventory.GetContainer(number);
 
-            if ((number == 0) || (Tibia.Constants.ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Tibia.Constants.Items.Container.NormalBag.Id && container.HasParent)))
+            if ((number == 0) || (ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Items.Container.NormalBag.Id && container.HasParent)))
             {
                 return false;
             }
@@ -184,7 +186,7 @@ namespace Kedrah.Modules
                 else if (lootContainerItem == null && container.Amount < container.Volume)
                 {
                     var itemLocation = new ItemLocation();
-                    itemLocation.Type = Tibia.Constants.ItemLocationType.Container;
+                    itemLocation.Type = ItemLocationType.Container;
                     itemLocation.ContainerId = container.Number;
                     itemLocation.ContainerSlot = (byte)(container.Volume - 1);
                     item.Move(itemLocation);
@@ -210,7 +212,7 @@ namespace Kedrah.Modules
                 if (container.Amount < container.Volume)
                 {
                     var itemLocation = new ItemLocation();
-                    itemLocation.Type = Tibia.Constants.ItemLocationType.Container;
+                    itemLocation.Type = ItemLocationType.Container;
                     itemLocation.ContainerId = container.Number;
                     itemLocation.ContainerSlot = (byte)(container.Volume - 1);
                     item.Move(itemLocation);
@@ -321,7 +323,7 @@ namespace Kedrah.Modules
 
             if (EatFromMonsters)
             {
-                Item food = containterEnumerable.FirstOrDefault(i => Tibia.Constants.ItemLists.Foods.ContainsKey(i.Id));
+                Item food = containterEnumerable.FirstOrDefault(i => ItemLists.Foods.ContainsKey(i.Id));
 
                 if (food != null)
                     for (int i = 0; i < food.Count; i++)
@@ -385,34 +387,5 @@ namespace Kedrah.Modules
         }
 
         #endregion
-    }
-
-    public enum OpenBodyRule
-    {
-        None,
-        Filtered,
-        Allowed,
-        All
-    }
-
-    public class LootItem
-    {
-        public ushort Id;
-        public byte Container;
-        public string Description;
-
-        public LootItem() { }
-
-        public LootItem(ushort id, byte container, string description)
-        {
-            Id = id;
-            Container = container;
-            Description = description;
-        }
-
-        public override string ToString()
-        {
-            return Id.ToString() + " Container " + (Container + 1).ToString() + " (" + Description + ")";
-        }
     }
 }

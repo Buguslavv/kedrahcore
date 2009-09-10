@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tibia.Objects;
+using Tibia.Packets;
+using Tibia;
+using Tibia.Util;
+using System.Threading;
 
 namespace Kedrah
 {
@@ -11,14 +16,14 @@ namespace Kedrah
 
         static private System.Threading.Mutex kedrahMutex;
 
-        public Tibia.Objects.Client Client = null;
-        public Tibia.Objects.Screen Screen = null;
-        public Tibia.Objects.Player Player = null;
-        public Tibia.Objects.Map Map = null;
-        public Tibia.Objects.BattleList BattleList = null;
-        public Tibia.Objects.Inventory Inventory = null;
+        public Client Client = null;
+        public Screen Screen = null;
+        public Player Player = null;
+        public Map Map = null;
+        public BattleList BattleList = null;
+        public Inventory Inventory = null;
         public Tibia.Objects.Console Console = null;
-        public Tibia.Packets.Proxy Proxy = null;
+        public Proxy Proxy = null;
 
         public HModules Modules;
 
@@ -33,27 +38,27 @@ namespace Kedrah
 
         public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF)
         {
-            Tibia.KeyboardHook.Enable();
+            KeyboardHook.Enable();
 
             do
             {
-                Tibia.Util.ClientChooserOptions clientChooserOptions = new Tibia.Util.ClientChooserOptions();
+                ClientChooserOptions clientChooserOptions = new ClientChooserOptions();
                 clientChooserOptions.Title = clientChooserTitle;
                 clientChooserOptions.ShowOTOption = true;
                 clientChooserOptions.OfflineOnly = true;
 
                 if (useWPF)
                 {
-                    Client = Tibia.Util.ClientChooserWPF.ShowBox(clientChooserOptions);
+                    Client = ClientChooserWPF.ShowBox(clientChooserOptions);
                 }
                 else
                 {
-                    Client = Tibia.Util.ClientChooser.ShowBox(clientChooserOptions);
+                    Client = ClientChooser.ShowBox(clientChooserOptions);
                 }
 
                 if (Client != null)
                 {
-                    kedrahMutex = new System.Threading.Mutex(true, "Kedrah_" + mutexName + Client.Process.Id.ToString());
+                    kedrahMutex = new Mutex(true, "Kedrah_" + mutexName + Client.Process.Id.ToString());
 
                     if (!kedrahMutex.WaitOne(0, false))
                     {
@@ -67,8 +72,8 @@ namespace Kedrah
                     Proxy = Client.IO.Proxy;
 
                     Client.Process.Exited += new EventHandler(ClientClosed);
-                    Proxy.ReceivedSelfAppearIncomingPacket += new Tibia.Packets.ProxyBase.IncomingPacketListener(OnLogin);
-                    Proxy.ReceivedLogoutOutgoingPacket += new Tibia.Packets.ProxyBase.OutgoingPacketListener(OnLogout);
+                    Proxy.ReceivedSelfAppearIncomingPacket += new ProxyBase.IncomingPacketListener(OnLogin);
+                    Proxy.ReceivedLogoutOutgoingPacket += new ProxyBase.OutgoingPacketListener(OnLogout);
 
                     Modules = new HModules(this);
                 }
@@ -81,21 +86,21 @@ namespace Kedrah
 
         #region Core Functions
 
-        private bool OnLogin(Tibia.Packets.IncomingPacket packet)
+        private bool OnLogin(IncomingPacket packet)
         {
             Map = Client.Map;
             Screen = Client.Screen;
             BattleList = Client.BattleList;
             Inventory = Client.Inventory;
             Console = Client.Console;
-            System.Threading.Thread.Sleep(300);
+            Thread.Sleep(300);
             Player = Client.GetPlayer();
             Modules.Enable();
 
             return true;
         }
 
-        private bool OnLogout(Tibia.Packets.OutgoingPacket packet)
+        private bool OnLogout(OutgoingPacket packet)
         {
             Modules.Disable();
 

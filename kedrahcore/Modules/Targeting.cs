@@ -7,60 +7,13 @@ using System.Xml;
 using System.Xml.XPath;
 using Tibia.Objects;
 using Tibia.Constants;
+using Kedrah.Objects;
+using Kedrah.Constants;
 
 namespace Kedrah.Modules
 {
     public class Targeting : Module
     {
-        #region Enums/Structures
-
-        public struct Element
-        {
-            public string To;
-            public int Percent;
-
-            public Element(string to, int percent)
-            {
-                To = to;
-                Percent = percent;
-            }
-        }
-
-        public enum FightActions
-        {
-            Attack,
-            Follow,
-            None
-        }
-
-        public enum FightExtra
-        {
-            Spell,
-            ItemEquip,
-            ItemUse,
-            AutoSpell
-        }
-
-        public enum FightStances
-        {
-            Stand,
-            Follow,
-            Distance,
-            ParryStand,
-            ParryFollow
-        }
-
-        public enum FightSecurity
-        {
-            Wave,
-            Beam,
-            Both,
-            Automatic,
-            None
-        }
-
-        #endregion
-
         #region Variables/Objects
 
         private Creature creature;
@@ -179,7 +132,7 @@ namespace Kedrah.Modules
             }
         }
 
-        public void AddAllCreatures(FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
+        public void AddAllCreatures(FightActions action, byte priority, FightSecurity security, FightStances stance, Attack attackMode, Follow followMode)
         {
             foreach (var c in CreatureLists.AllCreatures)
             {
@@ -203,7 +156,7 @@ namespace Kedrah.Modules
             Targets.Add(new Target(c));
         }
 
-        public void AddTarget(string name, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
+        public void AddTarget(string name, FightActions action, byte priority, FightSecurity security, FightStances stance, Attack attackMode, Follow followMode)
         {
             CreatureData c = null;
 
@@ -277,7 +230,7 @@ namespace Kedrah.Modules
                 return;
             }
 
-            Tibia.Objects.Creature selected = null;
+            Creature selected = null;
             Target selectedTarget = null;
             Dictionary<string, double[]> verifier = new Dictionary<string, double[]>(4);
 
@@ -316,9 +269,9 @@ namespace Kedrah.Modules
 
                 if (OthersMonsters > 0)
                 {
-                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Tibia.Objects.Creature c)
+                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
                     {
-                        return c.DistanceTo(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == Tibia.Constants.CreatureType.Player) && (!c.IsSelf());
+                        return c.DistanceTo(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == CreatureType.Player) && (!c.IsSelf());
                     });
 
                     if (playersAround.Count > 0 && !creature.IsAttacking())
@@ -410,7 +363,7 @@ namespace Kedrah.Modules
                 }
                 else
                 {
-                    Tibia.Packets.Outgoing.AttackPacket.Send(Kedrah.Client, (uint) Kedrah.Player.RedSquare);
+                    Tibia.Packets.Outgoing.AttackPacket.Send(Kedrah.Client, (uint)Kedrah.Player.RedSquare);
                 }
             }
             else if (target.Action == FightActions.Follow)
@@ -445,100 +398,6 @@ namespace Kedrah.Modules
             }
         }
 
-        #endregion
-
-        #region Auxiliar Classes
-
-        public class FightExtraPair
-        {
-            private FightExtra Type;
-            private Tibia.Objects.Item Item;
-            private Tibia.Constants.SlotNumber Slot;
-            private string Spell;
-            private Dictionary<DamageType, string> SpellTypes;
-
-            public FightExtraPair(FightExtra type, Tibia.Objects.Item item)
-            {
-                this.Type = type;
-                this.Item = item;
-                this.Slot = Tibia.Constants.SlotNumber.Ammo;
-                this.Spell = "";
-            }
-
-            public FightExtraPair(FightExtra type, Tibia.Objects.Item item, Tibia.Constants.SlotNumber slot)
-            {
-                this.Type = type;
-                this.Item = item;
-                this.Slot = slot;
-                this.Spell = "";
-            }
-
-            public FightExtraPair(FightExtra type, string spell)
-            {
-                this.Type = type;
-                this.Item = null;
-                this.Slot = Tibia.Constants.SlotNumber.Ammo;
-                this.Spell = spell;
-            }
-
-            public FightExtraPair(FightExtra type, Dictionary<DamageType, string> spellTypes)
-            {
-                this.Type = type;
-                this.Item = null;
-                this.Slot = Tibia.Constants.SlotNumber.Ammo;
-                this.SpellTypes = spellTypes;
-            }
-
-            public void Execute(Tibia.Objects.Creature creature, Tibia.Objects.Inventory inventory)
-            {
-                switch (this.Type)
-                {
-                    case FightExtra.ItemEquip:
-                        Tibia.Objects.ItemLocation loc = new Tibia.Objects.ItemLocation();
-                        this.Item.Move(inventory.GetItemInSlot(this.Slot).Location);
-                        break;
-                    case FightExtra.ItemUse:
-                        this.Item.Use(creature);
-                        break;
-                    case FightExtra.Spell:
-                        this.Item.Client.Console.Say(this.Spell);
-                        break;
-                    case FightExtra.AutoSpell:
-                        DamageType type = creature.Data.GetWeakness(SpellTypes.Keys.ToList());
-                        this.Item.Client.Console.Say(SpellTypes[type]);
-                        break;
-                }
-            }
-        }
-
-        public class Target : CreatureData
-        {
-            public FightActions Action;
-            public byte Priority;
-            public byte[] HPRange = { 0, 100 };
-            public FightSecurity Security;
-            public FightStances Stance;
-            public Tibia.Constants.Attack AttackMode;
-            public Tibia.Constants.Follow FollowMode;
-            public List<FightExtraPair> Extra;
-
-            public Target(CreatureData c)
-                : this(c, FightActions.None, 0, FightSecurity.Automatic, FightStances.Stand, Tibia.Constants.Attack.FullAttack, Tibia.Constants.Follow.DoNotFollow)
-            {
-            }
-
-            public Target(CreatureData c, FightActions action, byte priority, FightSecurity security, FightStances stance, Tibia.Constants.Attack attackMode, Tibia.Constants.Follow followMode)
-                : base(c.Name, c.HitPoints, c.ExperiencePoints, c.SummonMana, c.ConvinceMana, c.MaxDamage, c.CanIllusion, c.CanSeeInvisible, c.FrontAttack, c.Immunities, c.Strengths, c.Weaknesses, c.Sounds, c.Loot)
-            {
-                this.Action = action;
-                this.Priority = priority;
-                this.Security = security;
-                this.Stance = stance;
-                this.AttackMode = attackMode;
-                this.FollowMode = followMode;
-                this.Extra = new List<FightExtraPair>();
-            }
-        }
         #endregion
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using Kedrah.Objects;
+using Tibia.Constants;
 
 namespace Kedrah.Modules
 {
@@ -13,11 +15,11 @@ namespace Kedrah.Modules
         public bool Paralyze = false;
         public DateTime PotionNext = DateTime.Now;
         public DateTime SpellNext = DateTime.Now;
-        public List<ItemPercent> PotionLife;
-        public List<ItemPercent> PotionMana;
-        public List<ItemPercent> RuneLife;
-        public List<SpellPercent> SpellLife;
-        public string SpellPoisonWords = Tibia.Constants.Spells.Antidote.Words;
+        public List<HealPercent> PotionLife;
+        public List<HealPercent> PotionMana;
+        public List<HealPercent> RuneLife;
+        public List<HealPercent> SpellLife;
+        public string SpellPoisonWords = Spells.Antidote.Words;
         public ushort PotionExhaustion = 700;
         public ushort SpellExhaustion = 1080;
         public ushort SpellPoisonMana = 30;
@@ -29,10 +31,10 @@ namespace Kedrah.Modules
         public Heal(ref Core core)
             : base(ref core)
         {
-            PotionLife = new List<ItemPercent>();
-            PotionMana = new List<ItemPercent>();
-            RuneLife = new List<ItemPercent>();
-            SpellLife = new List<SpellPercent>();
+            PotionLife = new List<HealPercent>();
+            PotionMana = new List<HealPercent>();
+            RuneLife = new List<HealPercent>();
+            SpellLife = new List<HealPercent>();
 
             #region Timers
 
@@ -89,7 +91,7 @@ namespace Kedrah.Modules
 
             if (PotionNext.CompareTo(DateTime.Now) <= 0)
             {
-                foreach (ItemPercent potion in PotionLife)
+                foreach (HealPercent potion in PotionLife)
                 {
                     if (Kedrah.Player.HPBar <= potion.Percent)
                     {
@@ -97,7 +99,7 @@ namespace Kedrah.Modules
                     }
                 }
 
-                foreach (ItemPercent potion in PotionMana)
+                foreach (HealPercent potion in PotionMana)
                 {
                     if ((Kedrah.Player.Mana * 100 / Kedrah.Player.Mana_Max) <= potion.Percent)
                     {
@@ -108,7 +110,7 @@ namespace Kedrah.Modules
 
             if (SpellNext.CompareTo(DateTime.Now) <= 0)
             {
-                foreach (ItemPercent rune in RuneLife)
+                foreach (HealPercent rune in RuneLife)
                 {
                     if (Kedrah.Player.HPBar <= rune.Percent)
                     {
@@ -116,7 +118,7 @@ namespace Kedrah.Modules
                     }
                 }
 
-                foreach (SpellPercent spell in SpellLife)
+                foreach (HealPercent spell in SpellLife)
                 {
                     if (Kedrah.Player.HPBar <= spell.Percent && Kedrah.Player.Mana >= spell.Mana)
                     {
@@ -124,12 +126,12 @@ namespace Kedrah.Modules
                     }
                 }
 
-                if (Poison && Kedrah.Player.HasFlag(Tibia.Constants.Flag.Poisoned) && Kedrah.Player.Mana >= SpellPoisonMana)
+                if (Poison && Kedrah.Player.HasFlag(Flag.Poisoned) && Kedrah.Player.Mana >= SpellPoisonMana)
                 {
                     SpellNext = Kedrah.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
 
-                if (Paralyze && Kedrah.Player.HasFlag(Tibia.Constants.Flag.Paralyzed))
+                if (Paralyze && Kedrah.Player.HasFlag(Flag.Paralyzed))
                 {
                     SpellNext = Kedrah.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
@@ -137,41 +139,5 @@ namespace Kedrah.Modules
         }
 
         #endregion
-    }
-
-    public struct ItemPercent : IComparable<ItemPercent>
-    {
-        public uint Percent;
-        public Tibia.Objects.Item Item;
-
-        public ItemPercent(uint percent, Tibia.Objects.Item item)
-        {
-            this.Percent = percent;
-            this.Item = item;
-        }
-
-        public int CompareTo(ItemPercent other)
-        {
-            return Percent.CompareTo(other.Percent);
-        }
-    }
-
-    public struct SpellPercent : IComparable<SpellPercent>
-    {
-        public uint Percent;
-        public string Spell;
-        public uint Mana;
-
-        public SpellPercent(uint percent, string spell, uint mana)
-        {
-            this.Percent = percent;
-            this.Spell = spell;
-            this.Mana = mana;
-        }
-
-        public int CompareTo(SpellPercent other)
-        {
-            return Percent.CompareTo(other.Percent);
-        }
     }
 }

@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Enums.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="HModules.cs" />
     <Compile Include="IModule.cs" />
@@ -70,6 +71,11 @@
     <Compile Include="Modules\Heal.cs" />
     <Compile Include="Modules\Looter.cs" />
     <Compile Include="Modules\Targeting.cs" />
+    <Compile Include="Objects\FightExtraPair.cs" />
+    <Compile Include="Objects\HealPercent.cs" />
+    <Compile Include="Objects\LootItem.cs" />
+    <Compile Include="Objects\Target.cs" />
+    <Compile Include="Objects\Waypoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\WebServer.cs" />
   </ItemGroup>
