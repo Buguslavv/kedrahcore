@@ -1,0 +1,57 @@
+#summary List of features to develop
+#labels Phase-Implementation,Phase-Design
+
+= Modules =
+== General ==
+Basic functions that require less logic.
+ * ~~Light~~ 
+ * ~~Level Spy~~
+ * ~~X-Ray~~
+ * ~~Old Show Invisible~~
+ * Identify Fish spots
+ * ~~Replace Trees~~
+ * ~~Click Re-Use~~
+ * ~~Eat Food~~
+ * ~~ Frame rate Control~~
+ * Stack Items
+ * ~~Walk over fields~~
+ * ~~Avoid Pitfalls~~
+ * ~~WASD Walking (Enter to enable/disable chat)~~
+ * ~~Speed Boost (Turbo, Dash)~~
+ * ~~World Only View~~
+ * ~~IP Changer~~
+ * Fishing
+
+== Heal ==
+Healing with varied methods.
+ * ~~Refill Life / Mana~~
+ * ~~Exhaustion controller~~
+ * ~~Paralyze heal~~
+ * ~~Poison heal~~
+
+== Targeting ==
+Behave according to creatures and players.
+ * ~~Switch spells automatically based on damage types~~
+ * Fight Stance
+   * Stand
+   * Follow
+   * Distance
+   * Parry (2 or less monsters sorrounding)
+ * Fight Security (Avoid waves/beams)
+ * ~~Fight Mode (Offensive, Balanced, Defensive)~~
+ * ~~Follow Mode (Chase, Stand)~~
+ * ~~Target monsters~~
+   * ~~Target selection:~~
+     * ~~Distance~~
+     * ~~Health~~
+     * ~~Priority choosen~~
+     * ~~Stick~~
+   * ~~Actions (Attack, Follow, None)~~
+   * ~~Target Ignoring~~
+ * Execute some action (Async):
+   * Use item/rune
+   * Equip item
+   * Cast spell
+ * Lock target
+
+= TO BE CONTINUED... =
