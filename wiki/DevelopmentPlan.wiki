@@ -54,4 +54,79 @@ Behave according to creatures and players.
    * Cast spell
  * Lock target
 
-= TO BE CONTINUED... =
+== Cavebot ==
+Walking around and execute custom actions.
+ * Walking
+   * Action
+   * ~~Approach~~
+   * ~~Ladder~~
+   * ~~Node~~
+   * ~~Pick~~
+   * ~~Rope~~
+   * ~~Shovel~~
+   * ~~Stand~~
+   * ~~Walk~~
+ * ~~Find floor changer~~
+ * Leave trap
+
+== Loot ==
+Open creatures and get desired items.
+ * ~~Get listed items~~
+ * ~~Build list by loot value ratio~~
+ * ~~Open dead bodies (anywhere)~~
+ * Add loot by name
+ * ~~Add loot by id~~
+ * ~~Eat from corpses~~
+ * ~~Only open owned creatures~~
+ * ~~Only open bodies that contains desired loot~~
+
+== Maker ==
+Enchant items, cast spells, make runes.
+ * Make Runes
+ * Enchant Items (Spears)
+ * Cast Spells
+
+== Charger ==
+Equip items based on conditions.
+ * Move item to slot if
+   * Low ammount
+   * Target
+   * Mana / Health ammount
+   * Flag (drunk, paralyze)
+
+== Statistics ==
+Gather statistics such as experience, skills, spells.
+ * Experience yield (per supply, per time, global)
+ * Loot yield (per creature, per supply, per time, global)
+ * Balance (loot - waste)
+ * Skills yield
+ * Timers
+   * Spells
+   * Runes (Magic wall, wild growth, fields)
+ * Damage
+   * Average (dealing, receiving)
+   * Maximun (dealing, receiving)
+   * Last (dealing, receiving)
+ * Healing
+   * Average (absolute, percent)
+   * Maximun (absolute, percent)
+   * Last (absolute, percent)
+
+== Security ==
+Perform actions according to ingame events.
+ * Element on screen (GM, CM, Player, NPC
+   * Mark locations
+ * Attacked
+ * Traped
+ * Flags (Logout block, poisoned, etc)
+ * Low mana / health
+ * Disconnected
+ * Message
+
+== Context Menu ==
+Generate ingame context menus, linking to other modules.
+ * Add/Remove/Edit context menus
+
+== Context Menu ==
+Generate screen icons linking to other modules.
+ * Add/Remove/Edit icons
