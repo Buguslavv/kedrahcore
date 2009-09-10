@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Kedrah.Constants;
+using Kedrah.Modules;
 
 namespace Kedrah
 {
@@ -9,11 +11,11 @@ namespace Kedrah
     {
         #region Objects/Variables
 
-        public Kedrah.Modules.Cavebot Cavebot;
-        public Kedrah.Modules.General General;
-        public Kedrah.Modules.Heal Heal;
-        public Kedrah.Modules.Looter Looter;
-        public Kedrah.Modules.Targeting Targeting;
+        public Cavebot Cavebot;
+        public General General;
+        public Heal Heal;
+        public Looter Looter;
+        public Targeting Targeting;
         public WaitStatus WaitStatus;
 
         #endregion
@@ -53,12 +55,5 @@ namespace Kedrah
         }
 
         #endregion
-    }
-
-    public enum WaitStatus
-    {
-        Idle,
-        OpenContainer,
-        LootItems
     }
 }
