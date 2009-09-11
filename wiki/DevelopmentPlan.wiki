@@ -58,18 +58,19 @@
 == Cavebot ==
 === Walking around and execute custom actions. ===
  * _~~Approach~~_
- * _~~Ladder~~_
  * _~~Node~~_
  * _~~Pick~~_
+ * _~~OpenBody~~_
  * _~~Rope~~_
  * _~~Shovel~~_
  * _~~Stand~~_
+ * _~~Use~~_
  * _~~Walk~~_
  * _~~Find floor changer~~_
  * Action
  * Leave trap
 ----
-== Loot ==
+== ~~Loot~~ ==
 === Open creatures and get desired items. ===
  * _~~Get listed items~~_
  * _~~Build list by loot value ratio~~_
@@ -78,7 +79,7 @@
  * _~~Eat from corpses~~_
  * _~~Only open owned creatures~~_
  * _~~Only open bodies that contains desired loot~~_
- * Add loot by name
+ * _~~Add loot by name~~_
 ----
 == Maker ==
 === Enchant items, cast spells, make runes. ===
