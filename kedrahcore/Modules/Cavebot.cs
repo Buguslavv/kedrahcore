@@ -20,7 +20,6 @@ namespace Kedrah.Modules
         public Item Pick = Items.Tool.Pick;
         public Item Rope = Items.Tool.Rope;
         public Item Shovel = Items.Tool.Shovel;
-        public List<Location> LootBodies = new List<Location>();
 
         #endregion
 
@@ -212,7 +211,7 @@ namespace Kedrah.Modules
             return null;
         }
 
-        private bool PerformWaypoint(Waypoint waypoint)
+        public bool PerformWaypoint(Waypoint waypoint)
         {
             if (waypoint == null)
             {
@@ -331,28 +330,7 @@ namespace Kedrah.Modules
                 return;
             }
 
-            #region Open Bodies
-
-            if (LootBodies.Count > 0)
-            {
-                if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
-                {
-                    return;
-                }
-
-                LootBodies.Sort(new Comparison<Location>(delegate(Location l1, Location l2) { return l1.Distance().CompareTo(l2.Distance()); }));
-
-                if (PerformWaypoint(new Waypoint(LootBodies[0], WaypointType.OpenBody, Kedrah)))
-                {
-                    LootBodies.RemoveAt(0);
-                }
-
-                return;
-            }
-
-            #endregion
-
-            if (Waypoints.Count <= 0)
+            if (Kedrah.Modules.Looter.LootBodies.Count > 0 || Waypoints.Count <= 0)
             {
                 return;
             }

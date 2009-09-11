@@ -27,6 +27,7 @@ namespace Kedrah.Modules
         public bool OpenDistantBodies = true;
         public bool OpenNextContainer = true;
         public List<LootItem> LootItems = new List<LootItem>();
+        public List<Location> LootBodies = new List<Location>();
 
         #endregion
 
@@ -89,13 +90,13 @@ namespace Kedrah.Modules
                     {
                         if (OpenBodies == OpenBodyRule.All)
                         {
-                            Kedrah.Modules.Cavebot.LootBodies.Add(p.Position);
+                            LootBodies.Add(p.Position);
                         }
                         else
                         {
                             if (lastBody.IsValid())
                             {
-                                Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                                LootBodies.Add(lastBody);
                                 lastBody = Location.Invalid;
                             }
 
@@ -116,7 +117,7 @@ namespace Kedrah.Modules
 
                 if (OpenBodies == OpenBodyRule.Allowed)
                 {
-                    Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                    LootBodies.Add(lastBody);
                     lastBody = Location.Invalid;
                 }
                 else
@@ -127,7 +128,7 @@ namespace Kedrah.Modules
                         {
                             if (p.Message.ToLower().Contains(item.Value.Name.ToLower()))
                             {
-                                Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                                LootBodies.Add(lastBody);
                                 lastBody = Location.Invalid;
                                 return true;
                             }
@@ -138,7 +139,7 @@ namespace Kedrah.Modules
                     {
                         if (p.Message.ToLower().Contains(item.Description.ToLower()))
                         {
-                            Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
+                            LootBodies.Add(lastBody);
                             lastBody = Location.Invalid;
                             return true;
                         }
@@ -463,7 +464,26 @@ namespace Kedrah.Modules
         private void Looting_OnExecute()
         {
             if (Kedrah.Client.LoggedIn && lootContainers.Count > 0)
+            {
                 Loot(lootContainers.Dequeue());
+                return;
+            }
+
+            #region Open Bodies
+
+            if (LootBodies.Count > 0)
+            {
+                LootBodies.Sort(new Comparison<Location>(delegate(Location l1, Location l2) { return l1.Distance().CompareTo(l2.Distance()); }));
+
+                if (Kedrah.Modules.Cavebot.PerformWaypoint(new Waypoint(LootBodies[0], WaypointType.OpenBody, Kedrah)))
+                {
+                    LootBodies.RemoveAt(0);
+                }
+
+                return;
+            }
+
+            #endregion
         }
 
         #endregion
