@@ -22,18 +22,25 @@ namespace Kedrah.Constants
     {
         Action,
         Approach,
-        Ladder,
         Node,
+        OpenBody,
         Pick,
         Rope,
         Shovel,
         Stand,
+        Use,
         Walk
     }
 
     #endregion
 
     #region Loot
+
+    public enum LootContainer
+    {
+        Any = 0,
+        Ground = 255
+    }
 
     public enum OpenBodyRule
     {

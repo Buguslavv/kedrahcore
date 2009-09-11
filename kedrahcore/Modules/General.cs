@@ -9,6 +9,9 @@ using Tibia.Constants;
 using Tibia;
 using Tibia.Util;
 using Tibia.Objects;
+using Tibia.Packets.Incoming;
+using System.Threading;
+using Tibia.Packets;
 
 namespace Kedrah.Modules
 {
@@ -27,9 +30,9 @@ namespace Kedrah.Modules
         private Keys spyCenterKey;
         private string sign = "";
 
-        public bool showNames = false;
-        public bool fullLight = false;
-        public bool reusing = false;
+        public bool FullLight = false;
+        public bool Reusing = false;
+        public bool OpenSmall = false;
 
         #endregion
 
@@ -38,6 +41,8 @@ namespace Kedrah.Modules
         public General(ref Core core)
             : base(ref core)
         {
+            Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
+
             #region Timers
 
             Timers.Add("eatFood", new Tibia.Util.Timer(5000, false));
@@ -525,7 +530,7 @@ namespace Kedrah.Modules
                         if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
                         {
                             SendKeys.Send("{UP}");
-                            
+
                             if (!KeyboardHook.Control && !KeyboardHook.Alt && SpeedBoost && holdingBoostKey)
                             {
                                 Kedrah.Player.Walk(Direction.Up);
@@ -878,6 +883,20 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet)
+        {
+            if (OpenSmall)
+            {
+                ContainerOpenPacket p = (ContainerOpenPacket)packet;
+                List<Item> items = p.Items;
+                p.Items = new List<Item>();
+                p.Send();
+                p.Items = items;
+            }
+
+            return true;
+        }
+
         public void ChangeIP(string ip, short port)
         {
             if (ip.Length > 0 && port > 0)
@@ -929,7 +948,7 @@ namespace Kedrah.Modules
                     {
                         Kedrah.Map.LevelSpyOff();
 
-                        if (showNames)
+                        if (ShowNames)
                         {
                             Kedrah.Map.NameSpyOn();
                         }
@@ -938,7 +957,7 @@ namespace Kedrah.Modules
                             Kedrah.Map.NameSpyOff();
                         }
 
-                        if (fullLight)
+                        if (FullLight)
                         {
                             Kedrah.Map.FullLightOn();
                         }
@@ -985,7 +1004,7 @@ namespace Kedrah.Modules
                         {
                             Kedrah.Map.LevelSpyOff();
 
-                            if (showNames)
+                            if (ShowNames)
                             {
                                 Kedrah.Map.NameSpyOn();
                             }
@@ -994,7 +1013,7 @@ namespace Kedrah.Modules
                                 Kedrah.Map.NameSpyOff();
                             }
 
-                            if (fullLight)
+                            if (FullLight)
                             {
                                 Kedrah.Map.FullLightOn();
                             }

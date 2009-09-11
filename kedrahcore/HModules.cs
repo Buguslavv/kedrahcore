@@ -25,11 +25,11 @@ namespace Kedrah
         public HModules(Core core)
         {
             WaitStatus = WaitStatus.Idle;
-            Cavebot = new Kedrah.Modules.Cavebot(ref core);
-            General = new Kedrah.Modules.General(ref core);
-            Heal = new Kedrah.Modules.Heal(ref core);
-            Looter = new Kedrah.Modules.Looter(ref core);
-            Targeting = new Kedrah.Modules.Targeting(ref core);
+            Cavebot = new Cavebot(ref core);
+            General = new General(ref core);
+            Heal = new Heal(ref core);
+            Looter = new Looter(ref core);
+            Targeting = new Targeting(ref core);
         }
 
         #endregion

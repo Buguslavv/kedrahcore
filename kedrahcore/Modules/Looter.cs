@@ -19,8 +19,9 @@ namespace Kedrah.Modules
 
         private static ushort maxTries = 10;
         private static AutoResetEvent lootEvent = new AutoResetEvent(false);
+        private uint waitDrop = 0;
         private Queue<byte> lootContainers = new Queue<byte>();
-        private Item lastBody = null;
+        private Location lastBody = Location.Invalid;
         public bool EatFromMonsters = true;
         public OpenBodyRule OpenBodies = OpenBodyRule.Filtered;
         public bool OpenDistantBodies = true;
@@ -37,6 +38,7 @@ namespace Kedrah.Modules
             Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
             Kedrah.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
             Kedrah.Proxy.ReceivedTextMessageIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTextMessageIncomingPacket);
+            Kedrah.Proxy.ReceivedContainerAddItemIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerAddItemIncomingPacket);
 
             #region Timers
 
@@ -48,40 +50,11 @@ namespace Kedrah.Modules
 
         #endregion
 
-        #region Module Functions
+        #region Proxy Hooks
 
-        public void AddLootByRatio(double ratio)
+        private bool Proxy_ReceivedContainerAddItemIncomingPacket(IncomingPacket packet)
         {
-            foreach (var i in ItemDataLists.AllItems)
-            {
-                if (i.Value.ValueRatio >= ratio)
-                {
-                    LootItem lootItem = new LootItem((ushort)i.Value.Id, 0, i.Value.Name);
-                    LootItems.Add(lootItem);
-                }
-            }
-        }
-
-        private void AdjustStackOrder(IEnumerable<Item> cItems, Item item)
-        {
-            foreach (Item i in cItems)
-            {
-                if (i.Location.StackOrder > item.Location.StackOrder)
-                {
-                    i.Location.StackOrder--;
-                    i.Location.ContainerSlot--;
-                }
-            }
-        }
-
-        private bool IsLootContainer(byte number)
-        {
-            Container container = Kedrah.Inventory.GetContainer(number);
-
-            if ((number == 0) || (ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Items.Container.NormalBag.Id && container.HasParent)))
-            {
-                return false;
-            }
+            lootEvent.Set();
 
             return true;
         }
@@ -100,27 +73,33 @@ namespace Kedrah.Modules
 
         bool Proxy_ReceivedTileAddThingIncomingPacket(Tibia.Packets.IncomingPacket packet)
         {
+            TileAddThingPacket p = (TileAddThingPacket)packet;
+
+            if (p.Position == Kedrah.Player.Location && p.Item != null && p.Item.Id == waitDrop)
+            {
+                waitDrop = 0;
+                lootEvent.Set();
+            }
+
             if (Looting && OpenBodies != OpenBodyRule.None)
             {
-                TileAddThingPacket p = (TileAddThingPacket)packet;
-
-                if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacentTo(Kedrah.Player.Location)))
+                if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacent()))
                 {
                     if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z)
                     {
                         if (OpenBodies == OpenBodyRule.All)
                         {
-                            Kedrah.Modules.Cavebot.LootBodies.Add(p.Item);
+                            Kedrah.Modules.Cavebot.LootBodies.Add(p.Position);
                         }
                         else
                         {
-                            if (lastBody != null)
+                            if (lastBody.IsValid())
                             {
                                 Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
-                                lastBody = null;
+                                lastBody = Location.Invalid;
                             }
 
-                            lastBody = p.Item;
+                            lastBody = p.Position;
                         }
                     }
                 }
@@ -131,14 +110,14 @@ namespace Kedrah.Modules
 
         bool Proxy_ReceivedTextMessageIncomingPacket(Tibia.Packets.IncomingPacket packet)
         {
-            if (Looting && lastBody != null)
+            if (Looting && lastBody.IsValid())
             {
                 TextMessagePacket p = (TextMessagePacket)packet;
 
                 if (OpenBodies == OpenBodyRule.Allowed)
                 {
                     Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
-                    lastBody = null;
+                    lastBody = Location.Invalid;
                 }
                 else
                 {
@@ -149,8 +128,8 @@ namespace Kedrah.Modules
                             if (p.Message.ToLower().Contains(item.Value.Name.ToLower()))
                             {
                                 Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
-                                lastBody = null;
-                                break;
+                                lastBody = Location.Invalid;
+                                return true;
                             }
                         }
                     }
@@ -160,16 +139,90 @@ namespace Kedrah.Modules
                         if (p.Message.ToLower().Contains(item.Description.ToLower()))
                         {
                             Kedrah.Modules.Cavebot.LootBodies.Add(lastBody);
-                            lastBody = null;
-                            break;
+                            lastBody = Location.Invalid;
+                            return true;
                         }
                     }
                 }
 
-                lastBody = null;
+                lastBody = Location.Invalid;
             }
 
             return true;
+        }
+
+        #endregion
+
+        #region Module Functions
+
+        public void AddLootByRatio(double ratio)
+        {
+            AddLootByRatio(ratio, (byte)LootContainer.Any);
+        }
+
+        public void AddLootByRatio(double ratio, byte container)
+        {
+            foreach (var i in ItemDataLists.AllItems)
+            {
+                if (i.Value.ValueRatio >= ratio)
+                {
+                    LootItem lootItem = new LootItem((ushort)i.Value.Id, container, i.Value.Name);
+                    LootItems.Add(lootItem);
+                }
+            }
+        }
+
+        public void AddLootByName(string name)
+        {
+            AddLootByName(name, (byte)LootContainer.Any);
+        }
+
+        public void AddLootByName(string name, byte container)
+        {
+            if (ItemDataLists.AllItems.ContainsKey(name))
+            {
+                LootItem lootItem = new LootItem((ushort)ItemDataLists.AllItems[name].Id, container, ItemDataLists.AllItems[name].Name);
+                LootItems.Add(lootItem);
+            }
+        }
+
+        public void AddLootById(uint id)
+        {
+            AddLootById(id, (byte)LootContainer.Any);
+        }
+
+        public void AddLootById(uint id, byte container)
+        {
+            if (ItemLists.AllItems.ContainsKey(id))
+            {
+                LootItem lootItem = new LootItem((ushort)ItemLists.AllItems[id].Id, container, ItemLists.AllItems[id].Name);
+                LootItems.Add(lootItem);
+            }
+        }
+
+        private bool IsLootContainer(byte number)
+        {
+            Container container = Kedrah.Inventory.GetContainer(number);
+
+            if ((number == 0) || (ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Items.Container.NormalBag.Id && container.HasParent)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void OpenNewContainer(Item container, byte number)
+        {
+            Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
+            container.OpenAsContainer(number);
+
+            while (Kedrah.Modules.WaitStatus == WaitStatus.OpenContainer)
+            {
+                Thread.Sleep(100);
+            }
+
+            Kedrah.Modules.WaitStatus = WaitStatus.LootItems;
         }
 
         private void GetItem(Item item, Container container)
@@ -181,7 +234,6 @@ namespace Kedrah.Modules
                 if (lootContainerItem != null && (lootContainerItem.Count + item.Count <= 100 || container.Amount < container.Volume))
                 {
                     item.Move(lootContainerItem.Location);
-                    AdjustStackOrder(container.GetItems(), item);
                 }
                 else if (lootContainerItem == null && container.Amount < container.Volume)
                 {
@@ -190,7 +242,6 @@ namespace Kedrah.Modules
                     itemLocation.ContainerId = container.Number;
                     itemLocation.ContainerSlot = (byte)(container.Volume - 1);
                     item.Move(itemLocation);
-                    AdjustStackOrder(container.GetItems(), item);
                 }
                 else if (OpenNextContainer)
                 {
@@ -203,7 +254,7 @@ namespace Kedrah.Modules
 
                     if (newContainer != null)
                     {
-                        newContainer.OpenAsContainer(container.Number);
+                        OpenNewContainer(newContainer, container.Number);
                     }
                 }
             }
@@ -216,7 +267,6 @@ namespace Kedrah.Modules
                     itemLocation.ContainerId = container.Number;
                     itemLocation.ContainerSlot = (byte)(container.Volume - 1);
                     item.Move(itemLocation);
-                    AdjustStackOrder(container.GetItems(), item);
                 }
                 else if (OpenNextContainer)
                 {
@@ -224,7 +274,7 @@ namespace Kedrah.Modules
 
                     if (newContainer != null)
                     {
-                        newContainer.OpenAsContainer(container.Number);
+                        OpenNewContainer(newContainer, container.Number);
                     }
                 }
             }
@@ -258,7 +308,8 @@ namespace Kedrah.Modules
                         if (newContainer != null)
                         {
                             newContainer.OpenAsContainer(lootContainer.Number);
-                            Thread.Sleep(100);
+                            OpenNewContainer(newContainer, lootContainer.Number);
+
                             return null;
                         }
                     }
@@ -293,26 +344,54 @@ namespace Kedrah.Modules
 
                 if (lootItem != null)
                 {
-                    Container lootContainer = null;
-
-                    #region Select container
-
-                    if (lootItem.Container == 0)
-                        lootContainer = GetLootContainer(item);
-                    else
-                        lootContainer = Kedrah.Inventory.GetContainer(lootItem.Container);
-
-                    #endregion
-
-                    if (lootContainer == null)
-                        continue;
-
-                    int startAmmount = container.Amount;
-
-                    for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
+                    if (lootItem.Container == (byte)LootContainer.Ground)
                     {
-                        GetItem(item, lootContainer);
-                        Thread.Sleep(100);
+                        int startAmmount = container.Amount;
+
+                        for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
+                        {
+                            waitDrop = item.Id;
+                            item.Move(ItemLocation.FromLocation(Kedrah.Player.Location));
+
+                            if (lootEvent.WaitOne(1000))
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Container lootContainer = null;
+
+                        #region Select container
+
+                        if (lootItem.Container == (byte)LootContainer.Any)
+                        {
+                            lootContainer = GetLootContainer(item);
+                        }
+                        else
+                        {
+                            lootContainer = Kedrah.Inventory.GetContainer(lootItem.Container);
+                        }
+
+                        #endregion
+
+                        if (lootContainer == null)
+                        {
+                            continue;
+                        }
+
+                        int startAmmount = container.Amount;
+
+                        for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
+                        {
+                            GetItem(item, lootContainer);
+
+                            if (lootEvent.WaitOne(1000))
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
 
@@ -329,7 +408,7 @@ namespace Kedrah.Modules
                     for (int i = 0; i < food.Count; i++)
                     {
                         food.Use();
-                        Thread.Sleep(100);
+                        Thread.Sleep(300);
                     }
             }
 
@@ -341,14 +420,15 @@ namespace Kedrah.Modules
 
             if (bag != null)
             {
+                OpenNewContainer(bag, container.Number);
                 Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
-                bag.OpenAsContainer(container.Number);
             }
             else
             {
                 container.Close();
                 Kedrah.Modules.WaitStatus = WaitStatus.Idle;
             }
+
             Thread.Sleep(100);
 
             #endregion

@@ -271,7 +271,7 @@ namespace Kedrah.Modules
                 {
                     var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
                     {
-                        return c.DistanceTo(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == CreatureType.Player) && (!c.IsSelf());
+                        return c.DistanceBetween(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == CreatureType.Player) && (!c.IsSelf());
                     });
 
                     if (playersAround.Count > 0 && !creature.IsAttacking())
@@ -294,11 +294,11 @@ namespace Kedrah.Modules
                     continue;
                 }
 
-                verifier["distance"][0] = selected.DistanceTo(Kedrah.Player.Location);
+                verifier["distance"][0] = selected.Distance();
                 verifier["health"][0] = (double)selected.HPBar;
                 verifier["priority"][0] = (double)selectedTarget.Priority;
                 verifier["stick"][0] = (double)selected.Id;
-                verifier["distance"][1] = creature.DistanceTo(Kedrah.Player.Location);
+                verifier["distance"][1] = creature.Distance();
                 verifier["health"][1] = (double)creature.HPBar;
                 verifier["priority"][1] = (double)target.Priority;
                 verifier["stick"][1] = (double)creature.Id;
