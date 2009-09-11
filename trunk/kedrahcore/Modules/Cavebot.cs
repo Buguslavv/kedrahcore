@@ -20,7 +20,7 @@ namespace Kedrah.Modules
         public Item Pick = Items.Tool.Pick;
         public Item Rope = Items.Tool.Rope;
         public Item Shovel = Items.Tool.Shovel;
-        public List<Item> LootBodies = new List<Item>();
+        public List<Location> LootBodies = new List<Location>();
 
         #endregion
 
@@ -96,17 +96,32 @@ namespace Kedrah.Modules
 
         private Location NearestAjacent(Location location)
         {
-            Location result = new Location();
+            List<Location> locations = new List<Location> {
+                location.Offset(-1,-1,0),
+                location.Offset(-1,0,0),
+                location.Offset(-1,1,0),
+                location.Offset(0,-1,0),
+                location.Offset(0,1,0),
+                location.Offset(1,-1,0),
+                location.Offset(1,0,0),
+                location.Offset(1,1,0),
+            };
 
-            foreach (Tile t in Kedrah.Map.GetTilesOnSameFloor())
+            foreach (Location l in locations)
             {
-                if (t.Location.IsAdjacentTo(location) && t.Location.DistanceTo(Kedrah.Player.Location) < location.DistanceTo(Kedrah.Player.Location))
+                if (!location.IsValid() || l.Distance() < location.Distance()
+)
                 {
-                    result = t.Location;
+                    if (Kedrah.Map.GetTile(l).Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking | Tibia.Addresses.DatItem.Flag.BlocksPath))
+                    {
+                        continue;
+                    }
+
+                    location = l;
                 }
             }
 
-            return result;
+            return location;
         }
 
         private Waypoint FloorChangerWaypoint(Location destination)
@@ -120,8 +135,8 @@ namespace Kedrah.Modules
 
             List<uint> list = null;
             Tile result = null;
-            List<Tile> possible = Kedrah.Map.GetTilesOnSameFloor().Where(t => t.Location.DistanceTo(Kedrah.Player.Location) < 27).ToList();
-            possible.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.DistanceTo(destination).CompareTo(t2.Location.DistanceTo(destination)); }));
+            List<Tile> possible = Kedrah.Map.GetTilesOnSameFloor().Where(t => t.Location.Distance() < 27).ToList();
+            possible.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.DistanceBetween(destination).CompareTo(t2.Location.DistanceBetween(destination)); }));
 
             if (change < 0)
             {
@@ -175,7 +190,7 @@ namespace Kedrah.Modules
             }
             if (TileLists.DownUse.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Ladder, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Use, Kedrah);
             }
             if (TileLists.Shovel.Contains(result.Ground.Id))
             {
@@ -191,7 +206,7 @@ namespace Kedrah.Modules
             }
             if (TileLists.UpUse.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Ladder, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Use, Kedrah);
             }
 
             return null;
@@ -212,13 +227,24 @@ namespace Kedrah.Modules
                 case WaypointType.Action:
                     return true;
                 case WaypointType.Approach:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= 1)
+                    if (waypoint.Location.IsAdjacent())
                     {
                         return true;
                     }
                     break;
-                case WaypointType.Ladder:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= 1)
+                case WaypointType.OpenBody:
+                    if (waypoint.Location.IsAdjacent())
+                    {
+                        Tile t = Kedrah.Map.GetTile(waypoint.Location);
+                        if (t.Items.Count > 0)
+                        {
+                            t.Items.First(i => ItemLists.Corpse.ContainsKey(i.Id)).Use();
+                        }
+                        return true;
+                    }
+                    break;
+                case WaypointType.Use:
+                    if (waypoint.Location.IsAdjacent())
                     {
                         Tile t = Kedrah.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
@@ -233,13 +259,13 @@ namespace Kedrah.Modules
                     }
                     break;
                 case WaypointType.Node:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= SkipNodes)
+                    if (waypoint.Location.Distance() <= SkipNodes)
                     {
                         return true;
                     }
                     break;
                 case WaypointType.Pick:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) == 1)
+                    if (waypoint.Location.Distance() == 1)
                     {
                         Kedrah.Inventory.UseItemOnTile(Pick.Id, Kedrah.Map.GetTile(waypoint.Location));
                         return true;
@@ -250,14 +276,14 @@ namespace Kedrah.Modules
                     }
                     break;
                 case WaypointType.Rope:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) <= 1)
+                    if (waypoint.Location.IsAdjacent())
                     {
                         Kedrah.Inventory.UseItemOnTile(Rope.Id, Kedrah.Map.GetTile(waypoint.Location));
                         return true;
                     }
                     break;
                 case WaypointType.Shovel:
-                    if (waypoint.Location.DistanceTo(Kedrah.Player.Location) == 1)
+                    if (waypoint.Location.Distance() == 1)
                     {
                         Kedrah.Inventory.UseItemOnTile(Shovel.Id, Kedrah.Map.GetTile(waypoint.Location));
                         return true;
@@ -281,7 +307,7 @@ namespace Kedrah.Modules
 
             if (!Kedrah.Player.IsWalking)
             {
-                if (waypoint.Type == WaypointType.Approach || waypoint.Type == WaypointType.Ladder || waypoint.Type == WaypointType.Pick || waypoint.Type == WaypointType.Rope || waypoint.Type == WaypointType.Shovel)
+                if (waypoint.Type == WaypointType.Approach || waypoint.Type == WaypointType.OpenBody || waypoint.Type == WaypointType.Pick || waypoint.Type == WaypointType.Rope || waypoint.Type == WaypointType.Shovel || waypoint.Type == WaypointType.Use)
                 {
                     Kedrah.Player.GoTo = NearestAjacent(waypoint.Location);
                 }
@@ -309,17 +335,15 @@ namespace Kedrah.Modules
 
             if (LootBodies.Count > 0)
             {
-                LootBodies.RemoveAll(delegate(Item i) { return (i.Location.GroundLocation.Z != Kedrah.Player.Z); });
-                LootBodies.Sort(new Comparison<Item>(delegate(Item i1, Item i2) { return i1.Location.GroundLocation.DistanceTo(Kedrah.Player.Location).CompareTo(i2.Location.GroundLocation.DistanceTo(Kedrah.Player.Location)); }));
-
-                if (!LootBodies[0].Location.GroundLocation.IsAdjacentTo(Kedrah.Player.Location) && !Kedrah.Player.IsWalking)
+                if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
                 {
-                    PerformWaypoint(new Waypoint(NearestAjacent(LootBodies[0].Location.GroundLocation), WaypointType.Approach, Kedrah));
+                    return;
                 }
-                else if (!Kedrah.Player.IsWalking)
+
+                LootBodies.Sort(new Comparison<Location>(delegate(Location l1, Location l2) { return l1.Distance().CompareTo(l2.Distance()); }));
+
+                if (PerformWaypoint(new Waypoint(LootBodies[0], WaypointType.OpenBody, Kedrah)))
                 {
-                    Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
-                    LootBodies[0].OpenAsContainer((byte)Kedrah.Inventory.GetContainers().Count());
                     LootBodies.RemoveAt(0);
                 }
 

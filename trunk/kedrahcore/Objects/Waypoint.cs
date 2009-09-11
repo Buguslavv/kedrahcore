@@ -24,7 +24,7 @@ namespace Kedrah.Objects
 
         public int CompareTo(Waypoint other)
         {
-            int comparisson = other.Location.DistanceTo(Kedrah.Player.Location).CompareTo(other.Location.DistanceTo(Kedrah.Player.Location));
+            int comparisson = other.Location.Distance().CompareTo(other.Location.Distance());
 
             return comparisson;
         }

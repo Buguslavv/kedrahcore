@@ -72,10 +72,11 @@ namespace Kedrah
                     Proxy = Client.IO.Proxy;
 
                     Client.Process.Exited += new EventHandler(ClientClosed);
-                    Proxy.ReceivedSelfAppearIncomingPacket += new ProxyBase.IncomingPacketListener(OnLogin);
-                    Proxy.ReceivedLogoutOutgoingPacket += new ProxyBase.OutgoingPacketListener(OnLogout);
+                    Proxy.PlayerLogin += new EventHandler(OnLogin);
+                    Proxy.PlayerLogout += new EventHandler(OnLogout);
 
                     Modules = new HModules(this);
+                    Kedrah.Extensions.Kedrah = this;
                 }
 
                 break;
@@ -86,7 +87,7 @@ namespace Kedrah
 
         #region Core Functions
 
-        private bool OnLogin(IncomingPacket packet)
+        private void OnLogin(object sender, EventArgs e)
         {
             Map = Client.Map;
             Screen = Client.Screen;
@@ -96,11 +97,9 @@ namespace Kedrah
             Thread.Sleep(300);
             Player = Client.GetPlayer();
             Modules.Enable();
-
-            return true;
         }
 
-        private bool OnLogout(OutgoingPacket packet)
+        private void OnLogout(object sender, EventArgs e)
         {
             Modules.Disable();
 
@@ -108,11 +107,9 @@ namespace Kedrah
             {
                 Client.Window.WorldOnlyView = false;
             }
-
-            return true;
         }
 
-        void ClientClosed(object sender, EventArgs args)
+        void ClientClosed(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
