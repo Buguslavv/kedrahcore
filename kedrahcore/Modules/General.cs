@@ -24,6 +24,7 @@ namespace Kedrah.Modules
 
         private bool talking = false;
         private bool holdingBoostKey = true;
+        private bool showNames = false;
         private int floorOfSpy = 0;
         private Keys spyPlusKey;
         private Keys spyMinusKey;
@@ -302,11 +303,11 @@ namespace Kedrah.Modules
         {
             get
             {
-                return ShowNames;
+                return showNames;
             }
             set
             {
-                ShowNames = value;
+                showNames = value;
 
                 if (value)
                 {

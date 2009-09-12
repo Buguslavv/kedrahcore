@@ -5,17 +5,6 @@ using System.Text;
 
 namespace Kedrah.Constants
 {
-    #region Global
-
-    public enum WaitStatus
-    {
-        Idle,
-        OpenContainer,
-        LootItems
-    }
-
-    #endregion
-
     #region Cavebot
 
     public enum WaypointType
