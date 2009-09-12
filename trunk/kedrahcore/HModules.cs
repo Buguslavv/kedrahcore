@@ -16,7 +16,6 @@ namespace Kedrah
         public Heal Heal;
         public Looter Looter;
         public Targeting Targeting;
-        public WaitStatus WaitStatus;
 
         #endregion
 
@@ -24,7 +23,6 @@ namespace Kedrah
 
         public HModules(Core core)
         {
-            WaitStatus = WaitStatus.Idle;
             Cavebot = new Cavebot(ref core);
             General = new General(ref core);
             Heal = new Heal(ref core);

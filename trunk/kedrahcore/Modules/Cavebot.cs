@@ -34,7 +34,7 @@ namespace Kedrah.Modules
 
             #region Timers
 
-            Timers.Add("walk", new Tibia.Util.Timer(500, false));
+            Timers.Add("walk", new Tibia.Util.Timer(1000, false));
             Timers["walk"].Execute += new Tibia.Util.Timer.TimerExecution(Walk_OnExecute);
 
             #endregion
@@ -219,6 +219,11 @@ namespace Kedrah.Modules
                 return false;
             }
 
+            if (Kedrah.Player.Z != waypoint.Location.Z)
+            {
+                return true;
+            }
+
             #region Verification + Actions
 
             switch (waypoint.Type)
@@ -237,7 +242,11 @@ namespace Kedrah.Modules
                         Tile t = Kedrah.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
                         {
-                            t.Items.First(i => ItemLists.Corpse.ContainsKey(i.Id)).Use();
+                            Item item = t.Items.FirstOrDefault(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
+                            if (item != null)
+                            {
+                                item.Use();
+                            }
                         }
                         return true;
                     }
@@ -304,16 +313,19 @@ namespace Kedrah.Modules
 
             #endregion
 
-            if (!Kedrah.Player.IsWalking)
+
+            if (Kedrah.Modules.Targeting.IsTargeting)
             {
-                if (waypoint.Type == WaypointType.Approach || waypoint.Type == WaypointType.OpenBody || waypoint.Type == WaypointType.Pick || waypoint.Type == WaypointType.Rope || waypoint.Type == WaypointType.Shovel || waypoint.Type == WaypointType.Use)
-                {
-                    Kedrah.Player.GoTo = NearestAjacent(waypoint.Location);
-                }
-                else if (waypoint.Type != WaypointType.Action)
-                {
-                    Kedrah.Player.GoTo = waypoint.Location;
-                }
+                return false;
+            }
+
+            if (waypoint.Type == WaypointType.Approach || waypoint.Type == WaypointType.OpenBody || waypoint.Type == WaypointType.Pick || waypoint.Type == WaypointType.Rope || waypoint.Type == WaypointType.Shovel || waypoint.Type == WaypointType.Use)
+            {
+                Kedrah.Player.GoTo = NearestAjacent(waypoint.Location);
+            }
+            else if (waypoint.Type != WaypointType.Action)
+            {
+                Kedrah.Player.GoTo = waypoint.Location;
             }
 
             return false;
@@ -325,7 +337,7 @@ namespace Kedrah.Modules
 
         public void Walk_OnExecute()
         {
-            if (Kedrah.Player.RedSquare != 0 || Kedrah.Modules.Targeting.IsTargeting || Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            if (Kedrah.Player.IsWalking || Kedrah.Modules.Targeting.IsTargeting || Kedrah.Modules.Looter.IsLooting)
             {
                 return;
             }

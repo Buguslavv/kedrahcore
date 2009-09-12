@@ -9,6 +9,7 @@ using Tibia.Objects;
 using Tibia.Constants;
 using Kedrah.Objects;
 using Kedrah.Constants;
+using System.Threading;
 
 namespace Kedrah.Modules
 {
@@ -124,6 +125,8 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        #region Add Targets
+
         public void AddAllCreatures()
         {
             foreach (var c in CreatureLists.AllCreatures)
@@ -172,10 +175,9 @@ namespace Kedrah.Modules
             Targets.Add(new Target(c, action, priority, security, stance, attackMode, followMode));
         }
 
-        public override void Enable()
-        {
-            base.Enable();
-        }
+        #endregion
+
+        #region Get Spells
 
         public string GetBestMageSpell(CreatureData creatureData)
         {
@@ -223,6 +225,8 @@ namespace Kedrah.Modules
             return holySpell;
         }
 
+        #endregion
+
         public void SelectTarget()
         {
             if (!Kedrah.Client.LoggedIn)
@@ -239,20 +243,17 @@ namespace Kedrah.Modules
             verifier.Add("priority", new double[2] { 0, 0 });
             verifier.Add("stick", new double[2] { 0, 0 });
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
+            List<Creature> creatures = Kedrah.BattleList.GetCreatures().ToList();
+            creatures.RemoveAll(c => c.Z != Kedrah.Player.Z || c.IsSelf() || c.HPBar == 0 || c.Type != CreatureType.NPC);
 
-            foreach (Creature creature in Kedrah.BattleList.GetCreatures())
+            foreach (Creature creature in creatures)
             {
                 Target target = Targets.Find(delegate(Target t)
                 {
-                    return (string.Compare(t.Name, "All", false) == 0 || string.Compare(t.Name, creature.Name, true) == 0 && (t.HPRange[0] <= creature.HPBar && t.HPRange[1] <= creature.HPBar));
+                    return (string.Compare(t.Name, "All", false) == 0 || string.Compare(t.Name, creature.Name, true) == 0 && (t.HPRange[0] <= creature.HPBar && t.HPRange[1] >= creature.HPBar));
                 });
 
-                if (creature.IsSelf() || creature.Type != CreatureType.NPC)
-                {
-                    continue;
-                }
-
-                if (Reachable && !creature.IsReachable())
+                if (target == null)
                 {
                     continue;
                 }
@@ -262,7 +263,7 @@ namespace Kedrah.Modules
                     continue;
                 }
 
-                if (target == null)
+                if (Reachable && !creature.IsReachable())
                 {
                     continue;
                 }
@@ -335,7 +336,7 @@ namespace Kedrah.Modules
 
         private void Target_OnExecute()
         {
-            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            if (Kedrah.Modules.Looter.IsLooting)
             {
                 return;
             }
@@ -348,41 +349,28 @@ namespace Kedrah.Modules
                 return;
             }
 
+            if (Kedrah.Player.IsWalking && !creature.IsTarget())
+            {
+                Kedrah.Player.Stop();
+            }
+
             IsTargeting = true;
 
-            Kedrah.Client.FollowMode = target.FollowMode;
-            Kedrah.Client.AttackMode = target.AttackMode;
-            Tibia.Packets.Outgoing.FightModesPacket.Send(Kedrah.Client, (byte)Kedrah.Client.AttackMode, (byte)Kedrah.Client.FollowMode, (byte)Kedrah.Client.SafeMode);
+            Kedrah.Client.SetModes(target.AttackMode, target.FollowMode);
 
             if (target.Action == FightActions.Attack)
             {
-                if (creature.Id != Kedrah.Player.RedSquare)
-                {
-                    Kedrah.Player.Stop();
-                    creature.Attack();
-                }
-                else
-                {
-                    Tibia.Packets.Outgoing.AttackPacket.Send(Kedrah.Client, (uint)Kedrah.Player.RedSquare);
-                }
+                creature.Attack(Kedrah.Player.RedSquare == creature.Id);
             }
             else if (target.Action == FightActions.Follow)
             {
-                if (creature.Id != Kedrah.Player.RedSquare)
-                {
-                    Kedrah.Player.Stop();
-                    creature.Follow();
-                }
-                else
-                {
-                    Tibia.Packets.Outgoing.FollowPacket.Send(Kedrah.Client, (uint)Kedrah.Player.RedSquare);
-                }
+                creature.Follow(Kedrah.Player.GreenSquare == creature.Id);
             }
         }
 
         private void Action_OnExecute()
         {
-            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
+            if (Kedrah.Modules.Looter.IsLooting)
             {
                 return;
             }

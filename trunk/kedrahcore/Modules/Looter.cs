@@ -18,12 +18,10 @@ namespace Kedrah.Modules
         #region Variables/Objects
 
         private static ushort maxTries = 10;
-        private static AutoResetEvent lootEvent = new AutoResetEvent(false);
-        private uint waitDrop = 0;
-        private Queue<byte> lootContainers = new Queue<byte>();
         private Location lastBody = Location.Invalid;
-        public bool EatFromMonsters = true;
         public OpenBodyRule OpenBodies = OpenBodyRule.Filtered;
+        public bool EatFromMonsters = true;
+        public bool IsLooting = false;
         public bool OpenDistantBodies = true;
         public bool OpenNextContainer = true;
         public List<LootItem> LootItems = new List<LootItem>();
@@ -39,7 +37,6 @@ namespace Kedrah.Modules
             Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
             Kedrah.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
             Kedrah.Proxy.ReceivedTextMessageIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTextMessageIncomingPacket);
-            Kedrah.Proxy.ReceivedContainerAddItemIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerAddItemIncomingPacket);
 
             #region Timers
 
@@ -53,20 +50,33 @@ namespace Kedrah.Modules
 
         #region Proxy Hooks
 
-        private bool Proxy_ReceivedContainerAddItemIncomingPacket(IncomingPacket packet)
-        {
-            lootEvent.Set();
-
-            return true;
-        }
-
         private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet)
         {
             if (Looting && LootItems.Count > 0)
             {
-                Kedrah.Modules.WaitStatus = WaitStatus.Idle;
                 ContainerOpenPacket p = (ContainerOpenPacket)packet;
-                lootContainers.Enqueue(p.Id);
+                Thread handler = new Thread(new ThreadStart(delegate()
+                {
+                    AutoResetEvent ev = new AutoResetEvent(false);
+                    Thread thread = new Thread(new ThreadStart(delegate()
+                    {
+                        IsLooting = true;
+                        Kedrah.Player.Stop();
+                        Thread.Sleep(100);
+                        Loot(p.Id);
+                    }));
+
+                    thread.Priority = ThreadPriority.AboveNormal;
+                    thread.Start();
+
+                    if (!ev.WaitOne(2000))
+                    {
+                        thread.Abort();
+                    }
+
+                    IsLooting = false;
+                }));
+                handler.Start();
             }
 
             return true;
@@ -75,12 +85,6 @@ namespace Kedrah.Modules
         bool Proxy_ReceivedTileAddThingIncomingPacket(Tibia.Packets.IncomingPacket packet)
         {
             TileAddThingPacket p = (TileAddThingPacket)packet;
-
-            if (p.Position == Kedrah.Player.Location && p.Item != null && p.Item.Id == waitDrop)
-            {
-                waitDrop = 0;
-                lootEvent.Set();
-            }
 
             if (Looting && OpenBodies != OpenBodyRule.None)
             {
@@ -156,6 +160,8 @@ namespace Kedrah.Modules
 
         #region Module Functions
 
+        #region Add Loot
+
         public void AddLootByRatio(double ratio)
         {
             AddLootByRatio(ratio, (byte)LootContainer.Any);
@@ -201,6 +207,8 @@ namespace Kedrah.Modules
             }
         }
 
+        #endregion
+
         private bool IsLootContainer(byte number)
         {
             Container container = Kedrah.Inventory.GetContainer(number);
@@ -215,15 +223,8 @@ namespace Kedrah.Modules
 
         private void OpenNewContainer(Item container, byte number)
         {
-            Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
             container.OpenAsContainer(number);
-
-            while (Kedrah.Modules.WaitStatus == WaitStatus.OpenContainer)
-            {
-                Thread.Sleep(100);
-            }
-
-            Kedrah.Modules.WaitStatus = WaitStatus.LootItems;
+            Thread.Sleep(100);
         }
 
         private void GetItem(Item item, Container container)
@@ -308,7 +309,6 @@ namespace Kedrah.Modules
 
                         if (newContainer != null)
                         {
-                            newContainer.OpenAsContainer(lootContainer.Number);
                             OpenNewContainer(newContainer, lootContainer.Number);
 
                             return null;
@@ -322,18 +322,12 @@ namespace Kedrah.Modules
 
         private void Loot(byte number)
         {
-            if (Kedrah.Modules.WaitStatus != WaitStatus.Idle)
-            {
-                return;
-            }
-
             Container container = Kedrah.Inventory.GetContainer(number);
 
             if (container == null || !IsLootContainer(number))
+            {
                 return;
-
-            Kedrah.Modules.WaitStatus = WaitStatus.LootItems;
-            Kedrah.Player.Stop();
+            }
 
             IEnumerable<Item> containterEnumerable = container.GetItems();
             List<Item> containerItems = containterEnumerable.ToList();
@@ -351,13 +345,8 @@ namespace Kedrah.Modules
 
                         for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
                         {
-                            waitDrop = item.Id;
                             item.Move(ItemLocation.FromLocation(Kedrah.Player.Location));
-
-                            if (lootEvent.WaitOne(1000))
-                            {
-                                break;
-                            }
+                            Thread.Sleep(100);
                         }
                     }
                     else
@@ -387,11 +376,7 @@ namespace Kedrah.Modules
                         for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
                         {
                             GetItem(item, lootContainer);
-
-                            if (lootEvent.WaitOne(1000))
-                            {
-                                break;
-                            }
+                            Thread.Sleep(100);
                         }
                     }
                 }
@@ -422,12 +407,10 @@ namespace Kedrah.Modules
             if (bag != null)
             {
                 OpenNewContainer(bag, container.Number);
-                Kedrah.Modules.WaitStatus = WaitStatus.OpenContainer;
             }
             else
             {
                 container.Close();
-                Kedrah.Modules.WaitStatus = WaitStatus.Idle;
             }
 
             Thread.Sleep(100);
@@ -444,16 +427,24 @@ namespace Kedrah.Modules
             get
             {
                 if (Timers["looting"].State == Tibia.Util.TimerState.Running)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
             set
             {
                 if (value)
+                {
                     PlayTimer("looting");
+                }
                 else
+                {
                     PauseTimer("looting");
+                }
             }
         }
 
@@ -463,15 +454,14 @@ namespace Kedrah.Modules
 
         private void Looting_OnExecute()
         {
-            if (Kedrah.Client.LoggedIn && lootContainers.Count > 0)
+            if (Kedrah.Player.IsWalking || IsLooting)
             {
-                Loot(lootContainers.Dequeue());
                 return;
             }
 
             #region Open Bodies
 
-            if (LootBodies.Count > 0)
+            if (LootBodies.Count > 0 && !Kedrah.Player.IsWalking)
             {
                 LootBodies.Sort(new Comparison<Location>(delegate(Location l1, Location l2) { return l1.Distance().CompareTo(l2.Distance()); }));
 
