@@ -1,0 +1,17 @@
+#summary Milestone level plan for project features.
+#labels Featured,Phase-Design
+
+= Milestone 0.1 =
+== September 20, 2009 ==
+Ability to automatically hunt, with advanced options and General Hacks.
+  * ~~Looter Module~~
+  * ~~Healing Module~~
+  * Targeting Module
+  * Cavebot Module
+  * General Module
+
+= Milestone 0.2 =
+== October 11, 2009 ==
+More AFK tools such as runemaker.
+  * Maker Module
+  * ContextMenu Module
