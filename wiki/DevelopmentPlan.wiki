@@ -12,13 +12,14 @@
  * _~~Replace Trees~~_
  * _~~Click Re-Use~~_
  * _~~Eat Food~~_
- * _~~ Frame rate Control~~_
+ * _~~Frame rate Control~~_
  * _~~Walk over fields~~_
  * _~~Avoid Pitfalls~~_
  * _~~WASD Walking (Enter to enable/disable chat)~~_
  * _~~Speed Boost (Turbo, Dash)~~_
  * _~~World Only View~~_
  * _~~IP Changer~~_
+ * _~~Open windows small~~_
  * Identify Fish spots
  * Stack Items
  * Fishing
@@ -43,11 +44,10 @@
      * _~~Stick~~_
    * _~~Actions (Attack, Follow, None)~~_
    * _~~Target Ignoring~~_
- * Execute some action (Async):
-   * Use item/rune
-   * Equip item
-   * Cast spell
- * Lock target
+ * _~~Execute some action (Async):~~_
+   * _~~Use item/rune~~_
+   * _~~Equip item~~_
+   * _~~Cast spell~~_
  * Fight Stance
    * Stand
    * Follow
@@ -128,6 +128,6 @@
 === Generate ingame context menus, linking to other modules. ===
  * Add/Remove/Edit context menus
 ----
-== Context Menu ==
+== Icons ==
 === Generate screen icons linking to other modules. ===
  * Add/Remove/Edit icons
