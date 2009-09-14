@@ -3,7 +3,7 @@
 
 = Modules =
 ----
-== General ==
+== ~~General~~ ==
 === Basic functions that require less logic. ===
  * _~~Light~~_
  * _~~Level Spy~~_
