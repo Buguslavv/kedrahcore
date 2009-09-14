@@ -6,9 +6,9 @@
 Ability to automatically hunt, with advanced options and General Hacks.
   * ~~Looter Module~~
   * ~~Healing Module~~
+  * ~~General Module~~
   * Targeting Module
   * Cavebot Module
-  * General Module
 
 = Milestone 0.2 =
 == October 11, 2009 ==
