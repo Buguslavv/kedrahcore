@@ -34,9 +34,9 @@ namespace Kedrah.Modules
         public Looter(ref Core core)
             : base(ref core)
         {
-            Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
-            Kedrah.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
-            Kedrah.Proxy.ReceivedTextMessageIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTextMessageIncomingPacket);
+            Core.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
+            Core.Proxy.ReceivedTileAddThingIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTileAddThingIncomingPacket);
+            Core.Proxy.ReceivedTextMessageIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedTextMessageIncomingPacket);
 
             #region Timers
 
@@ -61,7 +61,7 @@ namespace Kedrah.Modules
                     Thread thread = new Thread(new ThreadStart(delegate()
                     {
                         IsLooting = true;
-                        Kedrah.Player.Stop();
+                        Core.Player.Stop();
                         Thread.Sleep(100);
                         Loot(p.Id);
                     }));
@@ -90,7 +90,7 @@ namespace Kedrah.Modules
             {
                 if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacent()))
                 {
-                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Kedrah.Player.Z)
+                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Core.Player.Z)
                     {
                         if (OpenBodies == OpenBodyRule.All)
                         {
@@ -211,7 +211,7 @@ namespace Kedrah.Modules
 
         private bool IsLootContainer(byte number)
         {
-            Container container = Kedrah.Inventory.GetContainer(number);
+            Container container = Core.Inventory.GetContainer(number);
 
             if ((number == 0) || (ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Items.Container.NormalBag.Id && container.HasParent)))
             {
@@ -284,7 +284,7 @@ namespace Kedrah.Modules
 
         private Container GetLootContainer(Item item)
         {
-            foreach (Container lootContainer in Kedrah.Inventory.GetContainers())
+            foreach (Container lootContainer in Core.Inventory.GetContainers())
             {
                 if (!IsLootContainer(lootContainer.Number))
                 {
@@ -322,7 +322,7 @@ namespace Kedrah.Modules
 
         private void Loot(byte number)
         {
-            Container container = Kedrah.Inventory.GetContainer(number);
+            Container container = Core.Inventory.GetContainer(number);
 
             if (container == null || !IsLootContainer(number))
             {
@@ -345,7 +345,7 @@ namespace Kedrah.Modules
 
                         for (int i = 0; i < maxTries && container.Amount == startAmmount; i++)
                         {
-                            item.Move(ItemLocation.FromLocation(Kedrah.Player.Location));
+                            item.Move(ItemLocation.FromLocation(Core.Player.Location));
                             Thread.Sleep(100);
                         }
                     }
@@ -361,7 +361,7 @@ namespace Kedrah.Modules
                         }
                         else
                         {
-                            lootContainer = Kedrah.Inventory.GetContainer(lootItem.Container);
+                            lootContainer = Core.Inventory.GetContainer(lootItem.Container);
                         }
 
                         #endregion
@@ -454,18 +454,18 @@ namespace Kedrah.Modules
 
         private void Looting_OnExecute()
         {
-            if (Kedrah.Player.IsWalking || IsLooting)
+            if (Core.Player.IsWalking || IsLooting)
             {
                 return;
             }
 
             #region Open Bodies
 
-            if (LootBodies.Count > 0 && !Kedrah.Player.IsWalking)
+            if (LootBodies.Count > 0 && !Core.Player.IsWalking)
             {
                 LootBodies.Sort(new Comparison<Location>(delegate(Location l1, Location l2) { return l1.Distance().CompareTo(l2.Distance()); }));
 
-                if (Kedrah.Modules.Cavebot.PerformWaypoint(new Waypoint(LootBodies[0], WaypointType.OpenBody, Kedrah)))
+                if (Core.Modules.Cavebot.PerformWaypoint(new Waypoint(LootBodies[0], WaypointType.OpenBody, Core)))
                 {
                     LootBodies.RemoveAt(0);
                 }

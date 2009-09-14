@@ -16,6 +16,7 @@ namespace Kedrah
         public Heal Heal;
         public Looter Looter;
         public Targeting Targeting;
+        public Scripter Scripter;
 
         #endregion
 
@@ -28,6 +29,7 @@ namespace Kedrah
             Heal = new Heal(ref core);
             Looter = new Looter(ref core);
             Targeting = new Targeting(ref core);
+            Scripter = new Scripter(ref core);
         }
 
         #endregion

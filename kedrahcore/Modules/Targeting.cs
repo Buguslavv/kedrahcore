@@ -229,7 +229,7 @@ namespace Kedrah.Modules
 
         public void SelectTarget()
         {
-            if (!Kedrah.Client.LoggedIn)
+            if (!Core.Client.LoggedIn)
             {
                 return;
             }
@@ -243,8 +243,8 @@ namespace Kedrah.Modules
             verifier.Add("priority", new double[2] { 0, 0 });
             verifier.Add("stick", new double[2] { 0, 0 });
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
-            List<Creature> creatures = Kedrah.BattleList.GetCreatures().ToList();
-            creatures.RemoveAll(c => c.Z != Kedrah.Player.Z || c.IsSelf() || c.HPBar == 0 || c.Type != CreatureType.NPC);
+            List<Creature> creatures = Core.BattleList.GetCreatures().ToList();
+            creatures.RemoveAll(c => c.Z != Core.Player.Z || c.IsSelf() || c.HPBar == 0 || c.Type != CreatureType.NPC);
 
             foreach (Creature creature in creatures)
             {
@@ -270,7 +270,7 @@ namespace Kedrah.Modules
 
                 if (OthersMonsters > 0)
                 {
-                    var playersAround = Kedrah.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
+                    var playersAround = Core.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
                     {
                         return c.DistanceBetween(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == CreatureType.Player) && (!c.IsSelf());
                     });
@@ -308,7 +308,7 @@ namespace Kedrah.Modules
                 {
                     if (v.Key == "stick")
                     {
-                        if (creature.Id == Kedrah.Player.RedSquare)
+                        if (creature.Id == Core.Player.RedSquare)
                         {
                             selected = creature;
                             selectedTarget = target;
@@ -336,7 +336,7 @@ namespace Kedrah.Modules
 
         private void Target_OnExecute()
         {
-            if (Kedrah.Modules.Looter.IsLooting)
+            if (Core.Modules.Looter.IsLooting)
             {
                 return;
             }
@@ -349,28 +349,28 @@ namespace Kedrah.Modules
                 return;
             }
 
-            if (Kedrah.Player.IsWalking && !creature.IsTarget())
+            if (Core.Player.IsWalking && !creature.IsTarget())
             {
-                Kedrah.Player.Stop();
+                Core.Player.Stop();
             }
 
             IsTargeting = true;
 
-            Kedrah.Client.SetModes(target.AttackMode, target.FollowMode);
+            Core.Client.SetModes(target.AttackMode, target.FollowMode);
 
             if (target.Action == FightActions.Attack)
             {
-                creature.Attack(Kedrah.Player.RedSquare == creature.Id);
+                creature.Attack(Core.Player.RedSquare == creature.Id);
             }
             else if (target.Action == FightActions.Follow)
             {
-                creature.Follow(Kedrah.Player.GreenSquare == creature.Id);
+                creature.Follow(Core.Player.GreenSquare == creature.Id);
             }
         }
 
         private void Action_OnExecute()
         {
-            if (Kedrah.Modules.Looter.IsLooting)
+            if (Core.Modules.Looter.IsLooting)
             {
                 return;
             }
@@ -382,7 +382,7 @@ namespace Kedrah.Modules
 
             foreach (FightExtraPair extra in target.Extra)
             {
-                extra.Execute(creature, Kedrah.Inventory);
+                extra.Execute(creature, Core.Inventory);
             }
         }
 

@@ -42,7 +42,7 @@ namespace Kedrah.Modules
         public General(ref Core core)
             : base(ref core)
         {
-            Kedrah.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
+            Core.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
 
             #region Timers
 
@@ -82,7 +82,7 @@ namespace Kedrah.Modules
             get
             {
                 Item f;
-                f = new Item(Kedrah.Client, 0);
+                f = new Item(Core.Client, 0);
                 f.Id = 1066;
                 return !f.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath);
             }
@@ -90,7 +90,7 @@ namespace Kedrah.Modules
             {
                 List<uint> Falls = new List<uint>();
                 Item f;
-                f = new Item(Kedrah.Client, 0);
+                f = new Item(Core.Client, 0);
 
                 Falls.Add(293);
                 Falls.Add(475);
@@ -227,7 +227,7 @@ namespace Kedrah.Modules
         {
             get
             {
-                return Kedrah.Player.Light;
+                return Core.Player.Light;
             }
             set
             {
@@ -239,7 +239,7 @@ namespace Kedrah.Modules
         {
             get
             {
-                return Kedrah.Player.LightColor;
+                return Core.Player.LightColor;
             }
             set
             {
@@ -311,11 +311,11 @@ namespace Kedrah.Modules
 
                 if (value)
                 {
-                    Kedrah.Map.NameSpyOn();
+                    Core.Map.NameSpyOn();
                 }
                 else
                 {
-                    Kedrah.Map.NameSpyOff();
+                    Core.Map.NameSpyOff();
                 }
             }
         }
@@ -334,9 +334,9 @@ namespace Kedrah.Modules
                     {
                         if (holdingBoostKey)
                         {
-                            if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                            if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                             {
-                                Kedrah.Player.Walk(Direction.Up);
+                                Core.Player.Walk(Direction.Up);
                             }
                         }
                         holdingBoostKey = true;
@@ -346,9 +346,9 @@ namespace Kedrah.Modules
                     {
                         if (holdingBoostKey)
                         {
-                            if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                            if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                             {
-                                Kedrah.Player.Walk(Direction.Left);
+                                Core.Player.Walk(Direction.Left);
                             }
                         }
                         holdingBoostKey = true;
@@ -358,9 +358,9 @@ namespace Kedrah.Modules
                     {
                         if (holdingBoostKey)
                         {
-                            if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                            if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                             {
-                                Kedrah.Player.Walk(Direction.Down);
+                                Core.Player.Walk(Direction.Down);
                             }
                         }
                         holdingBoostKey = true;
@@ -370,9 +370,9 @@ namespace Kedrah.Modules
                     {
                         if (holdingBoostKey)
                         {
-                            if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                            if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                             {
-                                Kedrah.Player.Walk(Direction.Right);
+                                Core.Player.Walk(Direction.Right);
                             }
                         }
                         holdingBoostKey = true;
@@ -444,7 +444,7 @@ namespace Kedrah.Modules
             get
             {
                 Item f;
-                f = new Item(Kedrah.Client, 0);
+                f = new Item(Core.Client, 0);
                 f.Id = 2118;
                 return f.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksPath);
             }
@@ -455,7 +455,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Item f;
-                    f = new Item(Kedrah.Client, 0);
+                    f = new Item(Core.Client, 0);
 
                     for (i = 2118; i <= 2127; i++)
                     {
@@ -478,7 +478,7 @@ namespace Kedrah.Modules
                     List<uint> Fields = new List<uint>();
                     uint i;
                     Item f;
-                    f = new Item(Kedrah.Client, 0);
+                    f = new Item(Core.Client, 0);
 
                     for (i = 2118; i <= 2127; i++)
                     {
@@ -511,14 +511,14 @@ namespace Kedrah.Modules
                 {
                     KeyboardHook.Add(Keys.Enter, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                         {
                             talking = true;
                             return false;
                         }
                         else
                         {
-                            if (Kedrah.Client.LoggedIn)
+                            if (Core.Client.LoggedIn)
                                 talking = false;
                             return true;
                         }
@@ -528,13 +528,13 @@ namespace Kedrah.Modules
 
                     KeyboardHook.Add(Keys.W, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{UP}");
 
                             if (!KeyboardHook.Control && !KeyboardHook.Alt && SpeedBoost && holdingBoostKey)
                             {
-                                Kedrah.Player.Walk(Direction.Up);
+                                Core.Player.Walk(Direction.Up);
                             }
 
                             holdingBoostKey = true;
@@ -547,13 +547,13 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.A, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{LEFT}");
 
                             if (!KeyboardHook.Control && !KeyboardHook.Alt && SpeedBoost && holdingBoostKey)
                             {
-                                Kedrah.Player.Walk(Direction.Left);
+                                Core.Player.Walk(Direction.Left);
                             }
 
                             holdingBoostKey = true;
@@ -566,13 +566,13 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.S, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{DOWN}");
 
                             if (!KeyboardHook.Control && !KeyboardHook.Alt && SpeedBoost && holdingBoostKey)
                             {
-                                Kedrah.Player.Walk(Direction.Down);
+                                Core.Player.Walk(Direction.Down);
                                 holdingBoostKey = true;
                             }
 
@@ -585,13 +585,13 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{RIGHT}");
 
                             if (!KeyboardHook.Control && !KeyboardHook.Alt && SpeedBoost && holdingBoostKey)
                             {
-                                Kedrah.Player.Walk(Direction.Right);
+                                Core.Player.Walk(Direction.Right);
                             }
 
                             holdingBoostKey = true;
@@ -626,7 +626,7 @@ namespace Kedrah.Modules
 
                     KeyboardHook.Add(Keys.Q, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{HOME}");
                             return false;
@@ -638,7 +638,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.E, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{PGUP}");
                             return false;
@@ -650,7 +650,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.Z, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{END}");
                             return false;
@@ -662,7 +662,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.X, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{PGDN}");
                             return false;
@@ -679,7 +679,7 @@ namespace Kedrah.Modules
 
                     KeyboardHook.Add(Keys.D1, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F1}");
                             return false;
@@ -691,7 +691,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D2, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F2}");
                             return false;
@@ -703,7 +703,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D3, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F3}");
                             return false;
@@ -715,7 +715,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D4, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F4}");
                             return false;
@@ -727,7 +727,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D5, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F5}");
                             return false;
@@ -739,7 +739,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D6, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F6}");
                             return false;
@@ -751,7 +751,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D7, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F7}");
                             return false;
@@ -763,7 +763,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D8, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F8}");
                             return false;
@@ -775,7 +775,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D9, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F9}");
                             return false;
@@ -787,7 +787,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.D0, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F10}");
                             return false;
@@ -799,7 +799,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.OemMinus, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F11}");
                             return false;
@@ -811,7 +811,7 @@ namespace Kedrah.Modules
                     }));
                     KeyboardHook.Add(Keys.Oemplus, new KeyboardHook.KeyPressed(delegate()
                     {
-                        if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive)
+                        if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive)
                         {
                             SendKeys.Send("{F12}");
                             return false;
@@ -830,7 +830,7 @@ namespace Kedrah.Modules
                         {
                             KeyboardHook.Add(key, new KeyboardHook.KeyPressed(delegate()
                             {
-                                if (Kedrah.Client.LoggedIn && !talking && Kedrah.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
+                                if (Core.Client.LoggedIn && !talking && Core.Client.Window.IsActive && !KeyboardHook.Control && !KeyboardHook.Alt)
                                 {
                                     return false;
                                 }
@@ -863,7 +863,7 @@ namespace Kedrah.Modules
         {
             get
             {
-                return Kedrah.Client.Window.WorldOnlyView;
+                return Core.Client.Window.WorldOnlyView;
             }
             set
             {
@@ -876,7 +876,7 @@ namespace Kedrah.Modules
                     PauseTimer("worldOnlyView");
                 }
 
-                Kedrah.Client.Window.WorldOnlyView = value;
+                Core.Client.Window.WorldOnlyView = value;
             }
         }
 
@@ -902,7 +902,7 @@ namespace Kedrah.Modules
         {
             if (ip.Length > 0 && port > 0)
             {
-                Kedrah.Client.Login.SetOT(ip, port);
+                Core.Client.Login.SetOT(ip, port);
             }
         }
 
@@ -936,35 +936,35 @@ namespace Kedrah.Modules
 
             KeyboardHook.Add(spyPlusKey, new KeyboardHook.KeyPressed(delegate()
             {
-                if (Kedrah.Client.Window.IsActive && Kedrah.Client.LoggedIn)
+                if (Core.Client.Window.IsActive && Core.Client.LoggedIn)
                 {
-                    Kedrah.Map.NameSpyOn();
-                    Kedrah.Map.FullLightOn();
-                    if (Kedrah.Map.LevelSpyOn(floorOfSpy + 1))
+                    Core.Map.NameSpyOn();
+                    Core.Map.FullLightOn();
+                    if (Core.Map.LevelSpyOn(floorOfSpy + 1))
                     {
                         floorOfSpy++;
                     }
 
                     if (floorOfSpy == 0)
                     {
-                        Kedrah.Map.LevelSpyOff();
+                        Core.Map.LevelSpyOff();
 
                         if (ShowNames)
                         {
-                            Kedrah.Map.NameSpyOn();
+                            Core.Map.NameSpyOn();
                         }
                         else
                         {
-                            Kedrah.Map.NameSpyOff();
+                            Core.Map.NameSpyOff();
                         }
 
                         if (FullLight)
                         {
-                            Kedrah.Map.FullLightOn();
+                            Core.Map.FullLightOn();
                         }
                         else
                         {
-                            Kedrah.Map.FullLightOff();
+                            Core.Map.FullLightOff();
                         }
                     }
                     if (floorOfSpy > 0)
@@ -976,7 +976,7 @@ namespace Kedrah.Modules
                         sign = "";
                     }
 
-                    Kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
+                    Core.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
                     return false;
                 }
                 return true;
@@ -984,43 +984,43 @@ namespace Kedrah.Modules
 
             KeyboardHook.Add(spyMinusKey, new KeyboardHook.KeyPressed(delegate()
             {
-                if (Kedrah.Client.Window.IsActive && Kedrah.Client.LoggedIn)
+                if (Core.Client.Window.IsActive && Core.Client.LoggedIn)
                 {
-                    if (floorOfSpy == 0 && Kedrah.Player.Z == 7)
+                    if (floorOfSpy == 0 && Core.Player.Z == 7)
                     {
-                        Kedrah.Map.LevelSpyOff();
-                        Kedrah.Client.Statusbar = prefix + prefixCenter;
+                        Core.Map.LevelSpyOff();
+                        Core.Client.Statusbar = prefix + prefixCenter;
                     }
                     else
                     {
-                        Kedrah.Map.NameSpyOn();
-                        Kedrah.Map.FullLightOn();
+                        Core.Map.NameSpyOn();
+                        Core.Map.FullLightOn();
 
-                        if (Kedrah.Map.LevelSpyOn(floorOfSpy - 1))
+                        if (Core.Map.LevelSpyOn(floorOfSpy - 1))
                         {
                             floorOfSpy--;
                         }
 
                         if (floorOfSpy == 0)
                         {
-                            Kedrah.Map.LevelSpyOff();
+                            Core.Map.LevelSpyOff();
 
                             if (ShowNames)
                             {
-                                Kedrah.Map.NameSpyOn();
+                                Core.Map.NameSpyOn();
                             }
                             else
                             {
-                                Kedrah.Map.NameSpyOff();
+                                Core.Map.NameSpyOff();
                             }
 
                             if (FullLight)
                             {
-                                Kedrah.Map.FullLightOn();
+                                Core.Map.FullLightOn();
                             }
                             else
                             {
-                                Kedrah.Map.FullLightOff();
+                                Core.Map.FullLightOff();
                             }
                         }
                         if (floorOfSpy > 0)
@@ -1032,7 +1032,7 @@ namespace Kedrah.Modules
                             sign = "";
                         }
 
-                        Kedrah.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
+                        Core.Client.Statusbar = prefix + prefixSpy + sign + floorOfSpy;
                     }
                     return false;
                 }
@@ -1041,12 +1041,12 @@ namespace Kedrah.Modules
 
             KeyboardHook.Add(spyCenterKey, new KeyboardHook.KeyPressed(delegate()
             {
-                if (Kedrah.Client.Window.IsActive && Kedrah.Client.LoggedIn)
+                if (Core.Client.Window.IsActive && Core.Client.LoggedIn)
                 {
-                    Kedrah.Map.LevelSpyOff();
-                    Kedrah.Client.Statusbar = prefix + prefixCenter;
-                    Kedrah.Map.NameSpyOn();
-                    Kedrah.Map.FullLightOn();
+                    Core.Map.LevelSpyOff();
+                    Core.Client.Statusbar = prefix + prefixCenter;
+                    Core.Map.NameSpyOn();
+                    Core.Map.FullLightOn();
                     return false;
                 }
                 return true;
@@ -1068,12 +1068,12 @@ namespace Kedrah.Modules
 
         public void ReplaceTrees()
         {
-            Kedrah.Map.ReplaceTrees();
+            Core.Map.ReplaceTrees();
         }
 
         public string GetLastMessage()
         {
-            return Kedrah.Client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText);
+            return Core.Client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText);
         }
 
         public override void Disable()
@@ -1087,7 +1087,7 @@ namespace Kedrah.Modules
 
         void EatFood_OnExecute()
         {
-            Item food = Kedrah.Inventory.GetItems().FirstOrDefault(i => i.IsInList(ItemLists.Foods.Values));
+            Item food = Core.Inventory.GetItems().FirstOrDefault(i => i.IsInList(ItemLists.Foods.Values));
 
             if (food != null)
             {
@@ -1097,39 +1097,39 @@ namespace Kedrah.Modules
 
         void Fishing_OnExecute()
         {
-            if (MaximumFishes < 0 && Kedrah.Inventory.CountItems(Items.Food.Fish.Id) >= MaximumFishes)
+            if (MaximumFishes < 0 && Core.Inventory.CountItems(Items.Food.Fish.Id) >= MaximumFishes)
             {
                 return;
             }
 
-            if (Kedrah.Player.Cap <= MinimumCap)
+            if (Core.Player.Cap <= MinimumCap)
             {
                 return;
             }
 
-            if (Kedrah.Inventory.CountItems(Items.Tool.Worms.Id) >= 0)
+            if (Core.Inventory.CountItems(Items.Tool.Worms.Id) >= 0)
             {
                 return;
             }
 
-            List < Tile > tiles = Kedrah.Map.GetTilesOnSameFloor().Where(delegate(Tile t)
+            List < Tile > tiles = Core.Map.GetTilesOnSameFloor().Where(delegate(Tile t)
             {
                 return (t.ObjectCount == 0 && t.Ground.Id >= Tiles.Water.FishStart &&
                     t.Ground.Id <= Tiles.Water.FishEnd && t.Location.Distance() < 9 &&
                     t.Location.IsShootable());
             }).ToList();
-            Kedrah.Inventory.UseItemOnTile(Items.Tool.FishingRod.Id, tiles[(new Random((int)DateTime.Now.Ticks)).Next(0, tiles.Count - 1)]);
+            Core.Inventory.UseItemOnTile(Items.Tool.FishingRod.Id, tiles[(new Random((int)DateTime.Now.Ticks)).Next(0, tiles.Count - 1)]);
         }
 
         void MakeLight_OnExecute()
         {
-            Kedrah.Player.LightColor = LightColor;
-            Kedrah.Player.Light = Light;
+            Core.Player.LightColor = LightColor;
+            Core.Player.Light = Light;
         }
 
         void RevealFishSpots_OnExecute()
         {
-            foreach (Tile t in Kedrah.Map.GetTilesOnSameFloor())
+            foreach (Tile t in Core.Map.GetTilesOnSameFloor())
             {
                 if (t.Ground.Id >= Tiles.Water.NoFishStart || t.Ground.Id >= Tiles.Water.NoFishEnd)
                 {
@@ -1140,45 +1140,45 @@ namespace Kedrah.Modules
 
         void FramerateControl_OnExecute()
         {
-            if (Kedrah.Client.Window.IsMinimized)
+            if (Core.Client.Window.IsMinimized)
             {
-                Kedrah.Client.Window.FPSLimit = 1.5;
+                Core.Client.Window.FPSLimit = 1.5;
             }
-            else if (Kedrah.Client.Window.IsActive)
+            else if (Core.Client.Window.IsActive)
             {
-                Kedrah.Client.Window.FPSLimit = 30;
+                Core.Client.Window.FPSLimit = 30;
             }
             else
             {
-                Kedrah.Client.Window.FPSLimit = 15;
+                Core.Client.Window.FPSLimit = 15;
             }
         }
 
         void StackItems_OnExecute()
         {
-            Kedrah.Inventory.Stack();
+            Core.Inventory.Stack();
         }
 
         void ClickReuse_OnExecute()
         {
-            if (GetAsyncKeyState(Keys.RButton) != 0 && Kedrah.Client.ActionState == ActionState.Using)
+            if (GetAsyncKeyState(Keys.RButton) != 0 && Core.Client.ActionState == ActionState.Using)
             {
-                Kedrah.Client.Window.ActionStateFreezer = false;
-                Kedrah.Client.ActionState = ActionState.None;
+                Core.Client.Window.ActionStateFreezer = false;
+                Core.Client.ActionState = ActionState.None;
             }
-            else if (Kedrah.Client.ActionState == ActionState.Using)
+            else if (Core.Client.ActionState == ActionState.Using)
             {
-                Kedrah.Client.Window.ActionStateFreezer = true;
+                Core.Client.Window.ActionStateFreezer = true;
             }
             else
             {
-                Kedrah.Client.Window.ActionStateFreezer = false;
+                Core.Client.Window.ActionStateFreezer = false;
             }
         }
 
         void WorldOnlyView_OnExecute()
         {
-            Kedrah.Client.Window.WorldOnlyView = true;
+            Core.Client.Window.WorldOnlyView = true;
         }
 
         #endregion

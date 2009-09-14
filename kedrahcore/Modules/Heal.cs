@@ -84,7 +84,7 @@ namespace Kedrah.Modules
 
         private void Healer_OnExecute()
         {
-            if (!Kedrah.Client.LoggedIn)
+            if (!Core.Client.LoggedIn)
             {
                 return;
             }
@@ -93,17 +93,17 @@ namespace Kedrah.Modules
             {
                 foreach (HealPercent potion in PotionLife)
                 {
-                    if (Kedrah.Player.HPBar <= potion.Percent)
+                    if (Core.Player.HPBar <= potion.Percent)
                     {
-                        PotionNext = Kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                        PotionNext = Core.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
                     }
                 }
 
                 foreach (HealPercent potion in PotionMana)
                 {
-                    if ((Kedrah.Player.Mana * 100 / Kedrah.Player.Mana_Max) <= potion.Percent)
+                    if ((Core.Player.Mana * 100 / Core.Player.Mana_Max) <= potion.Percent)
                     {
-                        PotionNext = Kedrah.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                        PotionNext = Core.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
                     }
                 }
             }
@@ -112,28 +112,28 @@ namespace Kedrah.Modules
             {
                 foreach (HealPercent rune in RuneLife)
                 {
-                    if (Kedrah.Player.HPBar <= rune.Percent)
+                    if (Core.Player.HPBar <= rune.Percent)
                     {
-                        SpellNext = Kedrah.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                        SpellNext = Core.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                     }
                 }
 
                 foreach (HealPercent spell in SpellLife)
                 {
-                    if (Kedrah.Player.HPBar <= spell.Percent && Kedrah.Player.Mana >= spell.Mana)
+                    if (Core.Player.HPBar <= spell.Percent && Core.Player.Mana >= spell.Mana)
                     {
-                        SpellNext = Kedrah.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                        SpellNext = Core.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                     }
                 }
 
-                if (Poison && Kedrah.Player.HasFlag(Flag.Poisoned) && Kedrah.Player.Mana >= SpellPoisonMana)
+                if (Poison && Core.Player.HasFlag(Flag.Poisoned) && Core.Player.Mana >= SpellPoisonMana)
                 {
-                    SpellNext = Kedrah.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    SpellNext = Core.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
 
-                if (Paralyze && Kedrah.Player.HasFlag(Flag.Paralyzed))
+                if (Paralyze && Core.Player.HasFlag(Flag.Paralyzed))
                 {
-                    SpellNext = Kedrah.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    SpellNext = Core.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
             }
         }
