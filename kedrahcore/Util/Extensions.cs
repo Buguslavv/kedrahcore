@@ -39,6 +39,44 @@ namespace Kedrah
             return location.IsAdjacentTo(Kedrah.Player.Location);
         }
 
+        public static bool IsShootable(this Location location)
+        {
+            int XSign = (location.X > Kedrah.Player.Location.X) ? 1 : -1;
+            int YSign = (location.Y > Kedrah.Player.Location.Y) ? 1 : -1;
+            double XDistance = Math.Abs(location.X - Kedrah.Player.Location.X);
+            double YDistance = Math.Abs(location.Y - Kedrah.Player.Location.Y);
+            double max = location.Distance();
+            Location check;
+
+            if (Math.Abs(XDistance) > 8 || Math.Abs(YDistance) > 5)
+            {
+                return false;
+            }
+
+            for (int i = 1; i <= max; i++)
+            {
+                check = Kedrah.Player.Location.Offset((int)Math.Ceiling(i * XDistance / max) * XSign, (int)Math.Ceiling(i * YDistance / max) * YSign, 0);
+                Tile tile = Kedrah.Map.GetTile(check);
+
+                if (tile != null)
+                {
+                    if (tile.Ground.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksMissiles))
+                    {
+                        return false;
+                    }
+
+                    Item item = tile.Items.FirstOrDefault(tileItem => tileItem.GetFlag(Tibia.Addresses.DatItem.Flag.BlocksMissiles));
+
+                    if (item != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Creature
@@ -80,6 +118,38 @@ namespace Kedrah
         public static bool IsTarget(this Creature creature)
         {
             return (creature.Id.Equals(Kedrah.Player.RedSquare) || creature.Id.Equals(Kedrah.Player.GreenSquare));
+        }
+
+        #endregion
+
+        #region Inventory
+
+        public static int CountItems(this Inventory inventory, uint id)
+        {
+            int count = 0;
+            
+            foreach (Item item in inventory.GetItems().Where(i => i.Id == id))
+            {
+                count += item.Count;
+            }
+
+            return count;
+        }
+
+        public static void Stack(this Inventory inventory)
+        {
+            List<Item> items = inventory.GetItems().Where(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.IsStackable) && i.Count < 100).ToList();
+            
+            foreach (Item item in items)
+            {
+                Item last = items.LastOrDefault(i => i.Id == item.Id);
+                
+                if (last != item)
+                {
+                    last.Move(item.Location);
+                    return;
+                }
+            }
         }
 
         #endregion

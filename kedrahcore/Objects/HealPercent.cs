@@ -21,7 +21,7 @@ namespace Kedrah.Objects
         public HealPercent(byte percent, Item item)
             : this(percent)
         {
-            Percent = percent;
+            Item = item;
         }
 
         public HealPercent(byte percent, string spell, uint mana)
