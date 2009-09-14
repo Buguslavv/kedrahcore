@@ -77,10 +77,10 @@ namespace Kedrah.Modules
         private Location MovableDirection()
         {
             List<Tile> tiles = new List<Tile>();
-            tiles.Add(Kedrah.Map.GetTile(Kedrah.Player.Location.Offset(1, 0, 0)));
-            tiles.Add(Kedrah.Map.GetTile(Kedrah.Player.Location.Offset(-1, 0, 0)));
-            tiles.Add(Kedrah.Map.GetTile(Kedrah.Player.Location.Offset(0, 1, 0)));
-            tiles.Add(Kedrah.Map.GetTile(Kedrah.Player.Location.Offset(0, -1, 0)));
+            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(1, 0, 0)));
+            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(-1, 0, 0)));
+            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(0, 1, 0)));
+            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(0, -1, 0)));
 
             foreach (Tile tile in tiles)
             {
@@ -90,7 +90,7 @@ namespace Kedrah.Modules
                 }
             }
 
-            return Kedrah.Player.Location.Offset(1, 1, 0);
+            return Core.Player.Location.Offset(1, 1, 0);
         }
 
         private Location NearestAjacent(Location location)
@@ -111,7 +111,7 @@ namespace Kedrah.Modules
                 if (!location.IsValid() || l.Distance() < location.Distance()
 )
                 {
-                    if (Kedrah.Map.GetTile(l).Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking | Tibia.Addresses.DatItem.Flag.BlocksPath))
+                    if (Core.Map.GetTile(l).Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking | Tibia.Addresses.DatItem.Flag.BlocksPath))
                     {
                         continue;
                     }
@@ -125,7 +125,7 @@ namespace Kedrah.Modules
 
         private Waypoint FloorChangerWaypoint(Location destination)
         {
-            sbyte change = (sbyte)(destination.Z - Kedrah.Player.Z);
+            sbyte change = (sbyte)(destination.Z - Core.Player.Z);
 
             if (Math.Abs(change) > 1)
             {
@@ -134,7 +134,7 @@ namespace Kedrah.Modules
 
             List<uint> list = null;
             Tile result = null;
-            List<Tile> possible = Kedrah.Map.GetTilesOnSameFloor().Where(t => t.Location.Distance() < 27).ToList();
+            List<Tile> possible = Core.Map.GetTilesOnSameFloor().Where(t => t.Location.Distance() < 27).ToList();
             possible.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.DistanceBetween(destination).CompareTo(t2.Location.DistanceBetween(destination)); }));
 
             if (change < 0)
@@ -185,27 +185,27 @@ namespace Kedrah.Modules
 
             if (TileLists.Down.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Stand, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Stand, Core);
             }
             if (TileLists.DownUse.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Use, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Use, Core);
             }
             if (TileLists.Shovel.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Shovel, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Shovel, Core);
             }
             if (TileLists.Rope.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Rope, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Rope, Core);
             }
             if (TileLists.Up.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Stand, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Stand, Core);
             }
             if (TileLists.UpUse.Contains(result.Ground.Id))
             {
-                return new Waypoint(result.Location, WaypointType.Use, Kedrah);
+                return new Waypoint(result.Location, WaypointType.Use, Core);
             }
 
             return null;
@@ -219,7 +219,7 @@ namespace Kedrah.Modules
                 return false;
             }
 
-            if (Kedrah.Player.Z != waypoint.Location.Z)
+            if (Core.Player.Z != waypoint.Location.Z)
             {
                 return true;
             }
@@ -239,7 +239,7 @@ namespace Kedrah.Modules
                 case WaypointType.OpenBody:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Tile t = Kedrah.Map.GetTile(waypoint.Location);
+                        Tile t = Core.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
                         {
                             Item item = t.Items.FirstOrDefault(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
@@ -254,7 +254,7 @@ namespace Kedrah.Modules
                 case WaypointType.Use:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Tile t = Kedrah.Map.GetTile(waypoint.Location);
+                        Tile t = Core.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
                         {
                             t.Items.First().Use();
@@ -275,34 +275,34 @@ namespace Kedrah.Modules
                 case WaypointType.Pick:
                     if (waypoint.Location.Distance() == 1)
                     {
-                        Kedrah.Inventory.UseItemOnTile(Pick.Id, Kedrah.Map.GetTile(waypoint.Location));
+                        Core.Inventory.UseItemOnTile(Pick.Id, Core.Map.GetTile(waypoint.Location));
                         return true;
                     }
-                    else if (waypoint.Location == Kedrah.Player.Location)
+                    else if (waypoint.Location == Core.Player.Location)
                     {
-                        Kedrah.Player.GoTo = MovableDirection();
+                        Core.Player.GoTo = MovableDirection();
                     }
                     break;
                 case WaypointType.Rope:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Kedrah.Inventory.UseItemOnTile(Rope.Id, Kedrah.Map.GetTile(waypoint.Location));
+                        Core.Inventory.UseItemOnTile(Rope.Id, Core.Map.GetTile(waypoint.Location));
                         return true;
                     }
                     break;
                 case WaypointType.Shovel:
                     if (waypoint.Location.Distance() == 1)
                     {
-                        Kedrah.Inventory.UseItemOnTile(Shovel.Id, Kedrah.Map.GetTile(waypoint.Location));
+                        Core.Inventory.UseItemOnTile(Shovel.Id, Core.Map.GetTile(waypoint.Location));
                         return true;
                     }
-                    else if (waypoint.Location == Kedrah.Player.Location)
+                    else if (waypoint.Location == Core.Player.Location)
                     {
-                        Kedrah.Player.GoTo = MovableDirection();
+                        Core.Player.GoTo = MovableDirection();
                     }
                     break;
                 case WaypointType.Stand:
-                    if (waypoint.Location == Kedrah.Player.Location)
+                    if (waypoint.Location == Core.Player.Location)
                     {
                         return true;
                     }
@@ -314,18 +314,18 @@ namespace Kedrah.Modules
             #endregion
 
 
-            if (Kedrah.Modules.Targeting.IsTargeting)
+            if (Core.Modules.Targeting.IsTargeting)
             {
                 return false;
             }
 
             if (waypoint.Type == WaypointType.Approach || waypoint.Type == WaypointType.OpenBody || waypoint.Type == WaypointType.Pick || waypoint.Type == WaypointType.Rope || waypoint.Type == WaypointType.Shovel || waypoint.Type == WaypointType.Use)
             {
-                Kedrah.Player.GoTo = NearestAjacent(waypoint.Location);
+                Core.Player.GoTo = NearestAjacent(waypoint.Location);
             }
             else if (waypoint.Type != WaypointType.Action)
             {
-                Kedrah.Player.GoTo = waypoint.Location;
+                Core.Player.GoTo = waypoint.Location;
             }
 
             return false;
@@ -337,12 +337,12 @@ namespace Kedrah.Modules
 
         public void Walk_OnExecute()
         {
-            if (Kedrah.Player.IsWalking || Kedrah.Modules.Targeting.IsTargeting || Kedrah.Modules.Looter.IsLooting)
+            if (Core.Player.IsWalking || Core.Modules.Targeting.IsTargeting || Core.Modules.Looter.IsLooting)
             {
                 return;
             }
 
-            if (Kedrah.Modules.Looter.LootBodies.Count > 0 || Waypoints.Count <= 0)
+            if (Core.Modules.Looter.LootBodies.Count > 0 || Waypoints.Count <= 0)
             {
                 return;
             }
@@ -354,9 +354,9 @@ namespace Kedrah.Modules
 
             Waypoint waypoint = Waypoints[iterator];
 
-            if (!Kedrah.Player.IsWalking)
+            if (!Core.Player.IsWalking)
             {
-                if (waypoint.Type != WaypointType.Action && waypoint.Location.Z != Kedrah.Player.Z)
+                if (waypoint.Type != WaypointType.Action && waypoint.Location.Z != Core.Player.Z)
                 {
                     PerformWaypoint(FloorChangerWaypoint(waypoint.Location));
                     return;

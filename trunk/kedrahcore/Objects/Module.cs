@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Kedrah
 {
-    public class Module : IModule
+    public partial class Module : IModule
     {
         #region Variables/Objects
 
-        public Core Kedrah;
+        public Core Core;
 
         public bool Enabled = false, Running = false;
         public Dictionary<string, Tibia.Util.Timer> Timers = new Dictionary<string, Tibia.Util.Timer>();
@@ -20,7 +20,7 @@ namespace Kedrah
 
         public Module(ref Core core)
         {
-            Kedrah = core;
+            Core = core;
             Disable();
         }
 
