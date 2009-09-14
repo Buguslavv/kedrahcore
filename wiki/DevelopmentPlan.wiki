@@ -20,9 +20,9 @@
  * _~~World Only View~~_
  * _~~IP Changer~~_
  * _~~Open windows small~~_
- * Identify Fish spots
- * Stack Items
- * Fishing
+ * _~~Identify Fish spots~~_
+ * _~~Stack Items~~_
+ * _~~Fishing~~_
 ----
 == ~~Heal~~ ==
 === Healing with varied methods.===
