@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Tibia.Constants;
 using Tibia;
-using Tibia.Util;
+using Tibia.Constants;
 using Tibia.Objects;
-using Tibia.Packets.Incoming;
-using System.Threading;
 using Tibia.Packets;
+using Tibia.Packets.Incoming;
+using Tibia.Util;
 
 namespace Kedrah.Modules
 {
@@ -35,6 +32,9 @@ namespace Kedrah.Modules
         public bool Reusing = false;
         public bool OpenSmall = false;
 
+        public int MaximumFishes = 0;
+        public int MinimumCap = 0;
+
         #endregion
 
         #region Constructor/Destructor
@@ -55,8 +55,8 @@ namespace Kedrah.Modules
             Timers.Add("revealFishSpots", new Tibia.Util.Timer(1000, false));
             Timers["revealFishSpots"].Execute += new Tibia.Util.Timer.TimerExecution(RevealFishSpots_OnExecute);
 
-            Timers.Add("replaceTrees", new Tibia.Util.Timer(1000, false));
-            Timers["replaceTrees"].Execute += new Tibia.Util.Timer.TimerExecution(ReplaceTrees_OnExecute);
+            Timers.Add("fishing", new Tibia.Util.Timer(1000, false));
+            Timers["fishing"].Execute += new Tibia.Util.Timer.TimerExecution(Fishing_OnExecute);
 
             Timers.Add("framerateControl", new Tibia.Util.Timer(500, false));
             Timers["framerateControl"].Execute += new Tibia.Util.Timer.TimerExecution(FramerateControl_OnExecute);
@@ -171,6 +171,32 @@ namespace Kedrah.Modules
             }
         }
 
+        public bool Fishing
+        {
+            get
+            {
+                if (Timers["fishing"].State == TimerState.Running)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (value)
+                {
+                    PlayTimer("fishing");
+                }
+                else
+                {
+                    PauseTimer("fishing");
+                }
+            }
+        }
+
         public bool FramerateControl
         {
             get
@@ -243,32 +269,6 @@ namespace Kedrah.Modules
                 else
                 {
                     PauseTimer("makeLight");
-                }
-            }
-        }
-
-        public bool ReplaceTrees
-        {
-            get
-            {
-                if (Timers["replaceTrees"].State == TimerState.Running)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            set
-            {
-                if (value)
-                {
-                    PlayTimer("replaceTrees");
-                }
-                else
-                {
-                    PauseTimer("replaceTrees");
                 }
             }
         }
@@ -1066,6 +1066,11 @@ namespace Kedrah.Modules
             #endregion
         }
 
+        public void ReplaceTrees()
+        {
+            Kedrah.Map.ReplaceTrees();
+        }
+
         public string GetLastMessage()
         {
             return Kedrah.Client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText);
@@ -1090,6 +1095,32 @@ namespace Kedrah.Modules
             }
         }
 
+        void Fishing_OnExecute()
+        {
+            if (MaximumFishes < 0 && Kedrah.Inventory.CountItems(Items.Food.Fish.Id) >= MaximumFishes)
+            {
+                return;
+            }
+
+            if (Kedrah.Player.Cap <= MinimumCap)
+            {
+                return;
+            }
+
+            if (Kedrah.Inventory.CountItems(Items.Tool.Worms.Id) >= 0)
+            {
+                return;
+            }
+
+            List < Tile > tiles = Kedrah.Map.GetTilesOnSameFloor().Where(delegate(Tile t)
+            {
+                return (t.ObjectCount == 0 && t.Ground.Id >= Tiles.Water.FishStart &&
+                    t.Ground.Id <= Tiles.Water.FishEnd && t.Location.Distance() < 9 &&
+                    t.Location.IsShootable());
+            }).ToList();
+            Kedrah.Inventory.UseItemOnTile(Items.Tool.FishingRod.Id, tiles[(new Random((int)DateTime.Now.Ticks)).Next(0, tiles.Count - 1)]);
+        }
+
         void MakeLight_OnExecute()
         {
             Kedrah.Player.LightColor = LightColor;
@@ -1098,12 +1129,13 @@ namespace Kedrah.Modules
 
         void RevealFishSpots_OnExecute()
         {
-
-        }
-
-        void ReplaceTrees_OnExecute()
-        {
-            Kedrah.Map.ReplaceTrees();
+            foreach (Tile t in Kedrah.Map.GetTilesOnSameFloor())
+            {
+                if (t.Ground.Id >= Tiles.Water.NoFishStart || t.Ground.Id >= Tiles.Water.NoFishEnd)
+                {
+                    t.ReplaceGround(5581);
+                }
+            }
         }
 
         void FramerateControl_OnExecute()
@@ -1124,7 +1156,7 @@ namespace Kedrah.Modules
 
         void StackItems_OnExecute()
         {
-
+            Kedrah.Inventory.Stack();
         }
 
         void ClickReuse_OnExecute()
