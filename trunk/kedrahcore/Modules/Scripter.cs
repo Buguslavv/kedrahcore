@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using Kedrah.Objects;
+using System.Threading;
 
 namespace Kedrah.Modules
 {
@@ -70,26 +71,44 @@ namespace Kedrah.Modules
 
         #region Module Function
 
-        public string LoadAllScripts()
+        public void RunAll()
         {
-            errorLog = new StringBuilder();
-            //foreach (string directory in "Scripts")
-            //{
-            string directory = "Scripts";
-            if (!Directory.Exists(directory)) return "";
-            foreach (string path in Directory.GetFiles(directory))
+            foreach (KeyValuePair<string, Script> script in loadedScripts)
             {
-                if (!File.Exists(path)) continue;
-                LoadScript(path);
+                Thread thread = new Thread(new ThreadStart(delegate()
+                {
+                    script.Value.Run(Core);
+                }));
+                thread.Start();
             }
-            //}
-            return errorLog.ToString();
         }
 
-        public void ReloadAllScripts()
+        public void Run(string name)
         {
-            UnloadAllScripts();
-            LoadAllScripts();
+            if (loadedScripts.ContainsKey(name))
+            {
+                Thread thread = new Thread(new ThreadStart(delegate()
+                {
+                    loadedScripts[name].Run(Core);
+                }));
+                thread.Start();
+            }
+        }
+
+        public void StopAll(string name)
+        {
+            foreach (KeyValuePair<string, Script> script in loadedScripts)
+            {
+                script.Value.Stop();
+            }
+        }
+
+        public void Stop(string name)
+        {
+            if (loadedScripts.ContainsKey(name))
+            {
+                loadedScripts[name].Stop();
+            }
         }
 
         public void UnloadScript(string name)
@@ -98,16 +117,7 @@ namespace Kedrah.Modules
             loadedScripts.Remove(name);
         }
 
-        public void UnloadAllScripts()
-        {
-            foreach (KeyValuePair<string, Script> script in loadedScripts)
-            {
-                script.Value.Stop();
-            }
-            loadedScripts.Clear();
-        }
-
-        public void LoadScript(string path)
+        public void LoadScriptFromFile(string path)
         {
             Assembly assembly = null;
             switch (Path.GetExtension(path))
@@ -141,44 +151,23 @@ namespace Kedrah.Modules
             {
                 foreach (Script script in FindScripts(assembly))
                 {
+                    if (loadedScripts.ContainsKey(script.Name))
+                    {
+                        loadedScripts.Remove(script.Name);
+                    }
                     loadedScripts.Add(script.Name, script);
-                    script.Start(Core);
                 }
             }
         }
 
         public static Assembly CompileScriptFromFile(string path, CodeDomProvider provider)
         {
-            CompilerParameters compilerParameters = new CompilerParameters();
-            compilerParameters.GenerateExecutable = false;
-            compilerParameters.GenerateInMemory = true;
-            compilerParameters.IncludeDebugInformation = false;
-            foreach (AssemblyName name in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
-            {
-                compilerParameters.ReferencedAssemblies.Add(name.Name + ".dll");
-            }
-            CompilerResults results = provider.CompileAssemblyFromFile(compilerParameters, path);
-            if (!results.Errors.HasErrors)
-            {
-                return results.CompiledAssembly;
-            }
-            else
-            {
-                foreach (CompilerError error in results.Errors)
-                {
-                    if (errorLog == null)
-                    {
-                        errorLog = new StringBuilder();
-                    }
-
-                    errorLog.AppendLine(error.ToString());
-                }
-            }
-            return null;
+            return CompileScriptFromSource(File.ReadAllText(path), provider);
         }
 
         public static Assembly CompileScriptFromSource(string source, CodeDomProvider provider)
         {
+            errorLog = new StringBuilder();
             CompilerParameters compilerParameters = new CompilerParameters();
             compilerParameters.GenerateExecutable = false;
             compilerParameters.GenerateInMemory = true;
@@ -197,11 +186,6 @@ namespace Kedrah.Modules
             {
                 foreach (CompilerError error in results.Errors)
                 {
-                    if (errorLog == null)
-                    {
-                        errorLog = new StringBuilder();
-                    }
-
                     errorLog.AppendLine(error.ToString());
                 }
             }
