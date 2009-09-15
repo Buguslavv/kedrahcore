@@ -15,7 +15,7 @@ namespace Kedrah.Objects
             Name = GetType().Name;
         }
 
-        public virtual bool Start(Core core)
+        public virtual bool Run(Core core)
         {
             Core = core;
             return true;
@@ -35,11 +35,11 @@ namespace Kedrah.Objects
             script += "\n";
             script += "namespace Kedrah\n";
             script += "{\n";
-            script += " public class "+name+" : Objects.Script\n";
+            script += " public class " + name + " : Objects.Script\n";
             script += " {\n";
-            script += "     public override bool Start(Core core)\n";
+            script += "     public override bool Run(Core core)\n";
             script += "     {\n";
-            script += "         base.Start(core);\n";
+            script += "         base.Run(core);\n";
             script += code;
             script += "         return true;\n";
             script += "     }\n";
