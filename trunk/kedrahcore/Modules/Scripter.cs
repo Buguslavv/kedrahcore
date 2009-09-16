@@ -20,7 +20,7 @@ namespace Kedrah.Modules
         private static VBCodeProvider vBCodeProvider = new VBCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
         private Dictionary<string, Script> loadedScripts = new Dictionary<string, Script>();
 
-        private static StringBuilder errorLog;
+        public string ErrorLog;
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace Kedrah.Modules
 
         #region Get/Set Objects
 
-        public static CSharpCodeProvider CSharpCodeProvider
+        public CSharpCodeProvider CSharpCodeProvider
         {
             get
             {
@@ -44,26 +44,11 @@ namespace Kedrah.Modules
             }
         }
 
-        public static VBCodeProvider VBCodeProvider
+        public VBCodeProvider VBCodeProvider
         {
             get
             {
                 return vBCodeProvider;
-            }
-        }
-
-        public static string ErrorLog
-        {
-            get
-            {
-                if (errorLog != null)
-                {
-                    return errorLog.ToString();
-                }
-                else
-                {
-                    return "";
-                }
             }
         }
 
@@ -75,11 +60,7 @@ namespace Kedrah.Modules
         {
             foreach (KeyValuePair<string, Script> script in loadedScripts)
             {
-                Thread thread = new Thread(new ThreadStart(delegate()
-                {
-                    script.Value.Run(Core);
-                }));
-                thread.Start();
+                Run(script.Key);
             }
         }
 
@@ -126,10 +107,10 @@ namespace Kedrah.Modules
                     assembly = LoadDll(path);
                     break;
                 case ".cs":
-                    assembly = CompileScriptFromFile(path, cSharpCodeProvider);
+                    assembly = CompileScriptFromFile(path, cSharpCodeProvider, ref ErrorLog);
                     break;
                 case ".vb":
-                    assembly = CompileScriptFromFile(path, vBCodeProvider);
+                    assembly = CompileScriptFromFile(path, vBCodeProvider, ref ErrorLog);
                     break;
             }
 
@@ -139,7 +120,7 @@ namespace Kedrah.Modules
         public void LoadScriptFromSource(string source, CodeDomProvider provider)
         {
             Assembly assembly = null;
-            assembly = CompileScriptFromSource(source, provider);
+            assembly = CompileScriptFromSource(source, provider, ref ErrorLog);
 
             LoadScriptFromAssembly(assembly);
         }
@@ -160,22 +141,23 @@ namespace Kedrah.Modules
             }
         }
 
-        public static Assembly CompileScriptFromFile(string path, CodeDomProvider provider)
+        public static Assembly CompileScriptFromFile(string path, CodeDomProvider provider, ref string errors)
         {
-            return CompileScriptFromSource(File.ReadAllText(path), provider);
+            return CompileScriptFromSource(File.ReadAllText(path), provider, ref errors);
         }
 
-        public static Assembly CompileScriptFromSource(string source, CodeDomProvider provider)
+        public static Assembly CompileScriptFromSource(string source, CodeDomProvider provider, ref string errors)
         {
-            errorLog = new StringBuilder();
+            StringBuilder errorLog = new StringBuilder();
+            errors = "";
             CompilerParameters compilerParameters = new CompilerParameters();
             compilerParameters.GenerateExecutable = false;
             compilerParameters.GenerateInMemory = true;
             compilerParameters.IncludeDebugInformation = false;
-            foreach (AssemblyName name in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
-            {
-                compilerParameters.ReferencedAssemblies.Add(name.Name + ".dll");
-            }
+            compilerParameters.ReferencedAssemblies.Add("System.dll");
+            compilerParameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");
+            compilerParameters.ReferencedAssemblies.Add("KedrahCore.dll");
+            compilerParameters.ReferencedAssemblies.Add("TibiaAPI.dll");
             compilerParameters.ReferencedAssemblies.Add(System.Reflection.Assembly.GetExecutingAssembly().Location);
             CompilerResults results = provider.CompileAssemblyFromSource(compilerParameters, source);
             if (!results.Errors.HasErrors)
@@ -186,9 +168,11 @@ namespace Kedrah.Modules
             {
                 foreach (CompilerError error in results.Errors)
                 {
-                    errorLog.AppendLine(error.ToString());
+                    errorLog.AppendLine(error.ErrorText);
                 }
             }
+
+            errors = errorLog.ToString();
             return null;
         }
 

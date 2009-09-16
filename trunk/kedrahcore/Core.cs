@@ -17,13 +17,9 @@ namespace Kedrah
         static private System.Threading.Mutex kedrahMutex;
 
         public Client Client = null;
-        public Screen Screen = null;
         public Player Player = null;
-        public Map Map = null;
-        public BattleList BattleList = null;
-        public Inventory Inventory = null;
-        public Tibia.Objects.Console Console = null;
         public Proxy Proxy = null;
+        public DateTime StartTime = DateTime.Now;
 
         public HModules Modules;
 
@@ -76,7 +72,7 @@ namespace Kedrah
                     Proxy.PlayerLogout += new EventHandler(OnLogout);
 
                     Modules = new HModules(this);
-                    Kedrah.Extensions.Kedrah = this;
+                    Kedrah.Extensions.Core = this;
                 }
 
                 break;
@@ -89,14 +85,10 @@ namespace Kedrah
 
         private void OnLogin(object sender, EventArgs e)
         {
-            Map = Client.Map;
-            Screen = Client.Screen;
-            BattleList = Client.BattleList;
-            Inventory = Client.Inventory;
-            Console = Client.Console;
             Thread.Sleep(300);
             Player = Client.GetPlayer();
             Modules.Enable();
+            StartTime = DateTime.Now;
         }
 
         private void OnLogout(object sender, EventArgs e)

@@ -7,7 +7,7 @@ namespace Kedrah.Objects
 {
     public interface IScript
     {
-        bool Run(Core core);
-        bool Stop();
+        void Run(Core core);
+        void Stop();
     }
 }

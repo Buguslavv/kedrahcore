@@ -95,7 +95,7 @@ namespace Kedrah.Modules
                 {
                     if (Core.Player.HPBar <= potion.Percent)
                     {
-                        PotionNext = Core.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                        PotionNext = Core.Client.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
                     }
                 }
 
@@ -103,7 +103,7 @@ namespace Kedrah.Modules
                 {
                     if ((Core.Player.Mana * 100 / Core.Player.Mana_Max) <= potion.Percent)
                     {
-                        PotionNext = Core.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
+                        PotionNext = Core.Client.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
                     }
                 }
             }
@@ -114,7 +114,7 @@ namespace Kedrah.Modules
                 {
                     if (Core.Player.HPBar <= rune.Percent)
                     {
-                        SpellNext = Core.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                        SpellNext = Core.Client.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                     }
                 }
 
@@ -122,18 +122,18 @@ namespace Kedrah.Modules
                 {
                     if (Core.Player.HPBar <= spell.Percent && Core.Player.Mana >= spell.Mana)
                     {
-                        SpellNext = Core.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                        SpellNext = Core.Client.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                     }
                 }
 
                 if (Poison && Core.Player.HasFlag(Flag.Poisoned) && Core.Player.Mana >= SpellPoisonMana)
                 {
-                    SpellNext = Core.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    SpellNext = Core.Client.Console.Say(SpellPoisonWords) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
 
                 if (Paralyze && Core.Player.HasFlag(Flag.Paralyzed))
                 {
-                    SpellNext = Core.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
+                    SpellNext = Core.Client.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
             }
         }

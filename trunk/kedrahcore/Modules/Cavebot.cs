@@ -77,10 +77,10 @@ namespace Kedrah.Modules
         private Location MovableDirection()
         {
             List<Tile> tiles = new List<Tile>();
-            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(1, 0, 0)));
-            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(-1, 0, 0)));
-            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(0, 1, 0)));
-            tiles.Add(Core.Map.GetTile(Core.Player.Location.Offset(0, -1, 0)));
+            tiles.Add(Core.Client.Map.GetTile(Core.Player.Location.Offset(1, 0, 0)));
+            tiles.Add(Core.Client.Map.GetTile(Core.Player.Location.Offset(-1, 0, 0)));
+            tiles.Add(Core.Client.Map.GetTile(Core.Player.Location.Offset(0, 1, 0)));
+            tiles.Add(Core.Client.Map.GetTile(Core.Player.Location.Offset(0, -1, 0)));
 
             foreach (Tile tile in tiles)
             {
@@ -111,7 +111,7 @@ namespace Kedrah.Modules
                 if (!location.IsValid() || l.Distance() < location.Distance()
 )
                 {
-                    if (Core.Map.GetTile(l).Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking | Tibia.Addresses.DatItem.Flag.BlocksPath))
+                    if (Core.Client.Map.GetTile(l).Ground.GetFlag(Tibia.Addresses.DatItem.Flag.Blocking | Tibia.Addresses.DatItem.Flag.BlocksPath))
                     {
                         continue;
                     }
@@ -134,7 +134,7 @@ namespace Kedrah.Modules
 
             List<uint> list = null;
             Tile result = null;
-            List<Tile> possible = Core.Map.GetTilesOnSameFloor().Where(t => t.Location.Distance() < 27).ToList();
+            List<Tile> possible = Core.Client.Map.GetTilesOnSameFloor().Where(t => t.Location.Distance() < 27).ToList();
             possible.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.DistanceBetween(destination).CompareTo(t2.Location.DistanceBetween(destination)); }));
 
             if (change < 0)
@@ -213,6 +213,11 @@ namespace Kedrah.Modules
 
         public bool PerformWaypoint(Waypoint waypoint)
         {
+            if (!Enabled)
+            {
+                return false;
+            }
+
             if (waypoint == null)
             {
                 iterator++;
@@ -239,7 +244,7 @@ namespace Kedrah.Modules
                 case WaypointType.OpenBody:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Tile t = Core.Map.GetTile(waypoint.Location);
+                        Tile t = Core.Client.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
                         {
                             Item item = t.Items.FirstOrDefault(i => i.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer));
@@ -254,7 +259,7 @@ namespace Kedrah.Modules
                 case WaypointType.Use:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Tile t = Core.Map.GetTile(waypoint.Location);
+                        Tile t = Core.Client.Map.GetTile(waypoint.Location);
                         if (t.Items.Count > 0)
                         {
                             t.Items.First().Use();
@@ -275,7 +280,7 @@ namespace Kedrah.Modules
                 case WaypointType.Pick:
                     if (waypoint.Location.Distance() == 1)
                     {
-                        Core.Inventory.UseItemOnTile(Pick.Id, Core.Map.GetTile(waypoint.Location));
+                        Core.Client.Inventory.UseItemOnTile(Pick.Id, Core.Client.Map.GetTile(waypoint.Location));
                         return true;
                     }
                     else if (waypoint.Location == Core.Player.Location)
@@ -286,14 +291,14 @@ namespace Kedrah.Modules
                 case WaypointType.Rope:
                     if (waypoint.Location.IsAdjacent())
                     {
-                        Core.Inventory.UseItemOnTile(Rope.Id, Core.Map.GetTile(waypoint.Location));
+                        Core.Client.Inventory.UseItemOnTile(Rope.Id, Core.Client.Map.GetTile(waypoint.Location));
                         return true;
                     }
                     break;
                 case WaypointType.Shovel:
                     if (waypoint.Location.Distance() == 1)
                     {
-                        Core.Inventory.UseItemOnTile(Shovel.Id, Core.Map.GetTile(waypoint.Location));
+                        Core.Client.Inventory.UseItemOnTile(Shovel.Id, Core.Client.Map.GetTile(waypoint.Location));
                         return true;
                     }
                     else if (waypoint.Location == Core.Player.Location)
