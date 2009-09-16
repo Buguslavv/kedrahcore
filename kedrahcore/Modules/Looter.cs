@@ -52,7 +52,7 @@ namespace Kedrah.Modules
 
         private bool Proxy_ReceivedContainerOpenIncomingPacket(IncomingPacket packet)
         {
-            if (Looting && LootItems.Count > 0)
+            if (Enabled && Looting && LootItems.Count > 0)
             {
                 ContainerOpenPacket p = (ContainerOpenPacket)packet;
                 Thread handler = new Thread(new ThreadStart(delegate()
@@ -86,7 +86,7 @@ namespace Kedrah.Modules
         {
             TileAddThingPacket p = (TileAddThingPacket)packet;
 
-            if (Looting && OpenBodies != OpenBodyRule.None)
+            if (Enabled && Looting && OpenBodies != OpenBodyRule.None)
             {
                 if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacent()))
                 {
@@ -115,7 +115,7 @@ namespace Kedrah.Modules
 
         bool Proxy_ReceivedTextMessageIncomingPacket(Tibia.Packets.IncomingPacket packet)
         {
-            if (Looting && lastBody.IsValid())
+            if (Enabled && Looting && lastBody.IsValid())
             {
                 TextMessagePacket p = (TextMessagePacket)packet;
 
@@ -211,7 +211,7 @@ namespace Kedrah.Modules
 
         private bool IsLootContainer(byte number)
         {
-            Container container = Core.Inventory.GetContainer(number);
+            Container container = Core.Client.Inventory.GetContainer(number);
 
             if ((number == 0) || (ItemLists.Container.ContainsKey((uint)container.Id) && !(container.Id == Items.Container.NormalBag.Id && container.HasParent)))
             {
@@ -284,7 +284,7 @@ namespace Kedrah.Modules
 
         private Container GetLootContainer(Item item)
         {
-            foreach (Container lootContainer in Core.Inventory.GetContainers())
+            foreach (Container lootContainer in Core.Client.Inventory.GetContainers())
             {
                 if (!IsLootContainer(lootContainer.Number))
                 {
@@ -322,7 +322,7 @@ namespace Kedrah.Modules
 
         private void Loot(byte number)
         {
-            Container container = Core.Inventory.GetContainer(number);
+            Container container = Core.Client.Inventory.GetContainer(number);
 
             if (container == null || !IsLootContainer(number))
             {
@@ -361,7 +361,7 @@ namespace Kedrah.Modules
                         }
                         else
                         {
-                            lootContainer = Core.Inventory.GetContainer(lootItem.Container);
+                            lootContainer = Core.Client.Inventory.GetContainer(lootItem.Container);
                         }
 
                         #endregion

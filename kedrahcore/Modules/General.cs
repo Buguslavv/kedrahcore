@@ -311,11 +311,11 @@ namespace Kedrah.Modules
 
                 if (value)
                 {
-                    Core.Map.NameSpyOn();
+                    Core.Client.Map.NameSpyOn();
                 }
                 else
                 {
-                    Core.Map.NameSpyOff();
+                    Core.Client.Map.NameSpyOff();
                 }
             }
         }
@@ -938,33 +938,33 @@ namespace Kedrah.Modules
             {
                 if (Core.Client.Window.IsActive && Core.Client.LoggedIn)
                 {
-                    Core.Map.NameSpyOn();
-                    Core.Map.FullLightOn();
-                    if (Core.Map.LevelSpyOn(floorOfSpy + 1))
+                    Core.Client.Map.NameSpyOn();
+                    Core.Client.Map.FullLightOn();
+                    if (Core.Client.Map.LevelSpyOn(floorOfSpy + 1))
                     {
                         floorOfSpy++;
                     }
 
                     if (floorOfSpy == 0)
                     {
-                        Core.Map.LevelSpyOff();
+                        Core.Client.Map.LevelSpyOff();
 
                         if (ShowNames)
                         {
-                            Core.Map.NameSpyOn();
+                            Core.Client.Map.NameSpyOn();
                         }
                         else
                         {
-                            Core.Map.NameSpyOff();
+                            Core.Client.Map.NameSpyOff();
                         }
 
                         if (FullLight)
                         {
-                            Core.Map.FullLightOn();
+                            Core.Client.Map.FullLightOn();
                         }
                         else
                         {
-                            Core.Map.FullLightOff();
+                            Core.Client.Map.FullLightOff();
                         }
                     }
                     if (floorOfSpy > 0)
@@ -988,39 +988,39 @@ namespace Kedrah.Modules
                 {
                     if (floorOfSpy == 0 && Core.Player.Z == 7)
                     {
-                        Core.Map.LevelSpyOff();
+                        Core.Client.Map.LevelSpyOff();
                         Core.Client.Statusbar = prefix + prefixCenter;
                     }
                     else
                     {
-                        Core.Map.NameSpyOn();
-                        Core.Map.FullLightOn();
+                        Core.Client.Map.NameSpyOn();
+                        Core.Client.Map.FullLightOn();
 
-                        if (Core.Map.LevelSpyOn(floorOfSpy - 1))
+                        if (Core.Client.Map.LevelSpyOn(floorOfSpy - 1))
                         {
                             floorOfSpy--;
                         }
 
                         if (floorOfSpy == 0)
                         {
-                            Core.Map.LevelSpyOff();
+                            Core.Client.Map.LevelSpyOff();
 
                             if (ShowNames)
                             {
-                                Core.Map.NameSpyOn();
+                                Core.Client.Map.NameSpyOn();
                             }
                             else
                             {
-                                Core.Map.NameSpyOff();
+                                Core.Client.Map.NameSpyOff();
                             }
 
                             if (FullLight)
                             {
-                                Core.Map.FullLightOn();
+                                Core.Client.Map.FullLightOn();
                             }
                             else
                             {
-                                Core.Map.FullLightOff();
+                                Core.Client.Map.FullLightOff();
                             }
                         }
                         if (floorOfSpy > 0)
@@ -1043,10 +1043,10 @@ namespace Kedrah.Modules
             {
                 if (Core.Client.Window.IsActive && Core.Client.LoggedIn)
                 {
-                    Core.Map.LevelSpyOff();
+                    Core.Client.Map.LevelSpyOff();
                     Core.Client.Statusbar = prefix + prefixCenter;
-                    Core.Map.NameSpyOn();
-                    Core.Map.FullLightOn();
+                    Core.Client.Map.NameSpyOn();
+                    Core.Client.Map.FullLightOn();
                     return false;
                 }
                 return true;
@@ -1068,7 +1068,7 @@ namespace Kedrah.Modules
 
         public void ReplaceTrees()
         {
-            Core.Map.ReplaceTrees();
+            Core.Client.Map.ReplaceTrees();
         }
 
         public string GetLastMessage()
@@ -1087,7 +1087,7 @@ namespace Kedrah.Modules
 
         void EatFood_OnExecute()
         {
-            Item food = Core.Inventory.GetItems().FirstOrDefault(i => i.IsInList(ItemLists.Foods.Values));
+            Item food = Core.Client.Inventory.GetItems().FirstOrDefault(i => i.IsInList(ItemLists.Foods.Values));
 
             if (food != null)
             {
@@ -1097,7 +1097,7 @@ namespace Kedrah.Modules
 
         void Fishing_OnExecute()
         {
-            if (MaximumFishes < 0 && Core.Inventory.CountItems(Items.Food.Fish.Id) >= MaximumFishes)
+            if (MaximumFishes < 0 && Core.Client.Inventory.CountItems(Items.Food.Fish.Id) >= MaximumFishes)
             {
                 return;
             }
@@ -1107,18 +1107,18 @@ namespace Kedrah.Modules
                 return;
             }
 
-            if (Core.Inventory.CountItems(Items.Tool.Worms.Id) >= 0)
+            if (Core.Client.Inventory.CountItems(Items.Tool.Worms.Id) >= 0)
             {
                 return;
             }
 
-            List < Tile > tiles = Core.Map.GetTilesOnSameFloor().Where(delegate(Tile t)
+            List < Tile > tiles = Core.Client.Map.GetTilesOnSameFloor().Where(delegate(Tile t)
             {
                 return (t.ObjectCount == 0 && t.Ground.Id >= Tiles.Water.FishStart &&
                     t.Ground.Id <= Tiles.Water.FishEnd && t.Location.Distance() < 9 &&
                     t.Location.IsShootable());
             }).ToList();
-            Core.Inventory.UseItemOnTile(Items.Tool.FishingRod.Id, tiles[(new Random((int)DateTime.Now.Ticks)).Next(0, tiles.Count - 1)]);
+            Core.Client.Inventory.UseItemOnTile(Items.Tool.FishingRod.Id, tiles[(new Random((int)DateTime.Now.Ticks)).Next(0, tiles.Count - 1)]);
         }
 
         void MakeLight_OnExecute()
@@ -1129,7 +1129,7 @@ namespace Kedrah.Modules
 
         void RevealFishSpots_OnExecute()
         {
-            foreach (Tile t in Core.Map.GetTilesOnSameFloor())
+            foreach (Tile t in Core.Client.Map.GetTilesOnSameFloor())
             {
                 if (t.Ground.Id >= Tiles.Water.NoFishStart || t.Ground.Id >= Tiles.Water.NoFishEnd)
                 {
@@ -1156,7 +1156,7 @@ namespace Kedrah.Modules
 
         void StackItems_OnExecute()
         {
-            Core.Inventory.Stack();
+            Core.Client.Inventory.Stack();
         }
 
         void ClickReuse_OnExecute()

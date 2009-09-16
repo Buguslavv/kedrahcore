@@ -243,7 +243,7 @@ namespace Kedrah.Modules
             verifier.Add("priority", new double[2] { 0, 0 });
             verifier.Add("stick", new double[2] { 0, 0 });
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
-            List<Creature> creatures = Core.BattleList.GetCreatures().ToList();
+            List<Creature> creatures = Core.Client.BattleList.GetCreatures().ToList();
             creatures.RemoveAll(c => c.Z != Core.Player.Z || c.IsSelf() || c.HPBar == 0 || c.Type != CreatureType.NPC);
 
             foreach (Creature creature in creatures)
@@ -270,7 +270,7 @@ namespace Kedrah.Modules
 
                 if (OthersMonsters > 0)
                 {
-                    var playersAround = Core.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
+                    var playersAround = Core.Client.BattleList.GetCreatures().ToList().FindAll(delegate(Creature c)
                     {
                         return c.DistanceBetween(creature.Location) <= OthersMonsters && (c.Z == creature.Location.Z) && (c.Type == CreatureType.Player) && (!c.IsSelf());
                     });
@@ -382,7 +382,7 @@ namespace Kedrah.Modules
 
             foreach (FightExtraPair extra in target.Extra)
             {
-                extra.Execute(creature, Core.Inventory);
+                extra.Execute(creature, Core.Client.Inventory);
             }
         }
 

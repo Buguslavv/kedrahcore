@@ -9,15 +9,15 @@ namespace Kedrah
 {
     public static class Extensions
     {
-        public static Core Kedrah = null;
+        public static Core Core = null;
 
         #region Client
 
         public static void SetModes(this Client client, Attack attack, Follow follow)
         {
-            Kedrah.Client.FollowMode = follow;
-            Kedrah.Client.AttackMode = attack;
-            Tibia.Packets.Outgoing.FightModesPacket.Send(Kedrah.Client, (byte)Kedrah.Client.AttackMode, (byte)Kedrah.Client.FollowMode, (byte)Kedrah.Client.SafeMode);
+            Core.Client.FollowMode = follow;
+            Core.Client.AttackMode = attack;
+            Tibia.Packets.Outgoing.FightModesPacket.Send(Core.Client, (byte)Core.Client.AttackMode, (byte)Core.Client.FollowMode, (byte)Core.Client.SafeMode);
         }
 
         #endregion
@@ -31,20 +31,20 @@ namespace Kedrah
 
         public static int Distance(this Location location)
         {
-            return location.DistanceBetween(Kedrah.Player.Location);
+            return location.DistanceBetween(Core.Player.Location);
         }
 
         public static bool IsAdjacent(this Location location)
         {
-            return location.IsAdjacentTo(Kedrah.Player.Location);
+            return location.IsAdjacentTo(Core.Player.Location);
         }
 
         public static bool IsShootable(this Location location)
         {
-            int XSign = (location.X > Kedrah.Player.Location.X) ? 1 : -1;
-            int YSign = (location.Y > Kedrah.Player.Location.Y) ? 1 : -1;
-            double XDistance = Math.Abs(location.X - Kedrah.Player.Location.X);
-            double YDistance = Math.Abs(location.Y - Kedrah.Player.Location.Y);
+            int XSign = (location.X > Core.Player.Location.X) ? 1 : -1;
+            int YSign = (location.Y > Core.Player.Location.Y) ? 1 : -1;
+            double XDistance = Math.Abs(location.X - Core.Player.Location.X);
+            double YDistance = Math.Abs(location.Y - Core.Player.Location.Y);
             double max = location.Distance();
             Location check;
 
@@ -55,8 +55,8 @@ namespace Kedrah
 
             for (int i = 1; i <= max; i++)
             {
-                check = Kedrah.Player.Location.Offset((int)Math.Ceiling(i * XDistance / max) * XSign, (int)Math.Ceiling(i * YDistance / max) * YSign, 0);
-                Tile tile = Kedrah.Map.GetTile(check);
+                check = Core.Player.Location.Offset((int)Math.Ceiling(i * XDistance / max) * XSign, (int)Math.Ceiling(i * YDistance / max) * YSign, 0);
+                Tile tile = Core.Client.Map.GetTile(check);
 
                 if (tile != null)
                 {
@@ -88,14 +88,14 @@ namespace Kedrah
 
         public static int Distance(this Creature creature)
         {
-            return creature.DistanceBetween(Kedrah.Player.Location);
+            return creature.DistanceBetween(Core.Player.Location);
         }
 
         public static void Attack(this Creature creature, bool packetOnly)
         {
             if (packetOnly)
             {
-                Tibia.Packets.Outgoing.AttackPacket.Send(Kedrah.Client, (uint)creature.Id);
+                Tibia.Packets.Outgoing.AttackPacket.Send(Core.Client, (uint)creature.Id);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace Kedrah
         {
             if (packetOnly)
             {
-                Tibia.Packets.Outgoing.FollowPacket.Send(Kedrah.Client, (uint)creature.Id);
+                Tibia.Packets.Outgoing.FollowPacket.Send(Core.Client, (uint)creature.Id);
             }
             else
             {
@@ -117,7 +117,7 @@ namespace Kedrah
 
         public static bool IsTarget(this Creature creature)
         {
-            return (creature.Id.Equals(Kedrah.Player.RedSquare) || creature.Id.Equals(Kedrah.Player.GreenSquare));
+            return (creature.Id.Equals(Core.Player.RedSquare) || creature.Id.Equals(Core.Player.GreenSquare));
         }
 
         #endregion
