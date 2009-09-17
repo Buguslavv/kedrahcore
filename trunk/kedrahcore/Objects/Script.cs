@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System;using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -7,6 +6,7 @@ using System.Text.RegularExpressions;
 using Tibia.Objects;
 using System.IO;
 using Tibia.Constants;
+using System.Globalization;
 
 namespace Kedrah.Objects
 {
@@ -16,131 +16,7 @@ namespace Kedrah.Objects
         protected Core core;
         protected Player player;
         protected Client client;
-
-        #region Custom Variables
-
-        protected int mp { get { return player.Mana; } }
-        protected int maxmp { get { return player.Mana_Max; } }
-        protected int mppc { get { return (100 * player.Mana / player.Mana_Max); } }
-        protected int hp { get { return player.HP; } }
-        protected int maxhp { get { return player.HP_Max; } }
-        protected int hppc { get { return player.HPBar; } }
-        protected int cap { get { return player.Cap; } }
-        protected int exp { get { return player.Exp; } }
-        protected int level { get { return player.Level; } }
-        protected int mlevel { get { return player.MagicLevel; } }
-        protected int posx { get { return player.X; } }
-        protected int posy { get { return player.Y; } }
-        protected int posz { get { return player.Z; } }
-        protected int soul { get { return player.Soul; } }
-        protected int stamina { get { return player.Stamina; } }
-        //protected int count { get { return 0; } } // NEED MODULE
-        protected int screenleft { get { return client.Window.Size.Left; } }
-        protected int screenright { get { return client.Window.Size.Rigth; } }
-        protected int screentop { get { return client.Window.Size.Top; } }
-        protected int screenbottom { get { return client.Window.Size.Bottom; } }
-        protected string name { get { return player.Name; } }
-        protected int time { get { return DateTime.Now.Second; } }
-        protected int timems { get { return DateTime.Now.Millisecond; } }
-        protected double deltatime { get { return DateTime.Now.Subtract(core.StartTime).TotalSeconds; } }
-        protected double deltatimems { get { return DateTime.Now.Subtract(core.StartTime).TotalMilliseconds; } }
-        //protected int exptnl { get { return 0; } } // NEED MODULE
-        //protected int exph { get { return 0; } } // NEED MODULE
-        //protected int expgained { get { return 0; } } // NEED MODULE
-        //protected int timetnl { get { return 0; } } // NEED MODULE
-        //protected int exptolevel { get { return 0; } } // FUNCTION
-        //protected int timetolevel { get { return 0; } } // FUNCTION
-        //protected int monstersaround { get { return 0; } } // FUNCTION
-        //protected int playersaround { get { return 0; } } // FUNCTION
-        //protected int sbtime { get { return 0; } }  // NEED MODULE
-        //protected int formattime { get { return 0; } } // FUNCTION
-        //protected int formatnum { get { return 0; } } // FUNCTION
-        //protected int itemcount { get { return 0; } } // FUNCTION
-        protected bool poisoned { get { return player.HasFlag(Flag.Poisoned); } }
-        //protected int poisondmg { get { return 0; } } // NEED MODULE
-        protected Item ringslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Ring)); } }
-        protected Item beltslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Ammo)); } }
-        protected Item backslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Backpack)); } }
-        protected Item rhandslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Right)); } }
-        protected Item lhandslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Left)); } }
-        protected Item amuletslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Necklace)); } }
-        protected Item bootsslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Feet)); } }
-        protected Item legsslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Legs)); } }
-        protected Item chestslot { get { return client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Armor)); } }
-        protected bool manashielded { get { return player.HasFlag(Flag.ProtectedByMagicShield); } }
-        protected bool drunk { get { return player.HasFlag(Flag.Drunk); } }
-        protected bool hasted { get { return player.HasFlag(Flag.Hasted); } }
-        protected bool paralyzed { get { return player.HasFlag(Flag.Paralyzed); } }
-        protected bool connected { get { return client.LoggedIn; } }
-        //protected int pkname { get { return 0; } } // FUNCTION
-        //protected int fileisline { get { return 0; } } // FUNCTION
-        //protected int filerandomline { get { return 0; } } // FUNCTION
-        //protected int fileline { get { return 0; } } // FUNCTION
-        //protected int token { get { return 0; } } // FUNCTION
-        //protected int cutstr { get { return 0; } } // FUNCTION
-        //protected int mshieldtime { get { return 0; } } // NEED MODULE
-        //protected int hastetime { get { return 0; } } // NEED MODULE
-        //protected int invistime { get { return 0; } } // NEED MODULE
-        //protected int strengthtime { get { return 0; } } // NEED MODULE
-        protected bool invisible { get { return !player.IsVisible; } }
-        //protected int dmgs { get { return 0; } } // NEED MODULE
-        //protected int enemycount { get { return 0; } } // NEED MODULE
-        //protected int friendcount { get { return 0; } } // NEED MODULE
-        protected int fishspots { get { return client.Map.GetTiles().Count(t => t.Location.Z == player.Z && Tiles.Water.GetNoFishIds().Contains(t.Ground.Id)); } }
-        protected bool waypointson { get { return core.Modules.Cavebot.Walk; } }
-        protected bool targetingon { get { return core.Modules.Targeting.Attacker; } }
-        //protected bool autocomboon { get { return false; } } // NEED MODULE
-        //protected bool caveboton { get { return waypointson; } }
-        //protected int ping { get { return 0; } } // NEED MODULE
-        //protected int idlerecvtime { get { return 0; } } // NEED MODULE
-        //protected int standtime { get { return 0; } } // NEED MODULE
-        protected string systime { get { return DateTime.Now.ToLongTimeString(); } }
-        protected string sysdate { get { return DateTime.Now.ToLongDateString(); } }
-        protected bool battlesign { get { return player.HasFlag(Flag.InBattle); } }
-        protected bool redbattlesign { get { return player.HasFlag(Flag.CannotLogoutOrEnterProtectionZone); } }
-        protected bool inpz { get { return player.HasFlag(Flag.WithinProtectionZone); } }
-        //protected int rand { get { return 0; } } // FUNCTION
-        //protected int sstime { get { return 0; } } // NEED MODULE
-        //protected int winitemcount { get { return 0; } } // FUNCTION
-        //protected int topitem { get { return 0; } } // FUNCTION
-        //protected int istileitem { get { return 0; } } // FUNCTION
-        //protected int lastdmg { get { return 0; } } // NEED MODULE
-        //protected int lastdmgtype { get { return 0; } } // NEED MODULE
-        //protected int mcount { get { return 0; } } // FUNCTION
-        //protected int pcount { get { return 0; } } // FUNCTION
-        //protected int screencount { get { return 0; } } // FUNCTION
-        //protected int lastdmgername { get { return 0; } } // NEED MODULE
-        //protected int lastdmgtime { get { return 0; } } // NEED MODULE
-        //protected int isleader { get { return 0; } } // FUNCTION
-        //protected int isfriend { get { return 0; } } // FUNCTION
-        //protected int issubfriend { get { return 0; } } // FUNCTION
-        //protected int isenemy { get { return 0; } } // FUNCTION
-        //protected int issubenemy { get { return 0; } } // FUNCTION
-        protected Player self { get { return player; } }
-        protected Creature target { get { return client.BattleList.GetCreatures().FirstOrDefault(c => c.Id == player.RedSquare); } }
-        protected Creature followed { get { return client.BattleList.GetCreatures().FirstOrDefault(c => c.Id == player.GreenSquare); } }
-        protected Creature attacked { get { return target; } }
-        //protected Creature attacker { get { return 0; } }
-        //protected Creature pk { get { return 0; } }
-        //protected Creature lastdmger { get { return 0; } }
-        //protected Creature pattacker { get { return 0; } }
-        //protected Creature mttacker { get { return 0; } }
-        //protected Creature enemy { get { return 0; } }
-        //protected Creature friend { get { return 0; } }
-        //protected Creature subenemy { get { return 0; } }
-        //protected Creature subfriend { get { return 0; } }
-        //protected Creature anyenemy { get { return 0; } }
-        //protected Creature anyfriend { get { return 0; } }
-        //protected Creature coretarget { get { return 0; } }
-        //protected Creature triggertarget { get { return 0; } }
-        //protected Creature autoaimtarget { get { return 0; } }
-        //protected int creature { get { return 0; } }
-        //protected int mostexposed { get { return 0; } }
-        //protected int mostshot { get { return 0; } }
-        //protected int curmsg { get { return 0; } }
-        protected string lastmsg { get { return client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText); } }
-
-        #endregion
+        protected Dictionary<string, object> symbols = new Dictionary<string, object>();
 
         public Script()
         {
@@ -152,11 +28,350 @@ namespace Kedrah.Objects
             this.core = core;
             client = core.Client;
             player = core.Player;
+
+            #region Register Variables
+
+            #endregion
         }
 
         public virtual void Stop()
         {
             Thread.CurrentThread.Abort();
+        }
+
+        protected object GetVariable(string name)
+        {
+            string[] variable = name.Split('.');
+            int param1 = -1;
+            Item item;
+            Random random = new Random((int)DateTime.Now.Ticks);
+            string[] lines;
+
+            switch (variable[0])
+            {
+                case "mp": return player.Mana;
+                case "maxmp": return player.Mana_Max;
+                case "mppc": return (100 * player.Mana / player.Mana_Max);
+                case "hp": return player.HP;
+                case "maxhp": return player.HP_Max;
+                case "hppc": return player.HPBar;
+                case "cap": return player.Cap;
+                case "exp": return player.Exp;
+                case "level": return player.Level;
+                case "mlevel": return player.MagicLevel;
+                case "posx": return player.X;
+                case "posy": return player.Y;
+                case "posz": return player.Z;
+                case "soul": return player.Soul;
+                case "stamina": return player.Stamina;
+                case "count": break;
+                case "screenleft": return client.Window.Size.Left;
+                case "screenright": return client.Window.Size.Rigth;
+                case "screentop": return client.Window.Size.Top;
+                case "screenbottom": return client.Window.Size.Bottom;
+                case "name": return player.Name;
+                case "time": return DateTime.Now.Second;
+                case "timems": return DateTime.Now.Millisecond;
+                case "deltatime": return DateTime.Now.Subtract(core.StartTime).TotalSeconds;
+                case "deltatimems": return DateTime.Now.Subtract(core.StartTime).TotalMilliseconds;
+                case "exptnl": break;
+                case "exph": break;
+                case "expgained": break;
+                case "timetnl": break;
+                case "exptolevel": break;
+                case "timetolevel": break;
+                case "monstersaround":
+                    if (variable.Length > 1)
+                    {
+                        int.TryParse(variable[1], out param1);
+                    }
+                    return client.BattleList.GetCreatures().Count(c => c.Type == CreatureType.NPC && c.Z == player.Z && (param1 < 1 || c.Distance() <= param1));
+                case "playersaround":
+                    if (variable.Length > 1)
+                    {
+                        int.TryParse(variable[1], out param1);
+                    }
+                    return client.BattleList.GetCreatures().Count(c => c.Type == CreatureType.Player && c.Z == player.Z && (param1 < 1 || c.Distance() <= param1));
+                case "sbtime": break;
+                case "formattime":
+                    if (variable.Length > 1)
+                    {
+                        int.TryParse(variable[1], out param1);
+                    }
+                    return (param1 / 3600) + ":" + ((param1 % 3600) / 60) + ":" + ((param1 % 3600) % 60);
+                case "formatnum":
+                    if (variable.Length > 1)
+                    {
+                        int.TryParse(variable[1], out param1);
+                    }
+                    return param1.ToString("#,#", CultureInfo.InvariantCulture);
+                case "itemcount":
+                    if (variable.Length > 1)
+                    {
+                        int.TryParse(variable[1], out param1);
+                        if (param1 > 0)
+                        {
+                            return client.Inventory.CountItems((uint)param1);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                case "poisoned": return player.HasFlag(Flag.Poisoned);
+                case "poisondmg": break;
+                case "ringslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Ring));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "beltslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Ammo));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "backslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Backpack));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "rhandslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Right));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "lhandslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Left));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "amuletslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Necklace));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "bootsslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Feet));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "legsslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Legs));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "chestslot":
+                    item = client.Inventory.GetItem(ItemLocation.FromSlot(SlotNumber.Armor));
+                    if (variable.Length > 1)
+                    {
+                        if (string.Compare(variable[1], "id", true) == 0)
+                        {
+                            return item.Id;
+                        }
+                        else if (string.Compare(variable[1], "count", true) == 0)
+                        {
+                            return item.Count;
+                        }
+                    }
+                    return item.Name;
+                case "manashielded": return player.HasFlag(Flag.ProtectedByMagicShield);
+                case "drunk": return player.HasFlag(Flag.Drunk);
+                case "hasted": return player.HasFlag(Flag.Hasted);
+                case "paralyzed": return player.HasFlag(Flag.Paralyzed);
+                case "connected": return client.LoggedIn;
+                case "pkname": break;
+                case "fileisline":
+                    if (variable.Length > 2)
+                    {
+                        if (!File.Exists(variable[1])) return false;
+                        if (File.ReadAllLines(variable[1]).Contains(variable[2])) return true;
+                    }
+                    return false;
+                case "filerandomline":
+                    if (variable.Length > 1)
+                    {
+                        if (!File.Exists(variable[1])) return "";
+                        lines = File.ReadAllLines(variable[1]);
+                        return lines[random.Next(lines.Count() - 1)];
+                    }
+                    return "";
+                case "fileline":
+                    if (variable.Length > 2)
+                    {
+                        if (!File.Exists(variable[1])) return "";
+                        int.TryParse(variable[2], out param1);
+                        if (param1 > 0)
+                        {
+                            lines = File.ReadAllLines(variable[1]);
+                            if (lines.Count() > param1)
+                            {
+                                return lines[param1];
+                            }
+                        }
+                    }
+                    return "";
+                case "token":
+                    param1 = 1;
+                    if (variable.Length > 2)
+                    {
+                        int.TryParse(variable[2], out param1);
+                        if (param1 < 1)
+                        {
+                            param1 = 1;
+                        }
+                    }
+                    if (variable.Length > 1)
+                    {
+                        MatchCollection matches = Regex.Matches(variable[1], @"\""([^\""]*?)\""| ([^\""]*?) |^([^\""]*?) | ([^\""]*?)$|^([^\""]*?)$");
+                        return matches[param1 - 1].Value.Trim('"');
+                    }
+                    return "";
+                case "cutstr": break;
+                case "mshieldtime": break;
+                case "hastetime": break;
+                case "invistime": break;
+                case "strengthtime": break;
+                case "invisible": return !player.IsVisible;
+                case "dmgs": break;
+                case "enemycount": break;
+                case "friendcount": break;
+                case "fishspots": return client.Map.GetTiles().Count(t => t.Location.Z == player.Z && Tiles.Water.GetNoFishIds().Contains(t.Ground.Id));
+                case "waypointson": return core.Modules.Cavebot.Walk;
+                case "targetingon": return core.Modules.Targeting.Attacker;
+                case "autocomboon": break;
+                case "caveboton": break;
+                case "ping": break;
+                case "idlerecvtime": break;
+                case "standtime": break;
+                case "systime": return DateTime.Now.ToLongTimeString();
+                case "sysdate": return DateTime.Now.ToLongDateString();
+                case "battlesign": return player.HasFlag(Flag.InBattle);
+                case "redbattlesign": return player.HasFlag(Flag.CannotLogoutOrEnterProtectionZone);
+                case "inpz": return player.HasFlag(Flag.WithinProtectionZone);
+                case "rand": break;
+                case "sstime": break;
+                case "winitemcount": break;
+                case "fired": break;
+                case "synctime": break;
+                case "navion": break;
+                case "exectime": break;
+                case "topitem": break;
+                case "istileitem": break;
+                case "lastdmg": break;
+                case "lastdmgtype": break;
+                case "mcount": break;
+                case "pcount": break;
+                case "screencount": break;
+                case "lastdmgername": break;
+                case "lastdmgtime": break;
+                case "isleader": break;
+                case "isfriend": break;
+                case "issubfriend": break;
+                case "isenemy": break;
+                case "issubenemy": break;
+                case "self": return player;
+                case "target": return client.BattleList.GetCreatures().FirstOrDefault(c => c.Id == player.RedSquare);
+                case "followed": return client.BattleList.GetCreatures().FirstOrDefault(c => c.Id == player.GreenSquare);
+                case "attacked": return client.BattleList.GetCreatures().FirstOrDefault(c => c.Id == player.RedSquare);
+                case "attacker": break;
+                case "pk": break;
+                case "lastdmger": break;
+                case "pattacker": break;
+                case "mttacker": break;
+                case "enemy": break;
+                case "friend": break;
+                case "subenemy": break;
+                case "subfriend": break;
+                case "anyenemy": break;
+                case "anyfriend": break;
+                case "coretarget": break;
+                case "triggertarget": break;
+                case "autoaimtarget": break;
+                case "creature": break;
+                case "mostexposed": break;
+                case "mostshot": break;
+                case "curmsg": break;
+                case "lastmsg": return client.Memory.ReadString(Tibia.Addresses.Client.LastMSGText);
+                case "lastnavmsg": break;
+            }
+
+            return null;
         }
 
         protected void reconnect()
@@ -166,24 +381,32 @@ namespace Kedrah.Objects
             client.Login.Login(client.Memory.ReadString(Tibia.Addresses.Client.LoginAccount), client.Memory.ReadString(Tibia.Addresses.Client.LoginPassword), client.Login.CharacterList[client.Login.SelectedChar].CharName);
         }
 
-        public static string RegexReplaceLoop(string code, List<string> expressions, List<string> replaces)
+        public static string RegexReplaceLoop(string code, string expression, string replace)
         {
             Regex regex;
-            if (expressions.Count != replaces.Count) return code;
 
-            for (int i = 0; i < expressions.Count; i++)
+            regex = new Regex(expression);
+            while (regex.IsMatch(code))
             {
-                regex = new Regex(expressions[i]);
-                while (regex.IsMatch(code))
-                {
-                    code = regex.Replace(code, replaces[i]);
-                }
+                code = regex.Replace(code, replace);
             }
 
             return code;
         }
 
-        public static string RegexReplace(string code, List<string> expressions, List<string> replaces)
+        public static string RegexReplaceLoopList(string code, List<string> expressions, List<string> replaces)
+        {
+            if (expressions.Count != replaces.Count) return code;
+
+            for (int i = 0; i < expressions.Count; i++)
+            {
+                code = RegexReplaceLoop(code, expressions[i], replaces[i]);
+            }
+
+            return code;
+        }
+
+        public static string RegexReplaceList(string code, List<string> expressions, List<string> replaces)
         {
             Regex regex;
             if (expressions.Count != replaces.Count) return code;
@@ -198,6 +421,105 @@ namespace Kedrah.Objects
             }
 
             return code;
+        }
+
+        public static string ParseVariables(string code)
+        {
+            string result = "";
+            bool variable = false;
+            bool parameter = false;
+            bool parameterStr = false;
+            bool parameterStart = false;
+            bool str = false;
+            bool varInStr = false;
+
+            foreach (char c in code)
+            {
+                switch (c)
+                {
+                    case '$':
+                        variable = true;
+                        if (str)
+                        {
+                            varInStr = true;
+                            result += "\" + ";
+                        }
+                        result += "GetVariable(\"";
+                        break;
+                    case '.':
+                        if (variable)
+                        {
+                            parameter = true;
+                        }
+                        result += c;
+                        break;
+                    case '"':
+                        if (parameterStr)
+                        {
+                            result += "\\\"";
+                        }
+                        else
+                        {
+                            result += c;
+                        }
+                        break;
+                    case '\'':
+                        if (parameter && !parameterStart)
+                        {
+                            if (parameterStr)
+                            {
+                                parameter = false;
+                                parameterStr = false;
+                            }
+                            else
+                            {
+                                parameterStr = true;
+                            }
+                        }
+                        else
+                        {
+                            if (variable)
+                            {
+                                variable = false;
+                                result += "\")";
+                                if (varInStr)
+                                {
+                                    varInStr = false;
+                                    result += " + \"";
+                                }
+                            }
+                            str = !str;
+                            result += c;
+                        }
+                        break;
+                    default:
+                        if (!(char.IsLetterOrDigit(c) || c == '_'))
+                        {
+                            if (parameter && !parameterStr)
+                            {
+                                parameter = false;
+                                parameterStart = false;
+                            }
+                            if (variable && !parameter)
+                            {
+                                variable = false;
+                                result += "\")";
+                                if (varInStr)
+                                {
+                                    varInStr = false;
+                                    result += " + \"";
+                                }
+                            }
+                        }
+                        else if (parameter && !parameterStr)
+                        {
+                            parameterStart = true;
+                        }
+                        result += c;
+                        break;
+                }
+            }
+            return result;
         }
 
         public static string GenerateFromScript(string name, string code)
@@ -217,23 +539,24 @@ namespace Kedrah.Objects
             List<string> expressionsLoop = new List<string>();
             List<string> replacesLoop = new List<string>();
 
-            expressions.AddRange(new string[] { @"'([^']*?)'", @"([^;])$", @"(\"".*)(\$[a-z][a-z0-9]+)(.*\"")" });
-            replaces.AddRange(new string[] { @"""$1""", @"$1;", @"$1"" + $2.ToString() + ""$3" });
+            expressions.AddRange(new string[] { @"([^;])$" });
+            replaces.AddRange(new string[] { @"$1;" });
 
             expressionsLoop.AddRange(new string[] { @"'([^']*?)'", @"([^\|])\|([^\|])", @"\[([^\[]*?)\]" });
             replacesLoop.AddRange(new string[] { @"""$1""", @"$1;$2", @"($1)" });
-            expressionsLoop.AddRange(new string[] { @"\$([a-z][a-z0-9]+)", "msgbox" });
-            replacesLoop.AddRange(new string[] { @"$1", "System.Windows.Forms.MessageBox.Show" });
+            expressionsLoop.AddRange(new string[] { "msgbox" });
+            replacesLoop.AddRange(new string[] { "System.Windows.Forms.MessageBox.Show" });
 
-            code = RegexReplace(code, expressions, replaces);
-            code = RegexReplaceLoop(code, expressionsLoop, replacesLoop);
+            code = ParseVariables(code);
+            code = RegexReplaceList(code, expressions, replaces);
+            code = RegexReplaceLoopList(code, expressionsLoop, replacesLoop);
 
             return GenerateCSharp(name, code, timeout);
         }
 
         public static string GenerateCSharp(string name, string code, int timeout)
         {
-            System.Windows.Forms.MessageBox.Show(code);
+            System.Windows.Forms.MessageBox.Show(code + " ---\n" + timeout);
             string script = "";
             script += "using System;\n";
             script += "using System.Collections.Generic;\n";
@@ -247,10 +570,16 @@ namespace Kedrah.Objects
             script += "     public override void Run(Core core)\n";
             script += "     {\n";
             script += "         base.Run(core);\n";
-            script += "         Timer Timer = new Timer(new TimerCallback(delegate(object o)\n";
-            script += "         {\n";
+            if (timeout != Timeout.Infinite)
+            {
+                script += "         Timer Timer = new Timer(new TimerCallback(delegate(object o)\n";
+                script += "         {\n";
+            }
             script += "             " + code + "\n";
-            script += "         ;}), null, 0, " + timeout.ToString() + ");\n";
+            if (timeout != Timeout.Infinite)
+            {
+                script += "         }), null, 0, " + timeout.ToString() + ");\n";
+            }
             script += "     }\n";
             script += " }\n";
             script += "}\n";
