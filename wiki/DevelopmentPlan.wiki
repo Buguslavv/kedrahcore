@@ -48,12 +48,12 @@
    * _~~Use item/rune~~_
    * _~~Equip item~~_
    * _~~Cast spell~~_
- * Fight Stance
-   * Stand
-   * Follow
-   * Distance
-   * Parry (2 or less monsters sorrounding)
- * Fight Security (Avoid waves/beams)
+ * _~~Fight Stance~~_
+   * _~~Stand~~_
+   * _~~Follow~~_
+   * _~~Distance~~_
+   * _~~Parry (2 or less monsters sorrounding)~~_
+ * _~~Fight Security (Avoid waves/beams)~~_
 ----
 == Cavebot ==
 === Walking around and execute custom actions. ===
@@ -67,7 +67,7 @@
  * _~~Use~~_
  * _~~Walk~~_
  * _~~Find floor changer~~_
- * Action
+ * _~~Action~~_
  * Leave trap
 ----
 == ~~Loot~~ ==
