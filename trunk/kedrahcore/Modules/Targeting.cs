@@ -61,6 +61,8 @@ namespace Kedrah.Modules
             Timers["target"].Execute += new Tibia.Util.Timer.TimerExecution(Target_OnExecute);
             Timers.Add("action", new Tibia.Util.Timer(2000, false));
             Timers["action"].Execute += new Tibia.Util.Timer.TimerExecution(Action_OnExecute);
+            Timers.Add("move", new Tibia.Util.Timer(1000, false));
+            Timers["move"].Execute += new Tibia.Util.Timer.TimerExecution(Move_OnExecute);
 
             #endregion
         }
@@ -100,11 +102,13 @@ namespace Kedrah.Modules
                 {
                     PlayTimer("target");
                     PlayTimer("action");
+                    PlayTimer("move");
                 }
                 else
                 {
                     PauseTimer("target");
                     PauseTimer("action");
+                    PauseTimer("move");
                 }
             }
         }
@@ -236,12 +240,12 @@ namespace Kedrah.Modules
 
             Creature selected = null;
             Target selectedTarget = null;
-            Dictionary<string, double[]> verifier = new Dictionary<string, double[]>(4);
+            Dictionary<string, int[]> verifier = new Dictionary<string, int[]>(4);
 
-            verifier.Add("distance", new double[2] { 0, 0 });
-            verifier.Add("health", new double[2] { 0, 0 });
-            verifier.Add("priority", new double[2] { 0, 0 });
-            verifier.Add("stick", new double[2] { 0, 0 });
+            verifier.Add("distance", new int[2] { 0, 0 });
+            verifier.Add("health", new int[2] { 0, 0 });
+            verifier.Add("priority", new int[2] { 0, 0 });
+            verifier.Add("stick", new int[2] { 0, 0 });
             List<KeyValuePair<string, byte>> items = TargetSelection.OrderByDescending(s => s.Value).ToList();
             List<Creature> creatures = Core.Client.BattleList.GetCreatures().ToList();
             creatures.RemoveAll(c => c.Z != Core.Player.Z || c.IsSelf() || c.HPBar == 0 || c.Type != CreatureType.NPC);
@@ -263,10 +267,14 @@ namespace Kedrah.Modules
                     continue;
                 }
 
-                if (Reachable && !creature.IsReachable())
+                try
                 {
-                    continue;
+                    if (Reachable && !creature.IsReachable())
+                    {
+                        continue;
+                    }
                 }
+                catch { }
 
                 if (OthersMonsters > 0)
                 {
@@ -296,13 +304,13 @@ namespace Kedrah.Modules
                 }
 
                 verifier["distance"][0] = selected.Distance();
-                verifier["health"][0] = (double)selected.HPBar;
-                verifier["priority"][0] = (double)selectedTarget.Priority;
-                verifier["stick"][0] = (double)selected.Id;
+                verifier["health"][0] = selected.HPBar;
+                verifier["priority"][0] = -selectedTarget.Priority;
+                verifier["stick"][0] = selected.Id;
                 verifier["distance"][1] = creature.Distance();
-                verifier["health"][1] = (double)creature.HPBar;
-                verifier["priority"][1] = (double)target.Priority;
-                verifier["stick"][1] = (double)creature.Id;
+                verifier["health"][1] = creature.HPBar;
+                verifier["priority"][1] = -target.Priority;
+                verifier["stick"][1] = creature.Id;
 
                 foreach (KeyValuePair<string, byte> v in items)
                 {
@@ -349,14 +357,10 @@ namespace Kedrah.Modules
                 return;
             }
 
-            if (Core.Player.IsWalking && !creature.IsTarget())
-            {
-                Core.Player.Stop();
-            }
-
             IsTargeting = true;
 
             Core.Client.SetModes(target.AttackMode, target.FollowMode);
+            Core.Player.RedSquare = creature.Id;
 
             if (target.Action == FightActions.Attack)
             {
@@ -384,6 +388,102 @@ namespace Kedrah.Modules
             {
                 extra.Execute(creature, Core.Client.Inventory);
             }
+        }
+
+        private void Move_OnExecute()
+        {
+            if (Core.Modules.Looter.IsLooting)
+            {
+                return;
+            }
+
+            if (target == null || creature == null)
+            {
+                return;
+            }
+
+            List<Location> prohibited = new List<Location>();
+
+            try
+            {
+                switch (target.Security)
+                {
+                    case FightSecurity.Both:
+                        prohibited = creature.Location.BeamAffectedLocations();
+                        prohibited.AddRange(creature.Location.WaveAffectedLocations());
+                        break;
+                    case FightSecurity.Beam:
+                        prohibited = creature.Location.BeamAffectedLocations();
+                        break;
+                    case FightSecurity.Wave:
+                        prohibited = creature.Location.WaveAffectedLocations();
+                        break;
+                    case FightSecurity.Automatic:
+                        switch (target.FrontAttack)
+                        {
+                            case FrontAttack.Both:
+                                prohibited = creature.Location.BeamAffectedLocations();
+                                prohibited.AddRange(creature.Location.WaveAffectedLocations());
+                                break;
+                            case FrontAttack.Beam:
+                                prohibited = creature.Location.BeamAffectedLocations();
+                                break;
+                            case FrontAttack.Wave:
+                                prohibited = creature.Location.WaveAffectedLocations();
+                                break;
+                        }
+                        break;
+                }
+
+                foreach (Location l in prohibited)
+                    Core.Client.Map.GetTile(l).ReplaceGround(923);
+
+                if (!Core.Player.IsWalking)
+                {
+                    if (prohibited.Count > 0 || target.Stance == FightStances.Distance)
+                    {
+                        List<Tile> list;
+                        Tile tile;
+                        IEnumerable<Tile> possible = Core.Client.Map.GetTilesOnSameFloor().Where(t => t.Location.DistanceBetween(creature.Location) <= ((target.Stance == FightStances.Distance) ? Distance : 1));
+                        possible = possible.Where(t => !prohibited.Contains(t.Location));
+                        try { possible = possible.Where(t => t.Location.IsReachable()); }
+                        catch { }
+                        list = possible.ToList();
+                        list.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.Distance().CompareTo(t2.Location.Distance()); }));
+                        tile = list.FirstOrDefault(t => t.Location.Distance() == Distance);
+                        if (tile != null) tile = list.FirstOrDefault();
+
+                        if (tile != null)
+                        {
+                            Core.Player.GoTo = tile.Location;
+                        }
+                    }
+                    else if (target.Stance == FightStances.ParryFollow || target.Stance == FightStances.ParryStand)
+                    {
+                        if (Core.Player.Location.MonstersAround() > 2)
+                        {
+                            List<Tile> list;
+                            Tile tile;
+                            IEnumerable<Tile> possible = Core.Client.Map.GetTilesOnSameFloor().Where(t => t.Location.MonstersAround() <= 2);
+                            try { possible = possible.Where(t => t.Location.IsReachable()); }
+                            catch { }
+                            list = possible.ToList();
+                            list.Sort(new Comparison<Tile>(delegate(Tile t1, Tile t2) { return t1.Location.Distance().CompareTo(t2.Location.Distance()); }));
+                            tile = list.FirstOrDefault(t => t.Location.Distance() == Distance);
+
+                            if (tile != null)
+                            {
+                                Core.Player.GoTo = tile.Location;
+                            }
+                        }
+                    }
+                    else if (target.Stance == FightStances.ParryFollow || target.Stance == FightStances.Follow)
+                    {
+                        creature.Approach();
+                    }
+                }
+            }
+            catch { }
         }
 
         #endregion

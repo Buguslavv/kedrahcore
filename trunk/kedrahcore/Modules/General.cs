@@ -22,6 +22,7 @@ namespace Kedrah.Modules
         private bool talking = false;
         private bool holdingBoostKey = true;
         private bool showNames = false;
+        private bool speedBoost = false;
         private int floorOfSpy = 0;
         private Keys spyPlusKey;
         private Keys spyMinusKey;
@@ -324,10 +325,11 @@ namespace Kedrah.Modules
         {
             get
             {
-                return SpeedBoost;
+                return speedBoost;
             }
             set
             {
+                speedBoost = value;
                 if (value)
                 {
                     KeyboardHook.Add(Keys.Up, new KeyboardHook.KeyPressed(delegate()
@@ -399,8 +401,6 @@ namespace Kedrah.Modules
                         holdingBoostKey = false;
                         return true;
                     }));
-
-                    SpeedBoost = true;
                 }
                 else
                 {
@@ -408,7 +408,6 @@ namespace Kedrah.Modules
                     KeyboardHook.Remove(Keys.Down);
                     KeyboardHook.Remove(Keys.Left);
                     KeyboardHook.Remove(Keys.Right);
-                    SpeedBoost = false;
                 }
             }
         }
