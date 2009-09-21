@@ -234,6 +234,10 @@ namespace Kedrah.Modules
             switch (waypoint.Type)
             {
                 case WaypointType.Action:
+                    if (Core.Modules.Scripter.ErrorLog == string.Empty)
+                    {
+                        Core.Modules.Scripter.Run(waypoint.ToString());
+                    }
                     return true;
                 case WaypointType.Approach:
                     if (waypoint.Location.IsAdjacent())
