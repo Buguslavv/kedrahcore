@@ -107,7 +107,7 @@ namespace Kedrah.Modules
 
                 foreach (HealPercent potion in PotionMana)
                 {
-                    if ((Core.Player.Mana * 100 / Core.Player.Mana_Max) <= Util.RandomGenerator.RandomNumber(potion.Percent, (int)(potion.Percent * Core.RandomRate)))
+                    if ((Core.Player.Mana * 100 / Core.Player.ManaMax) <= Util.RandomGenerator.RandomNumber(potion.Percent, (int)(potion.Percent * Core.RandomRate)))
                     {
                         if (potion.Keys != null)
                         {

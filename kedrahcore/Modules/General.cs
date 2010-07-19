@@ -34,7 +34,7 @@ namespace Kedrah.Modules
         public bool OpenSmall = false;
 
         public int MaximumFishes = 0;
-        public int MinimumCap = 0;
+        public uint MinimumCap = 0;
 
         #endregion
 
@@ -1102,7 +1102,7 @@ namespace Kedrah.Modules
                 return;
             }
 
-            if (Core.Player.Cap <= MinimumCap)
+            if (Core.Player.Capacity <= MinimumCap)
             {
                 return;
             }
