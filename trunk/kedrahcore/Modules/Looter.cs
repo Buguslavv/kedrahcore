@@ -88,13 +88,13 @@ namespace Kedrah.Modules
 
             if (Enabled && Looting && OpenBodies != OpenBodyRule.None)
             {
-                if (p.Item != null && (OpenDistantBodies || p.Position.IsAdjacent()))
+                if (p.Item != null && (OpenDistantBodies || p.Location.IsAdjacent()))
                 {
-                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Position.Z == Core.Player.Z)
+                    if (p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsContainer) && p.Item.GetFlag(Tibia.Addresses.DatItem.Flag.IsCorpse) && p.Location.Z == Core.Player.Z)
                     {
                         if (OpenBodies == OpenBodyRule.All)
                         {
-                            LootBodies.Add(p.Position);
+                            LootBodies.Add(p.Location);
                         }
                         else
                         {
@@ -104,7 +104,7 @@ namespace Kedrah.Modules
                                 lastBody = Location.Invalid;
                             }
 
-                            lastBody = p.Position;
+                            lastBody = p.Location;
                         }
                     }
                 }
