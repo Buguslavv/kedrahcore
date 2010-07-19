@@ -22,7 +22,7 @@ namespace Kedrah
         public Player Player = null;
         public Proxy Proxy = null;
         public DateTime StartTime = DateTime.Now;
-        public double RandomRate = 1.07;
+        public double RandomRate = 1.10;
 
         public HModules Modules;
 
