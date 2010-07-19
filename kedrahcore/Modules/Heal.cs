@@ -98,7 +98,7 @@ namespace Kedrah.Modules
                         if (potion.Keys != null)
                         {
                             Core.Client.Input.SendKeys(potion.Keys);
-                            PotionNext = DateTime.Now;
+                            PotionNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(PotionExhaustion, (int)Math.Round(PotionExhaustion * Core.RandomRate)));
                         }
                         else
                             PotionNext = Core.Client.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
@@ -112,7 +112,7 @@ namespace Kedrah.Modules
                         if (potion.Keys != null)
                         {
                             Core.Client.Input.SendKeys(potion.Keys);
-                            PotionNext = DateTime.Now;
+                            PotionNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(PotionExhaustion, (int) Math.Round(PotionExhaustion * Core.RandomRate)));
                         }
                         else
                             PotionNext = Core.Client.Inventory.UseItemOnSelf(potion.Item.Id) ? DateTime.Now.AddMilliseconds(PotionExhaustion) : DateTime.Now;
@@ -129,7 +129,7 @@ namespace Kedrah.Modules
                         if (rune.Keys != null)
                         {
                             Core.Client.Input.SendKeys(rune.Keys);
-                            SpellNext = DateTime.Now;
+                            SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
                         }
                         else
                             SpellNext = Core.Client.Inventory.UseItemOnSelf(rune.Item.Id) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
@@ -143,7 +143,7 @@ namespace Kedrah.Modules
                         if (spell.Keys != null)
                         {
                             Core.Client.Input.SendKeys(spell.Keys);
-                            SpellNext = DateTime.Now;
+                            SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
                         }
                         else
                             SpellNext = Core.Client.Console.Say(spell.Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
@@ -153,7 +153,7 @@ namespace Kedrah.Modules
                 if (Poison && Core.Player.HasFlag(Flag.Poisoned) && Core.Player.Mana >= SpellPoisonMana)
                 {
                     Core.Client.Input.SendString(SpellPoisonWords);
-                    SpellNext = DateTime.Now;
+                    SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
                 }
 
                 if (Paralyze && Core.Player.HasFlag(Flag.Paralyzed))
@@ -161,7 +161,7 @@ namespace Kedrah.Modules
                     if (SpellLife.Last().Keys != null)
                     {
                         Core.Client.Input.SendKeys(SpellLife.Last().Keys);
-                        SpellNext = DateTime.Now;
+                        SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
                     }
                     else
                         SpellNext = Core.Client.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
