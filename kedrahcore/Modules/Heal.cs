@@ -93,7 +93,7 @@ namespace Kedrah.Modules
             {
                 foreach (HealPercent potion in PotionLife)
                 {
-                    if (Core.Player.HPBar <= potion.Percent)
+                    if (Core.Player.HPBar <= Util.RandomGenerator.RandomNumber(potion.Percent, (int)(potion.Percent * Core.RandomRate)))
                     {
                         if (potion.Keys != null)
                         {
@@ -107,7 +107,7 @@ namespace Kedrah.Modules
 
                 foreach (HealPercent potion in PotionMana)
                 {
-                    if ((Core.Player.Mana * 100 / Core.Player.Mana_Max) <= potion.Percent)
+                    if ((Core.Player.Mana * 100 / Core.Player.Mana_Max) <= Util.RandomGenerator.RandomNumber(potion.Percent, (int)(potion.Percent * Core.RandomRate)))
                     {
                         if (potion.Keys != null)
                         {
@@ -124,7 +124,7 @@ namespace Kedrah.Modules
             {
                 foreach (HealPercent rune in RuneLife)
                 {
-                    if (Core.Player.HPBar <= rune.Percent)
+                    if (Core.Player.HPBar <= Util.RandomGenerator.RandomNumber(rune.Percent, (int) (rune.Percent * Core.RandomRate)))
                     {
                         if (rune.Keys != null)
                         {
@@ -138,7 +138,7 @@ namespace Kedrah.Modules
 
                 foreach (HealPercent spell in SpellLife)
                 {
-                    if (Core.Player.HPBar <= spell.Percent && Core.Player.Mana >= spell.Mana)
+                    if (Core.Player.HPBar <= Util.RandomGenerator.RandomNumber(spell.Percent, (int)(spell.Percent * Core.RandomRate)) && Core.Player.Mana >= spell.Mana)
                     {
                         if (spell.Keys != null)
                         {
@@ -158,13 +158,16 @@ namespace Kedrah.Modules
 
                 if (Paralyze && Core.Player.HasFlag(Flag.Paralyzed))
                 {
-                    if (SpellLife.Last().Keys != null)
+                    if (Util.RandomGenerator.RandomNumber(0, (int)(2 * Core.RandomRate)) == 0)
                     {
-                        Core.Client.Input.SendKeys(SpellLife.Last().Keys);
-                        SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
+                        if (SpellLife.Last().Keys != null)
+                        {
+                            Core.Client.Input.SendKeys(SpellLife.Last().Keys);
+                            SpellNext = DateTime.Now.AddMilliseconds(Util.RandomGenerator.RandomNumber(SpellExhaustion, (int)Math.Round(SpellExhaustion * Core.RandomRate)));
+                        }
+                        else
+                            SpellNext = Core.Client.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                     }
-                    else
-                        SpellNext = Core.Client.Console.Say(SpellLife.Last().Spell) ? DateTime.Now.AddMilliseconds(SpellExhaustion) : DateTime.Now;
                 }
             }
         }
