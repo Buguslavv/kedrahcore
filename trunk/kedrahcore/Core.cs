@@ -16,10 +16,13 @@ namespace Kedrah
 
         static private System.Threading.Mutex kedrahMutex;
 
+        private Tibia.Util.Timer loginChecker = new Tibia.Util.Timer(100, false);
+
         public Client Client = null;
         public Player Player = null;
         public Proxy Proxy = null;
         public DateTime StartTime = DateTime.Now;
+        public double RandomRate = 0.7;
 
         public HModules Modules;
 
@@ -32,7 +35,7 @@ namespace Kedrah
         {
         }
 
-        public Core(string clientChooserTitle, string mutexName, bool hookProxy, bool useWPF)
+        public Core(string clientChooserTitle, string mutexName, bool proxy, bool useWPF)
         {
             KeyboardHook.Enable();
 
@@ -41,7 +44,7 @@ namespace Kedrah
                 ClientChooserOptions clientChooserOptions = new ClientChooserOptions();
                 clientChooserOptions.Title = clientChooserTitle;
                 clientChooserOptions.ShowOTOption = true;
-                clientChooserOptions.OfflineOnly = true;
+                clientChooserOptions.OfflineOnly = proxy;
 
                 if (useWPF)
                 {
@@ -63,19 +66,25 @@ namespace Kedrah
                     }
 
                     System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.AboveNormal;
-
-                    Client.IO.StartProxy();
-                    Proxy = Client.IO.Proxy;
-
                     Client.Process.Exited += new EventHandler(ClientClosed);
-                    Proxy.PlayerLogin += new EventHandler(OnLogin);
-                    Proxy.PlayerLogout += new EventHandler(OnLogout);
+
+                    if (proxy)
+                    {
+                        Client.IO.StartProxy();
+                        Proxy = Client.IO.Proxy;
+
+                        Proxy.PlayerLogin += new EventHandler(OnLogin);
+                        Proxy.PlayerLogout += new EventHandler(OnLogout);
+                    }
+                    else
+                    {
+                        loginChecker.Execute += new Tibia.Util.Timer.TimerExecution(loginChecker_Execute);
+                        loginChecker.Start();
+                    }
 
                     Modules = new HModules(this);
                     Kedrah.Extensions.Core = this;
                 }
-
-                break;
             } while (Client == null);
         }
 
@@ -99,6 +108,8 @@ namespace Kedrah
             {
                 Client.Window.WorldOnlyView = false;
             }
+
+            Player = null;
         }
 
         void ClientClosed(object sender, EventArgs e)
@@ -107,5 +118,13 @@ namespace Kedrah
         }
 
         #endregion
+
+        private void loginChecker_Execute()
+        {
+            if (Client.LoggedIn && Player == null)
+                OnLogin(null, null);
+            else if (!Client.LoggedIn && Player != null)
+                OnLogout(null, null);
+        }
     }
 }
