@@ -43,7 +43,8 @@ namespace Kedrah.Modules
         public General(ref Core core)
             : base(ref core)
         {
-            Core.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
+            if (Core.Proxy != null)
+                Core.Proxy.ReceivedContainerOpenIncomingPacket += new Proxy.IncomingPacketListener(Proxy_ReceivedContainerOpenIncomingPacket);
 
             #region Timers
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Tibia.Objects;
+using System.Windows.Forms;
 
 namespace Kedrah.Objects
 {
@@ -11,6 +12,7 @@ namespace Kedrah.Objects
         public byte Percent;
         public Item Item;
         public string Spell;
+        public Keys[] Keys;
         public uint Mana;
 
         public HealPercent(byte percent)
@@ -28,6 +30,19 @@ namespace Kedrah.Objects
             : this(percent)
         {
             Spell = spell;
+            Mana = mana;
+        }
+
+        public HealPercent(byte percent, params Keys[] keys)
+            : this(percent)
+        {
+            Keys = keys;
+        }
+
+        public HealPercent(byte percent, uint mana, params Keys[] keys)
+            : this(percent)
+        {
+            Keys = keys;
             Mana = mana;
         }
 
