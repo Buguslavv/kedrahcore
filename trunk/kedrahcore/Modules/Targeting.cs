@@ -306,11 +306,11 @@ namespace Kedrah.Modules
                 verifier["distance"][0] = selected.Distance();
                 verifier["health"][0] = selected.HPBar;
                 verifier["priority"][0] = -selectedTarget.Priority;
-                verifier["stick"][0] = selected.Id;
+                verifier["stick"][0] = (int) selected.Id;
                 verifier["distance"][1] = creature.Distance();
                 verifier["health"][1] = creature.HPBar;
                 verifier["priority"][1] = -target.Priority;
-                verifier["stick"][1] = creature.Id;
+                verifier["stick"][1] = (int) creature.Id;
 
                 foreach (KeyValuePair<string, byte> v in items)
                 {
